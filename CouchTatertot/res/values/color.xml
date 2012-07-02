@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="couchpotato_background">#4e5969</color>
+    <color name="couchpotato_background_dark">#47515f</color>
+    <color name="couchpotato_highlight">#03b6de</color>
+    <color name="couchpotato_missing_poster">#282d34</color>
+    
+    <color name="actionbar_background">@color/couchpotato_background</color>
+    <color name="actionbar_background_light">@color/couchpotato_highlight</color>
+    <color name="actionbar_background_dark">@color/couchpotato_background_dark</color>
+    <color name="actionbar_background_very_dark">@color/couchpotato_missing_poster</color>
+    
+    <color name="focused_background_list">#80FF7F00</color>
+    <color name="focused_background">@color/focused_background_list</color>
+    <color name="pressed_background_list">#804080FF</color>
+    <color name="pressed_background">@color/pressed_background_list</color>
+    <color name="selected_background_list">#8080FF04</color>
+    <color name="selected_background">@color/pressed_background_list</color>
+    
+    <color name="options_seperator_background">#333333</color>
+    
+</resources>

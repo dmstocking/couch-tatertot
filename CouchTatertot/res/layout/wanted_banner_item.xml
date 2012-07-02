@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:background="@color/couchpotato_background_dark" >
+
+    <org.couchtatertot.widget.LoadingPosterView
+        android:id="@+id/posterLoadingPosterView"
+        android:layout_width="120dp"
+        android:layout_height="180dp"
+        android:background="@color/couchpotato_missing_poster"
+        android:scaleType="fitXY" />
+        
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <TextView
+            android:id="@+id/yearTextView"
+            style="@style/MovieTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="2012" />
+
+        <TextView
+            android:id="@+id/titleTextView"
+            style="@style/MovieTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@id/yearTextView"
+            android:singleLine="true"
+            android:text="Movie Title" />
+
+        <LinearLayout
+            android:id="@+id/LinearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true" >
+
+            <TextView
+                android:id="@+id/qualityTextView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:background="#20FFFFFF"
+                android:text="Quality Label" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/plotTextView"
+            style="@style/NormalText"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/LinearLayout2"
+            android:layout_below="@id/titleTextView"
+            android:layout_alignParentLeft="true"
+            android:text="Movie Plot here a long long time ago in a galexy far far away someone typed this as test data" />
+    </RelativeLayout>
+
+</LinearLayout>

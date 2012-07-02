@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="NormalText" parent="@android:style/TextAppearance">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="NormalLabel" parent="NormalText" >
+        <item name="android:paddingLeft">3dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingRight">3dp</item>
+    </style>
+    <style name="ClickableText" >
+        <item name="android:textColor">@color/button_text_selector</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+<!--         <item name="android:background">@color/button_background_selector</item> -->
+    </style>
+    <style name="ButtonText" >
+        <item name="android:textSize">20sp</item>
+<!--         <item name="android:textColor">@color/button_text_selector</item> -->
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">5dp</item>
+<!--         <item name="android:background">@color/button_background_selector</item> -->
+    </style>
+    <style name="MovieTitle" parent="@android:style/TextAppearance" >
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="MovieLabel" parent="@android:style/TextAppearance" >
+        <item name="android:paddingRight">3dp</item>
+    </style>
+    <style name="ShowOptionTitle" parent="@android:style/TextAppearance" >
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/button_text_selector</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:background">@color/button_background_selector</item>
+    </style>
+    <style name="BoldTitle" parent="@android:style/TextAppearance" >
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">25sp</item>
+    </style>
+    <style name="Widget.CouchTatertot.ActionButton" parent="Widget.CouchTatertot.ActionButton">
+	    <item name="background">@drawable/action_button_selector</item>
+	    <item name="android:background">@drawable/action_button_selector</item>
+<!--     <item name="android:paddingTop">0px</item> -->
+<!--     <item name="android:paddingBottom">0px</item> -->
+<!--         <item name="android:background">@color/sickbeard_dark</item> -->
+        <item name="android:minHeight">?attr/actionBarSize</item>
+    	<item name="android:minWidth">?attr/actionBarSize</item>
+<!--         <item name="android:gravity">center</item> -->
+<!--         <item name="android:paddingLeft">12dip</item> -->
+<!--         <item name="android:paddingRight">12dip</item> -->
+<!--         <item name="android:scaleType">center</item> -->
+    </style>
+    <style name="Widget.CouchTatertot.ActionBar" parent="Widget.Sherlock.ActionBar" >
+<!--         <item name="actionBarSize">@dimen/actionbar_height</item> -->
+<!--         <item name="android:actionBarSize">@dimen/actionbar_height</item> -->
+        <item name="background">@color/actionbar_background</item>
+        <item name="android:background">@color/actionbar_background</item>
+<!--         <item name="divider">@drawable/seperator_background</item> -->
+<!--         <item name="android:divider">@drawable/seperator_background</item> -->
+        <item name="titleTextStyle">@style/BoldTitle</item>
+        <item name="android:titleTextStyle">@style/BoldTitle</item>
+    </style>
+    <style name="Theme.CouchTatertot" parent="Theme.Sherlock">
+<!--         <item name="absForceOverflow">true</item> -->
+        <item name="actionBarStyle">@style/Widget.CouchTatertot.ActionBar</item>
+        <item name="android:actionBarStyle">@style/Widget.CouchTatertot.ActionBar</item>
+        <item name="actionButtonStyle">@style/Widget.CouchTatertot.ActionButton</item>
+        <item name="android:actionButtonStyle">@style/Widget.CouchTatertot.ActionButton</item>
+        <item name="actionBarItemBackground">@drawable/action_button_selector</item>
+        <item name="android:actionBarItemBackground">@drawable/action_button_selector</item>
+        <item name="actionModeBackground">@color/actionbar_background</item>
+        <item name="android:actionModeBackground">@color/actionbar_background</item>
+    </style>
+</resources>

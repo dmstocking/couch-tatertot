@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/posterImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true" 
+        android:layout_alignParentLeft="true" 
+        android:layout_alignParentRight="true"
+        android:scaleType="centerCrop"
+        android:background="@color/couchpotato_missing_poster"  />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dip"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true" 
+        android:layout_alignParentLeft="true" 
+        android:layout_alignParentRight="true"
+	    android:background="#B0000000"
+        android:orientation="vertical" >
+
+        <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+			<RelativeLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:orientation="vertical" >
+				
+				<TextView
+		            android:id="@+id/yearTextView"
+		            style="@style/MovieTitle"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_alignParentRight="true"
+		            android:layout_alignParentTop="true"
+	                android:background="#40000000"
+		            android:text="2012" />
+		
+		        <TextView
+		            android:id="@+id/titleTextView"
+		            style="@style/MovieTitle"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="1"
+		            android:layout_alignParentLeft="true"
+		            android:layout_alignParentTop="true"
+		            android:layout_toLeftOf="@id/yearTextView"
+	                android:background="#40000000"
+		            android:singleLine="true"
+		            android:text="Movie Title" />
+				
+		        <TextView
+		            android:id="@+id/plotTextView"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_below="@id/titleTextView"
+		            android:text="Plot!!!!" />
+		        
+		        <TextView
+	                android:id="@+id/optionsTextView"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_below="@id/plotTextView"
+	                android:background="#40000000"
+	                android:paddingLeft="3dp"
+	                android:text="Options"
+	                android:textColor="#ffffff"
+	                android:textSize="15sp"
+	                android:textStyle="bold" />
+		        
+		        <TextView
+	                android:id="@+id/qualityTextView"
+	                style="@style/ClickableText"
+	                android:layout_width="fill_parent"
+	                android:layout_height="72px"
+	                android:layout_below="@id/optionsTextView"
+	                android:drawableRight="@drawable/ic_menu_more"
+	                android:gravity="center_vertical"
+	                android:paddingLeft="3dp"
+	                android:text="Quality"
+	                android:textColor="#ffffff" />
+	        
+	        </RelativeLayout>
+        
+        </ScrollView>
+
+        <Button
+            android:id="@+id/addMovieButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Movie" />
+        
+    </LinearLayout>
+
+</RelativeLayout>
