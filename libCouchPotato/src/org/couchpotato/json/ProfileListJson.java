@@ -23,19 +23,7 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
-public class MovieJson {
-	public ProfileJson profile;
-	@SerializedName("library_id")
-	public int libraryId;
-	public List<ReleaseJson> releases;
-	@SerializedName("status_id")
-	public int statusId;
-	@SerializedName("profile_id")
-	public int profileId;
-	public LibraryJson library;
-	public StatusJson status;
-	@SerializedName("last_edit")
-	public int lastEdit;
-	public int id;
-	public List<String> files;
+public class ProfileListJson {
+	public List<ProfileJson> list;
+	public boolean success = false;
 }

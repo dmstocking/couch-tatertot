@@ -38,6 +38,9 @@
 	<string name="pause_item_title">Pause</string>
 	<string name="refresh_item_title">Refresh</string>
 	<string name="update_item_title">Update</string>
+	<string name="download_item_title">Download</string>
+	<string name="ignore_item_title">Toggle Ignore</string>
+	<string name="details_item_title">Details</string>
 	
 	<string name="set_status_item_title">Set Status</string>
 	

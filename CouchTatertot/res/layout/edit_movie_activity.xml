@@ -7,7 +7,7 @@
     android:orientation="vertical" >
 
     <fragment
-        android:name="org.couchtatertot.fragments.EditMovieFragment"
+        android:name="org.couchtatertot.fragment.EditMovieFragment"
         android:id="@+id/editMovieFragment"
         android:layout_weight="1"
         android:layout_width="match_parent"

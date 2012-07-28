@@ -59,14 +59,15 @@ public class GetPosterTask extends CouchTask<Void,Void,Bitmap>
 				URL url = Preferences.singleton.getCouchPotato().fileCache(filename);
 				ret = BitmapFactory.decodeStream(url.openStream());
 				PosterCache.singleton.put(filename, ret);
-				
 			}
-			// i don't like huge if statements
-			if ( ret != null ) {
-				if ( width > 0 && height > 0 ) {
-					ret = Bitmap.createScaledBitmap(ret, width, height, true);
-				}
-			}
+			// I have removed this ONLY because 
+			// 1) the bitmaps are small
+			// 2) it causes a lot of Garbage Collection calls
+//			if ( ret != null ) {
+//				if ( width > 0 && height > 0 ) {
+//					ret = Bitmap.createScaledBitmap(ret, width, height, true);
+//				}
+//			}
 			return ret;
 		} catch (Exception e) {
 			this.error = e;

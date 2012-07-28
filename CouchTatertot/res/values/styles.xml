@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
     <style name="NormalText" parent="@android:style/TextAppearance">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">#FFFFFF</item>
@@ -15,6 +15,14 @@
         <item name="android:textStyle">bold</item>
 <!--         <item name="android:background">@color/button_background_selector</item> -->
     </style>
+    <style name="TextViewButton" parent="ClickableText" >
+        <item name="android:clickable">true</item>
+        <item name="android:paddingLeft">3dp</item>
+        <item name="android:background">@color/button_background_selector</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawableRight">@drawable/ic_text_more</item>
+        <item name="android:layout_height">72dp</item>
+    </style>
     <style name="ButtonText" >
         <item name="android:textSize">20sp</item>
 <!--         <item name="android:textColor">@color/button_text_selector</item> -->
@@ -24,9 +32,11 @@
     </style>
     <style name="MovieTitle" parent="@android:style/TextAppearance" >
         <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
     <style name="MovieLabel" parent="@android:style/TextAppearance" >
         <item name="android:paddingRight">3dp</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
     <style name="ShowOptionTitle" parent="@android:style/TextAppearance" >
         <item name="android:textSize">20sp</item>

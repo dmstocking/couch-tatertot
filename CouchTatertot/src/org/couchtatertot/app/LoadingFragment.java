@@ -205,6 +205,7 @@ public abstract class LoadingFragment<Params, Progress, Result> extends Sherlock
 //    			}
     			// if we have a error
     			if ( error != null || result == null ) {
+    				LoadingFragment.this.error.setText("Error Retrieving Results\nERROR: "+error.getMessage());
     				LoadingFragment.this.setStatus(LoadingFragment.Status.ERROR);
     			} else {
         			LoadingFragment.this.setStatus(LoadingFragment.Status.NORMAL);

@@ -23,19 +23,24 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
-public class MovieJson {
-	public ProfileJson profile;
-	@SerializedName("library_id")
-	public int libraryId;
-	public List<ReleaseJson> releases;
+public class ReleaseJson {
+	// TODO figure out what this is
+//	public List<Object> files;
+	public List<ReleaseInfoJson> info;
+	@SerializedName("quality_id")
+	public int qualityId;
 	@SerializedName("status_id")
 	public int statusId;
-	@SerializedName("profile_id")
-	public int profileId;
-	public LibraryJson library;
-	public StatusJson status;
-	@SerializedName("last_edit")
-	public int lastEdit;
+	public String identifier;
 	public int id;
-	public List<String> files;
+	
+	public String getValueFromInfo( String identifier )
+	{
+		for ( ReleaseInfoJson json : info ) {
+			if ( identifier.compareTo(json.identifier) == 0 ) {
+				return json.value;
+			}
+		}
+		return "";
+	}
 }

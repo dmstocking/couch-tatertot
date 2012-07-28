@@ -19,8 +19,9 @@
  */
 package org.couchtatertot;
 
-import org.couchtatertot.fragments.ManageFragment;
-import org.couchtatertot.fragments.WantedFragment;
+import org.couchtatertot.dialog.WhatsNewDialog;
+import org.couchtatertot.fragment.ManageFragment;
+import org.couchtatertot.fragment.WantedFragment;
 import org.couchtatertot.helper.PosterCache;
 import org.couchtatertot.helper.Preferences;
 
@@ -29,6 +30,9 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.viewpagerindicator.TitlePageIndicator;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -37,6 +41,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 public class HomeActivity extends SherlockFragmentActivity {
+	
+	private static int PREFRENCES_ACTIVITY_REQUEST_CODE = 1;
+
+	private boolean preferencesChanged = false;
 	
 	private ViewPager viewpager;
 	private SlideAdapter pageAdapter;
@@ -60,6 +68,22 @@ public class HomeActivity extends SherlockFragmentActivity {
         pageAdapter =  new SlideAdapter( this.getSupportFragmentManager() );
         viewpager.setAdapter( pageAdapter );
         pageIndicator.setViewPager( viewpager );
+        
+        if ( Preferences.singleton.isUpdated ) {
+        	// make sure the dialog box isnt already up
+        	Fragment f = getSupportFragmentManager().findFragmentByTag("whatsnew");
+        	if ( f == null ) {
+        		// since it isnt lets make it
+		        WhatsNewDialog diag = new WhatsNewDialog();
+		        diag.setOnOkClick( new DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Preferences.singleton.isUpdated = false;
+					}
+				});
+		        diag.show(getSupportFragmentManager(), "whatsnew");
+        	}
+        }
     }
     
 	@Override
@@ -73,17 +97,42 @@ public class HomeActivity extends SherlockFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch ( item.getItemId() )
 		{
-		case R.id.logMenuItem:
-			return true;
+//		case R.id.logMenuItem:
+//			return true;
 		case R.id.cacheMenuItem:
-			return true;
-		case R.id.settingsMenuItem:
-			return true;
-		case R.id.aboutMenuItem:
 			PosterCache.singleton.clear();
 			return true;
+		case R.id.settingsMenuItem:
+			{
+				Intent intent = new Intent(this,PreferencesActivity.class);
+				startActivity(intent);
+				return true;
+			}
+		case R.id.aboutMenuItem:
+			{
+				Intent intent = new Intent(this,AboutActivity.class);
+				startActivity(intent);
+				return true;
+			}
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// if we came back from the PreferencesActivity
+		if ( requestCode == PREFRENCES_ACTIVITY_REQUEST_CODE ) {
+			if ( preferencesChanged ) {
+				wantedFrag.refresh();
+				manageFrag.refresh();
+				preferencesChanged = false;
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+		preferencesChanged = true;
 	}
 
 	private class SlideAdapter extends FragmentPagerAdapter {

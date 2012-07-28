@@ -7,8 +7,8 @@
     android:orientation="vertical" >
 
     <fragment
-        android:name="org.couchtatertot.fragment.SearchFragment"
-        android:id="@+id/searchFragment"
+        android:name="org.couchtatertot.fragment.ReleasesFragment"
+        android:id="@+id/releasesFragment"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dip" />

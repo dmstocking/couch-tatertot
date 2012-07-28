@@ -34,6 +34,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.net.ssl.HostnameVerifier;
@@ -170,19 +171,60 @@ public class CouchPotato {
 		;
 	}
 	
-	public void movieAdd( String profileId, String imdbId, String title ) throws MalformedURLException, IOException, SocketTimeoutException
+	public void movieAdd( Integer profileId, String imdbId, String title ) throws MalformedURLException, IOException, SocketTimeoutException
 	{
-		;
+		StringBuilder builder = new StringBuilder();
+		if ( profileId != null ) {
+			builder.append("&profile_id=");
+			builder.append(profileId);
+		}
+		builder.append("&identifier=");
+		builder.append(imdbId);
+		builder.append("&title=");
+		builder.append(title);
+		// all you get back is success and currently it doens't actually mean success
+		// if you give an id that doesn't exist it returns "success" : true
+		this.<Object>command("movie.add/", builder.toString(), Object.class);
 	}
 	
 	public void movieDelete( List<Integer> IDs, PageEnum page ) throws MalformedURLException, IOException, SocketTimeoutException
 	{
-		;
+		StringBuilder builder = new StringBuilder();
+		builder.append("&id=");
+		Iterator<Integer> iter = IDs.iterator();
+		if ( iter.hasNext() ) {
+			builder.append(iter.next().toString().toLowerCase());
+			while ( iter.hasNext() ) {
+				builder.append(",");
+				builder.append(iter.next().toString().toLowerCase());
+			}
+		}
+		builder.append("&delete_from=");
+		builder.append(page.toString().toLowerCase());
+		// SEE movieAdd for why this is here
+		this.<Object>command("movie.delete/", builder.toString(), Object.class);
 	}
 	
-	public void movieGet( int id ) throws MalformedURLException, IOException, SocketTimeoutException
+	public void movieEdit( int profileId, int id, String defaultTitle ) throws MalformedURLException, IOException, SocketTimeoutException
 	{
-		;
+		StringBuilder builder = new StringBuilder();
+		builder.append("&profile_id=");
+		builder.append(profileId);
+		builder.append("&id=");
+		builder.append(id);
+		builder.append("&default_title=");
+		builder.append(defaultTitle);
+		// SEE movieAdd for why this is here
+		this.<Object>command("movie.edit/", builder.toString(), Object.class);
+	}
+	
+	public MovieJson movieGet( int id ) throws MalformedURLException, IOException, SocketTimeoutException
+	{
+		StringBuilder builder = new StringBuilder();
+		builder.append("&id=");
+		builder.append(id);
+		// SEE movieAdd for why this is here
+		return this.<MovieWrapperJson>command("movie.get/", builder.toString(), MovieWrapperJson.class).movie;
 	}
 	
 	/**
@@ -217,7 +259,11 @@ public class CouchPotato {
 	
 	public void movieRefresh( int id ) throws MalformedURLException, IOException, SocketTimeoutException
 	{
-		;
+		StringBuilder builder = new StringBuilder();
+		builder.append("&id=");
+		builder.append(id);
+		// SEE movieAdd for why this is here
+		this.<Object>command("movie.refresh/", builder.toString(), Object.class);
 	}
 	
 	public SearchResultsJson movieSearch( String query ) throws MalformedURLException, IOException, SocketTimeoutException
@@ -238,9 +284,9 @@ public class CouchPotato {
 		;
 	}
 	
-	public void profileList() throws MalformedURLException, IOException, SocketTimeoutException
+	public List<ProfileJson> profileList() throws MalformedURLException, IOException, SocketTimeoutException
 	{
-		;
+		return this.<ProfileListJson>command("profile.list/", null, ProfileListJson.class).list;
 	}
 	
 	public void qualityList() throws MalformedURLException, IOException, SocketTimeoutException
@@ -250,17 +296,29 @@ public class CouchPotato {
 	
 	public void releaseDelete( int id ) throws MalformedURLException, IOException, SocketTimeoutException
 	{
-		;
+		StringBuilder builder = new StringBuilder();
+		builder.append("&id=");
+		builder.append(id);
+		this.<Object>command("release.delete/", builder.toString(), Object.class);
+		return;
 	}
 	
 	public void releaseDownload( int id ) throws MalformedURLException, IOException, SocketTimeoutException
 	{
-		;
+		StringBuilder builder = new StringBuilder();
+		builder.append("&id=");
+		builder.append(id);
+		this.<Object>command("release.download/", builder.toString(), Object.class);
+		return;
 	}
 	
 	public void releaseIgnore( int id ) throws MalformedURLException, IOException, SocketTimeoutException
 	{
-		;
+		StringBuilder builder = new StringBuilder();
+		builder.append("&id=");
+		builder.append(id);
+		this.<Object>command("release.ignore/", builder.toString(), Object.class);
+		return;
 	}
 	
 	public void renamerScan() throws MalformedURLException, IOException, SocketTimeoutException
@@ -278,7 +336,7 @@ public class CouchPotato {
 		// TODO fix this because couch potato api doesn't use all query options
 		if ( arguments != null && arguments.length() == 0 )
 			arguments = null;
-		if ( path == null )
+		if ( path == null || path.length() == 0 )
 			return new URI( scheme, null, hostName, port, "/api/" + api + "/" + command, arguments, null );
 		else
 			return new URI( scheme, null, hostName, port, "/" + path + "/api/" + api + "/" + command, arguments, null );

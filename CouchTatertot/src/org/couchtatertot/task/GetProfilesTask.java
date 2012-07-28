@@ -1,5 +1,5 @@
 /*
- * 	libCouchPotato is a java library for communication with couchpotato
+ * 	CouchTatertot is a android app for managing couchpotato
  * 	Copyright (C) 2012  David Stocking dmstocking@gmail.com
  * 
  * 	http://code.google.com/p/couch-tatertot/
@@ -17,25 +17,28 @@
  * 	You should have received a copy of the GNU General Public License
  * 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.couchpotato.json;
+package org.couchtatertot.task;
 
 import java.util.List;
 
-import com.google.gson.annotations.SerializedName;
+import org.couchpotato.json.ProfileJson;
+import org.couchtatertot.helper.Preferences;
 
-public class MovieJson {
-	public ProfileJson profile;
-	@SerializedName("library_id")
-	public int libraryId;
-	public List<ReleaseJson> releases;
-	@SerializedName("status_id")
-	public int statusId;
-	@SerializedName("profile_id")
-	public int profileId;
-	public LibraryJson library;
-	public StatusJson status;
-	@SerializedName("last_edit")
-	public int lastEdit;
-	public int id;
-	public List<String> files;
+public class GetProfilesTask extends CouchTask<Void,Void,List<ProfileJson>>
+{
+
+	@Override
+	public String getTaskLogName() {
+		return "GetProfilesTask";
+	}
+
+	@Override
+	protected List<ProfileJson> doInBackground(Void... params) {
+		try {
+			return Preferences.singleton.getCouchPotato().profileList();
+		} catch (Exception e) {
+			this.error = e;
+		}
+		return null;
+	}
 }

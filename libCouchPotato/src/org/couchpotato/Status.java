@@ -49,7 +49,7 @@ public class Status {
 	 */
 	static public String getIdentifier(int i)
 	{
-		return identifiers.get(i);
+		return identifiers.get(i-1);
 	}
 	
 	/**
@@ -58,6 +58,6 @@ public class Status {
 	 */
 	static public String getLabel(int i)
 	{
-		return identifiers.get(i);
+		return identifiers.get(i-1);
 	}
 }

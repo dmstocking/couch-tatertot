@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item
+        android:id="@+id/downloadMenuItem"
+        android:title="@string/download_item_title"
+        android:icon="@drawable/ic_menu_download"
+        android:showAsAction="always" />
+    
+<!--     This item only applies to downloaded release .... I think -->
+<!--     <item -->
+<!--         android:id="@+id/deleteMenuItem" -->
+<!--         android:title="@string/delete_item_title" -->
+<!--         android:icon="@drawable/ic_menu_delete" -->
+<!--         android:showAsAction="always" /> -->
+    
+    <item
+        android:id="@+id/ignoreMenuItem"
+        android:title="@string/ignore_item_title"
+        android:icon="@drawable/ic_menu_delete"
+        android:showAsAction="ifRoom" />
+    
+    <item
+        android:id="@+id/detailsMenuItem"
+        android:title="@string/details_item_title"
+        android:icon="@drawable/ic_menu_info_details"
+        android:showAsAction="ifRoom" />
+    
+</menu>

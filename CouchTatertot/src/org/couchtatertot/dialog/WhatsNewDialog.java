@@ -17,7 +17,7 @@
  * 	You should have received a copy of the GNU General Public License
  * 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.sickstache.dialogs;
+package org.couchtatertot.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -33,9 +33,7 @@ public class WhatsNewDialog extends SherlockDialogFragment {
 	DialogInterface.OnClickListener okListener = null;
 	
 	private static String whatsNew =
-			"- Fixed crash on Android 4.1\n" +
-			"- Fixed crash on Android 2.2\n" +
-			"- Fixed problem when loading an image that doesnt exist\n" +
+			"- This app was released. :)\n" +
 			"\n" +
 			"Please show your support by purchasing this app on Goole Play!";
 	

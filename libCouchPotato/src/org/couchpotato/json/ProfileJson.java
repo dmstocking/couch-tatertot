@@ -26,6 +26,7 @@ import com.google.gson.annotations.SerializedName;
 public class ProfileJson {
 	// public Object core;
 	// public Object hide;
+	public int id;
 	public int order;
 	public List<TypeJson> types;
 	public String label;

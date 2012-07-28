@@ -64,6 +64,7 @@
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:layout_below="@id/titleTextView"
+		            android:textColor="#B0B0B0"
 		            android:text="Plot!!!!" />
 		        
 		        <TextView
@@ -78,56 +79,36 @@
 	                android:textSize="15sp"
 	                android:textStyle="bold" />
 		        
-		        <TextView
-	                android:id="@+id/releasesTextView"
-	                style="@style/ClickableText"
+		        <org.couchtatertot.widget.WorkingTextView
+	                android:id="@+id/releasesWorkingTextView"
 	                android:layout_width="fill_parent"
-	                android:layout_height="72px"
-	                android:layout_below="@id/optionsTextView"
-	                android:drawableRight="@drawable/ic_menu_more"
-	                android:gravity="center_vertical"
-	                android:paddingLeft="3dp"
+	                android:layout_height="wrap_content"
+	                android:layout_below="@+id/optionsTextView"
 	                android:text="Releases"
-	                android:textColor="#ffffff"
 	                android:visibility="gone" />
 		        
-		        <TextView
-	                android:id="@+id/editTextView"
-	                style="@style/ClickableText"
+		        <org.couchtatertot.widget.WorkingTextView
+	                android:id="@+id/editWorkingTextView"
 	                android:layout_width="fill_parent"
-	                android:layout_height="72px"
-	                android:layout_below="@id/releasesTextView"
-	                android:drawableRight="@drawable/ic_menu_more"
-	                android:gravity="center_vertical"
-	                android:paddingLeft="3dp"
+	                android:layout_height="wrap_content"
+	                android:layout_below="@+id/releasesWorkingTextView"
 	                android:text="Edit"
-	                android:textColor="#ffffff"
 	                android:visibility="gone" />
 		        
-		        <TextView
-	                android:id="@+id/refreshTextView"
-	                style="@style/ClickableText"
+		        <org.couchtatertot.widget.WorkingTextView
+	                android:id="@+id/refreshWorkingTextView"
 	                android:layout_width="fill_parent"
-	                android:layout_height="72px"
-	                android:layout_below="@id/editTextView"
-	                android:drawableRight="@drawable/ic_menu_more"
-	                android:gravity="center_vertical"
-	                android:paddingLeft="3dp"
+	                android:layout_height="wrap_content"
+	                android:layout_below="@+id/editWorkingTextView"
 	                android:text="Refresh"
-	                android:textColor="#ffffff"
 	                android:visibility="gone" />
 		        
-		        <TextView
-	                android:id="@+id/deleteTextView"
-	                style="@style/ClickableText"
+		        <org.couchtatertot.widget.WorkingTextView
+	                android:id="@+id/deleteWorkingTextView"
 	                android:layout_width="fill_parent"
-	                android:layout_height="72px"
-	                android:layout_below="@id/refreshTextView"
-	                android:drawableRight="@drawable/ic_menu_more"
-	                android:gravity="center_vertical"
-	                android:paddingLeft="3dp"
+	                android:layout_height="wrap_content"
+	                android:layout_below="@+id/refreshWorkingTextView"
 	                android:text="Delete"
-	                android:textColor="#ffffff"
 	                android:visibility="gone" />
 	        
 	        </RelativeLayout>

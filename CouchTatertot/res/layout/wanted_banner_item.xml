@@ -11,7 +11,7 @@
         android:layout_height="180dp"
         android:background="@color/couchpotato_missing_poster"
         android:scaleType="fitXY" />
-        
+
     <RelativeLayout
         android:id="@+id/RelativeLayout1"
         android:layout_width="fill_parent"
@@ -26,7 +26,7 @@
             android:layout_alignParentTop="true"
             android:text="2012" />
 
-        <TextView
+        <org.couchtatertot.widget.MarqueeView
             android:id="@+id/titleTextView"
             style="@style/MovieTitle"
             android:layout_width="wrap_content"
@@ -35,6 +35,9 @@
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@id/yearTextView"
             android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
             android:text="Movie Title" />
 
         <LinearLayout
@@ -49,10 +52,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
+                android:background="#20FFFFFF"
                 android:paddingLeft="3dp"
                 android:paddingRight="3dp"
-                android:background="#20FFFFFF"
-                android:text="Quality Label" />
+                android:text="No Quality" />
         </LinearLayout>
 
         <TextView
@@ -61,8 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_above="@+id/LinearLayout2"
-            android:layout_below="@id/titleTextView"
             android:layout_alignParentLeft="true"
+            android:layout_below="@id/titleTextView"
             android:text="Movie Plot here a long long time ago in a galexy far far away someone typed this as test data" />
     </RelativeLayout>
 

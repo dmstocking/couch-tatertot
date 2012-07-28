@@ -103,22 +103,15 @@ public class PosterCache {
 	public void put( String key, Bitmap bitmap )
 	{
 		String filename = sanatizeKey(key);
-		Bitmap existing = memCache.get(key);
-		if ( existing == null ) {
-			synchronized ( memCache ) {
-				memCache.put(filename, bitmap);
-			}
+		synchronized ( memCache ) {
+			memCache.put(filename, bitmap);
 		}
 		try {
 			File tmp = new File( cacheDir, filename );
-			if ( tmp.exists() == false ) {
-				FileOutputStream out = new FileOutputStream( tmp );
-				bitmap.compress(CompressFormat.PNG, 90, out);
-				out.close();
-				Log.e(cacheLogName, "Added poster \"" + filename + "\" to disk cache.");
-			} else {
-				Log.e(cacheLogName, "Poster already existed in cache.");
-			}
+			FileOutputStream out = new FileOutputStream( tmp );
+			bitmap.compress(CompressFormat.PNG, 90, out);
+			out.close();
+			Log.e(cacheLogName, "Added poster \"" + filename + "\" to disk cache.");
 		} catch (Exception e) {
 			Log.e(cacheLogName, "Error adding poster. ERROR:" + e.getMessage(), e);
 		}

@@ -38,6 +38,8 @@ public class Preferences implements OnSharedPreferenceChangeListener {
 	private SharedPreferences pref;
 	private CouchPotato potato;
 	
+	private OnSharedPreferenceChangeListener listener;
+	
 	public static void setUpSingleton( Context c )
 	{
 		if ( singleton == null ) {
@@ -78,7 +80,7 @@ public class Preferences implements OnSharedPreferenceChangeListener {
 	
 	public int getPort()
 	{
-		return pref.getInt("port", 5050);
+		return Integer.parseInt(pref.getString("port", "5050"));
 	}
 	
 	// TODO I don't know if I want this considering I should just go auto get it
@@ -111,8 +113,8 @@ public class Preferences implements OnSharedPreferenceChangeListener {
 	{
 		// this should work because we are passing a reference not the object
 		// so when we assign a new value we are not changing any of the old objects
-//		return potato;
-		return new CouchPotato(false, "10.30.0.159", 5050, null, "0e8b7a6885f947d0aa547246deb95caa", "", "");
+		return potato;
+//		return new CouchPotato(false, "10.30.0.159", 5050, null, "0e8b7a6885f947d0aa547246deb95caa", "", "");
 	}
 	
 	public void setSickBeard( String host, String port, String api, String path, String username, String password )
@@ -130,10 +132,18 @@ public class Preferences implements OnSharedPreferenceChangeListener {
 	
 	private void updateCouchPotato()
 	{
-		potato = new CouchPotato( getHTTPS(), getHost(), getPort(), getAPI(), getPath(), getUsername(), getPassword() );
+		potato = new CouchPotato( getHTTPS(), getHost(), getPort(), getPath(), getAPI(), getUsername(), getPassword() );
+	}
+
+	public void registerSharedPreferencesChangedListener( OnSharedPreferenceChangeListener listener )
+	{
+		this.listener = listener;
 	}
 
 	public void onSharedPreferenceChanged(SharedPreferences arg0, String arg1) {
 		this.updateCouchPotato();
+		if ( listener != null ) {
+			listener.onSharedPreferenceChanged(arg0, arg1);
+		}
 	}
 }
