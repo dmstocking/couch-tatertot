@@ -19,9 +19,6 @@
  */
 package org.couchtatertot.task;
 
-import java.util.List;
-
-import org.couchpotato.CouchPotato.PageEnum;
 import org.couchtatertot.helper.Preferences;
 
 public class MovieEditTask extends CouchTask<Void,Void,Void>

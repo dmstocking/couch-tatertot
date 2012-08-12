@@ -19,18 +19,11 @@
  */
 package org.couchtatertot.widget;
 
-import java.net.URI;
-
 import org.couchtatertot.task.GetPosterTask;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 
 public class LoadingPosterView extends ImageView {

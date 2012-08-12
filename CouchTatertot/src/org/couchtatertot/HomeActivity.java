@@ -25,24 +25,24 @@ import org.couchtatertot.fragment.WantedFragment;
 import org.couchtatertot.helper.PosterCache;
 import org.couchtatertot.helper.Preferences;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.viewpagerindicator.TitlePageIndicator;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-public class HomeActivity extends SherlockFragmentActivity {
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.viewpagerindicator.TitlePageIndicator;
+
+public class HomeActivity extends SherlockFragmentActivity implements OnSharedPreferenceChangeListener {
 	
-	private static int PREFRENCES_ACTIVITY_REQUEST_CODE = 1;
+	private static int PREFERENCES_ACTIVITY_REQUEST_CODE = 1;
 
 	private boolean preferencesChanged = false;
 	
@@ -58,6 +58,7 @@ public class HomeActivity extends SherlockFragmentActivity {
         super.onCreate(savedInstanceState);
         PosterCache.setUpSingleton(this);
         Preferences.setUpSingleton(this);
+        Preferences.singleton.registerSharedPreferencesChangedListener(this);
         setContentView(R.layout.main_activity);
         
         wantedFrag = new WantedFragment();
@@ -105,7 +106,7 @@ public class HomeActivity extends SherlockFragmentActivity {
 		case R.id.settingsMenuItem:
 			{
 				Intent intent = new Intent(this,PreferencesActivity.class);
-				startActivity(intent);
+				startActivityForResult(intent, PREFERENCES_ACTIVITY_REQUEST_CODE);
 				return true;
 			}
 		case R.id.aboutMenuItem:
@@ -121,7 +122,7 @@ public class HomeActivity extends SherlockFragmentActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// if we came back from the PreferencesActivity
-		if ( requestCode == PREFRENCES_ACTIVITY_REQUEST_CODE ) {
+		if ( requestCode == PREFERENCES_ACTIVITY_REQUEST_CODE ) {
 			if ( preferencesChanged ) {
 				wantedFrag.refresh();
 				manageFrag.refresh();

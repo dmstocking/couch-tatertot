@@ -26,6 +26,7 @@ import org.couchtatertot.task.GetExternalPosterTask;
 import org.couchtatertot.task.MovieAddTask;
 import org.couchtatertot.widget.WorkingTextView;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -45,8 +46,10 @@ public class AddMovieFragment extends SherlockFragment {
 	String imdb;
 	String title;
 	String poster;
-	
 	String[] titles;
+	String plot;
+	String year;
+	
 	
 	String selectedTitle;
 	Integer selectedProfileId = null;
@@ -62,18 +65,51 @@ public class AddMovieFragment extends SherlockFragment {
 	Button addMovie;
 	
 	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		Intent intent = this.getActivity().getIntent();
+		imdb = intent.getStringExtra("imdb");
+		title = intent.getStringExtra("title");
+		selectedTitle = title;
+		poster = intent.getStringExtra("poster");
+		titles = intent.getStringArrayExtra("titles");
+		plot = intent.getStringExtra("plot");
+		year = intent.getStringExtra("year");
+	}
+
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.setRetainInstance(true);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View root = inflater.inflate(R.layout.movie_fragment, container, false);
-		posterImageView = (ImageView) root.findViewById(R.id.posterImageView);
-		titleTextView = (TextView) root.findViewById(R.id.titleTextView);
-		yearTextView = (TextView) root.findViewById(R.id.yearTextView);
-		plotTextView = (TextView) root.findViewById(R.id.plotTextView);
-		editTextView = (WorkingTextView) root.findViewById(R.id.editWorkingTextView);
+		return root;
+	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		posterImageView = (ImageView) view.findViewById(R.id.posterLoadingPosterView);
+		if ( poster != null ) {
+			new GetExternalPosterTask( poster, posterImageView.getWidth(), posterImageView.getHeight() ){
+				@Override
+				protected void onPostExecute(Bitmap result) {
+					super.onPostExecute(result);
+					if ( result != null )
+						posterImageView.setImageBitmap(result);
+				}
+			}.execute();
+		}
+		titleTextView = (TextView) view.findViewById(R.id.titleTextView);
+		titleTextView.setText(title);
+		yearTextView = (TextView) view.findViewById(R.id.yearTextView);
+		yearTextView.setText(year);
+		plotTextView = (TextView) view.findViewById(R.id.plotTextView);
+		plotTextView.setText(plot);
+		editTextView = (WorkingTextView) view.findViewById(R.id.editWorkingTextView);
 		editTextView.setVisibility(View.VISIBLE);
 		editTextView.setOnClickListener( new View.OnClickListener() {
 			@Override
@@ -94,7 +130,7 @@ public class AddMovieFragment extends SherlockFragment {
 				diag.show(getFragmentManager(), "edit");
 			}
 		});
-		addMovie = (Button) root.findViewById(R.id.addMovieButton);
+		addMovie = (Button) view.findViewById(R.id.addMovieButton);
 		addMovie.setVisibility(View.VISIBLE);
 		addMovie.setOnClickListener( new View.OnClickListener() {
 			@Override
@@ -114,35 +150,11 @@ public class AddMovieFragment extends SherlockFragment {
 				task.execute();
 			}
 		});
-		return root;
-	}
-
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		Intent intent = this.getSherlockActivity().getIntent();
-		imdb = intent.getStringExtra("imdb");
-		title = intent.getStringExtra("title");
-		selectedTitle = title;
-		poster = intent.getStringExtra("poster");
-		titles = intent.getStringArrayExtra("titles");
-		titleTextView.setText(title);
-		yearTextView.setText(intent.getStringExtra("year"));
-		plotTextView.setText(intent.getStringExtra("plot"));
-		if ( poster != null )
-			new GetExternalPosterTask( poster, posterImageView.getWidth(), posterImageView.getHeight() ){
-				@Override
-				protected void onPostExecute(Bitmap result) {
-					super.onPostExecute(result);
-					if ( result != null )
-						posterImageView.setImageBitmap(result);
-				}
-			}.execute();
 	}
 	
 }

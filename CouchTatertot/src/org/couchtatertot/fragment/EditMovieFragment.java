@@ -31,23 +31,16 @@ import org.couchtatertot.dialog.EditDialog;
 import org.couchtatertot.helper.Preferences;
 import org.couchtatertot.task.MovieDeleteTask;
 import org.couchtatertot.task.MovieEditTask;
-import org.couchtatertot.task.GetExternalPosterTask;
 import org.couchtatertot.task.RefreshTask;
+import org.couchtatertot.widget.LoadingPosterView;
 import org.couchtatertot.widget.WorkingTextView;
 
-import android.app.ProgressDialog;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.actionbarsherlock.app.SherlockFragment;
 
 public class EditMovieFragment extends LoadingFragment<Integer,Void,MovieJson> {
 
@@ -58,7 +51,7 @@ public class EditMovieFragment extends LoadingFragment<Integer,Void,MovieJson> {
 	String title;
 	String poster;
 	
-	ImageView posterImageView;
+	LoadingPosterView posterImageView;
 	
 	TextView titleTextView;
 	TextView yearTextView;
@@ -73,40 +66,53 @@ public class EditMovieFragment extends LoadingFragment<Integer,Void,MovieJson> {
 	String origTitle = null;
 	int profileId = -1;
 	
+	private MovieJson savedMovieJson = null;
+	
+	@Override
+	protected boolean isRetainInstance() {
+		return true;
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		Intent intent = this.getActivity().getIntent();
+		id = intent.getIntExtra("id", -1);
+		page = PageEnum.valueOf(intent.getStringExtra("page"));
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.setRetainInstance(true);
 	}
-
-//	@Override
-//	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//		View root = inflater.inflate(R.layout.movie_fragment, container, false);
-//		return root;
-//	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		posterImageView = (ImageView) view.findViewById(R.id.posterImageView);
+		posterImageView = (LoadingPosterView) view.findViewById(R.id.posterLoadingPosterView);
 		titleTextView = (TextView) view.findViewById(R.id.titleTextView);
 		yearTextView = (TextView) view.findViewById(R.id.yearTextView);
 		plotTextView = (TextView) view.findViewById(R.id.plotTextView);
-		releasesWorkingTextView = (WorkingTextView) view.findViewById(R.id.releasesWorkingTextView);
-		releasesWorkingTextView.setVisibility(View.VISIBLE);
 		editWorkingTextView = (WorkingTextView) view.findViewById(R.id.editWorkingTextView);
 		editWorkingTextView.setVisibility(View.VISIBLE);
 		refreshWorkingTextView = (WorkingTextView) view.findViewById(R.id.refreshWorkingTextView);
 		refreshWorkingTextView.setVisibility(View.VISIBLE);
 		deleteWorkingTextView = (WorkingTextView) view.findViewById(R.id.deleteWorkingTextView);
 		deleteWorkingTextView.setVisibility(View.VISIBLE);
-		releasesWorkingTextView.setOnClickListener( new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(getSherlockActivity(),ReleasesActivity.class);
-				intent.putExtra("id", id);
-				startActivity(intent);
-			}
-		});
+		// releases should never be null but it wont be shown to the user if its downloaded
+		releasesWorkingTextView = (WorkingTextView) view.findViewById(R.id.releasesWorkingTextView);
+		if ( page == PageEnum.WANTED || page == PageEnum.ALL ) {
+			releasesWorkingTextView.setVisibility(View.VISIBLE);
+			releasesWorkingTextView.setOnClickListener( new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(getSherlockActivity(),ReleasesActivity.class);
+					intent.putExtra("id", id);
+					startActivity(intent);
+				}
+			});
+		}
 		editWorkingTextView.setOnClickListener( new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -166,10 +172,15 @@ public class EditMovieFragment extends LoadingFragment<Integer,Void,MovieJson> {
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		Intent intent = this.getSherlockActivity().getIntent();
-		id = intent.getIntExtra("id", -1);
-		page = PageEnum.valueOf(intent.getStringExtra("page"));
 		super.onActivityCreated(savedInstanceState);
+		if ( isInRetainLifecycle() ) {
+			if ( savedMovieJson != null ) {
+				onPostExecute(savedMovieJson);
+			} else {
+				this.refresh();
+				this.setStatus(Status.WORKING);
+			}
+		}
 	}
 
 	@Override
@@ -198,6 +209,7 @@ public class EditMovieFragment extends LoadingFragment<Integer,Void,MovieJson> {
 
 	@Override
 	protected void onPostExecute(MovieJson result) {
+		savedMovieJson = result;
 		titles = result.library.info.titles;
 		origTitle = result.library.titles.get(0).title;
 		profileId = result.profileId;
@@ -208,15 +220,8 @@ public class EditMovieFragment extends LoadingFragment<Integer,Void,MovieJson> {
 			releasesWorkingTextView.text.setEnabled(false);
 		}
 		releasesWorkingTextView.text.setText("Releases (" + result.releases.size() + ")");
-		if ( result.library.info.images.poster.size() > 0 )
-			new GetExternalPosterTask( result.library.info.images.poster.get(0), posterImageView.getWidth(), posterImageView.getHeight() ){
-				@Override
-				protected void onPostExecute(Bitmap result) {
-					super.onPostExecute(result);
-					if ( result != null )
-						posterImageView.setImageBitmap(result);
-				}
-			}.execute();
+		if ( result.library.files.size() > 1 )
+			posterImageView.setPoster(result.library.files.get(1).path);
 		this.setStatus(Status.NORMAL);
 	}
 	

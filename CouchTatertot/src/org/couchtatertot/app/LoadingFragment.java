@@ -30,12 +30,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public abstract class LoadingFragment<Params, Progress, Result> extends SherlockFragment {
+public abstract class LoadingFragment<Params, Progress, Result> extends CouchFragment {
 	
 	public enum Status { NORMAL, WORKING, ERROR, EMPTY };
 	
@@ -88,7 +87,11 @@ public abstract class LoadingFragment<Params, Progress, Result> extends Sherlock
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		this.refresh();
+		if ( this.isInRetainLifecycle() == false ) {
+			this.refresh();
+		} else {
+			this.setStatus(Status.NORMAL);
+		}
 	}
 	
 	@Override
@@ -205,6 +208,8 @@ public abstract class LoadingFragment<Params, Progress, Result> extends Sherlock
 //    			}
     			// if we have a error
     			if ( error != null || result == null ) {
+    				if ( error == null )
+    					error = new Exception( "Unknown Error Occurred");
     				LoadingFragment.this.error.setText("Error Retrieving Results\nERROR: "+error.getMessage());
     				LoadingFragment.this.setStatus(LoadingFragment.Status.ERROR);
     			} else {

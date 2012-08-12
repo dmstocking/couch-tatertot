@@ -22,7 +22,6 @@ package org.couchtatertot.helper;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.util.concurrent.ConcurrentMap;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -31,8 +30,6 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.support.v4.util.LruCache;
 import android.util.Log;
-
-import com.google.common.collect.MapMaker;
 
 public class PosterCache {
 	

@@ -19,37 +19,24 @@
  */
 package org.couchtatertot.fragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.couchpotato.CouchPotato;
 import org.couchpotato.Status;
-import org.couchpotato.CouchPotato.PageEnum;
-import org.couchpotato.json.MovieJson;
 import org.couchpotato.json.ReleaseJson;
-import org.couchtatertot.EditMovieActivity;
 import org.couchtatertot.R;
 import org.couchtatertot.app.LoadingListFragment;
 import org.couchtatertot.helper.Preferences;
 import org.couchtatertot.task.ReleaseDownloadTask;
 import org.couchtatertot.task.ReleaseIgnoreTask;
-import org.couchtatertot.widget.LoadingPosterView;
+import org.couchtatertot.widget.SafeArrayAdapter;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Checkable;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -57,13 +44,17 @@ import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.viewpagerindicator.TitlePageIndicator;
 
 public class ReleasesFragment extends LoadingListFragment<Void, Void, List<ReleaseJson>> {
 	
-	private ArrayAdapter<ReleaseJson> releaseAdapter;
+	private SafeArrayAdapter<ReleaseJson> releaseAdapter;
 	
 	private int id;
+
+	@Override
+	protected boolean isRetainInstance() {
+		return true;
+	}
 
 	@Override
 	protected int getChoiceMode() {
@@ -71,14 +62,21 @@ public class ReleasesFragment extends LoadingListFragment<Void, Void, List<Relea
 	}
 
 	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		Intent intent = this.getActivity().getIntent();
+		id = intent.getIntExtra("id", -1);
+	}
+
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-	    releaseAdapter = new ArrayAdapter<ReleaseJson>(this.getActivity(), R.layout.releases_item) {
+	    releaseAdapter = new SafeArrayAdapter<ReleaseJson>(this.getActivity(), R.layout.releases_item) {
 			@Override
 			public View getView( int position, View convertView, ViewGroup parent ) {
 				View row = convertView;
 				if ( row == null ) {
-					row = getActivity().getLayoutInflater().inflate(R.layout.releases_item, null);
+					row = layoutInflater.inflate(R.layout.releases_item, null);
 				}
 				ReleaseJson item = getItem(position);
 				View overlay = row.findViewById(R.id.selectedOverlay);
@@ -100,6 +98,7 @@ public class ReleasesFragment extends LoadingListFragment<Void, Void, List<Relea
 				age.setText("Age: " + item.getValueFromInfo("age"));
 				score.setText("Score: " + item.getValueFromInfo("score"));
 				size.setText("Size: " + item.getValueFromInfo("size"));
+				quality.setText(item.getValueFromInfo("quality"));
 				status.setText(Status.getIdentifier(item.statusId));
 				return row;
 			}
@@ -111,13 +110,6 @@ public class ReleasesFragment extends LoadingListFragment<Void, Void, List<Relea
 		super.onViewCreated(view, savedInstanceState);
 		this.getListView().setBackgroundResource(R.color.couchpotato_background);
 		this.getListView().setCacheColorHint(R.color.couchpotato_background);
-	}
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		Intent intent = this.getSherlockActivity().getIntent();
-		id = intent.getIntExtra("id", -1);
-		super.onActivityCreated(savedInstanceState);
 	}
 	
 	@Override
@@ -205,23 +197,6 @@ public class ReleasesFragment extends LoadingListFragment<Void, Void, List<Relea
 			actionMode.finish();
 		}
 	}
-	
-//	@Override
-//	public void onPageScrollStateChanged(int arg0) {
-//		// do nothing
-//	}
-//
-//	@Override
-//	public void onPageScrolled(int arg0, float arg1, int arg2) {
-//		// do nothing
-//	}
-//
-//	@Override
-//	public void onPageSelected(int arg0) {
-//		if ( arg0 != 0 && actionMode != null ) {
-//			actionMode.finish();
-//		}
-//	}
 
 	@Override
 	protected String getEmptyText() {

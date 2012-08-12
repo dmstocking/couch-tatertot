@@ -1,0 +1,9 @@
+Version 1.1:
+- Fixed a bug on screen rotation
+- Saved state on rotation.
+- Removed release managment for already downloaded movies.
+- Automatic refresh after settings changed.
+- Loading managed movies 25 at a time.
+
+Version 1.0.1:
+- Released this app

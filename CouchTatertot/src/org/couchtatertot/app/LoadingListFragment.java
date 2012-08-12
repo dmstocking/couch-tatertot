@@ -35,13 +35,12 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public abstract class LoadingListFragment<Params, Progress, Result> extends SherlockListFragment implements AdapterView.OnItemLongClickListener {
+public abstract class LoadingListFragment<Params, Progress, Result> extends CouchListFragment implements AdapterView.OnItemLongClickListener {
 	
 	public enum ListStatus { NORMAL, ERROR, EMPTY };
 	
@@ -63,7 +62,7 @@ public abstract class LoadingListFragment<Params, Progress, Result> extends Sher
 		return ListView.CHOICE_MODE_NONE;
 	}
 	
-	private AsyncTask<Params,Progress,Result> downloader = new Downloader();
+	protected AsyncTask<Params,Progress,Result> downloader = new Downloader();
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -95,7 +94,8 @@ public abstract class LoadingListFragment<Params, Progress, Result> extends Sher
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		this.refresh();
+		if ( this.isInRetainLifecycle() == false )
+			this.refresh();
 	}
 	
 	@Override
@@ -173,7 +173,7 @@ public abstract class LoadingListFragment<Params, Progress, Result> extends Sher
 	protected abstract void onProgressUpdate(Progress...values);
 	protected abstract void onPostExecute(Result result);
 	
-	private class Downloader extends AsyncTask<Params, Progress, Result> {
+	protected class Downloader extends AsyncTask<Params, Progress, Result> {
 
     	public Exception error = null;
     	
@@ -205,10 +205,13 @@ public abstract class LoadingListFragment<Params, Progress, Result> extends Sher
 //    			}
     			// if we have a error
     			if ( error != null || result == null ) {
+    				if ( error == null )
+    					error = new Exception( "Unknown Error Occurred");
     				LoadingListFragment.this.error.setText("Error Retrieving Results\nERROR: "+error.getMessage());
     				LoadingListFragment.this.setListStatus(ListStatus.ERROR);
     				Log.e("LoadingListFragment", "ERROR: " + error.getMessage(), error);
     			} else {
+        			LoadingListFragment.this.setListStatus(ListStatus.NORMAL);
     				LoadingListFragment.this.onPostExecute(result);
     			}
     		}

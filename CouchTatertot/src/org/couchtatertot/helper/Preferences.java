@@ -20,7 +20,6 @@
 package org.couchtatertot.helper;
 
 import org.couchpotato.CouchPotato;
-import org.couchtatertot.R;
 
 import android.content.Context;
 import android.content.SharedPreferences;

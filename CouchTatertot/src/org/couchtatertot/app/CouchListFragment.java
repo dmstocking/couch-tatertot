@@ -17,18 +17,37 @@
  * 	You should have received a copy of the GNU General Public License
  * 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.couchtatertot;
+package org.couchtatertot.app;
 
 import android.os.Bundle;
 
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.actionbarsherlock.app.SherlockListFragment;
 
-public class PreferencesActivity extends SherlockPreferenceActivity {
+public class CouchListFragment extends SherlockListFragment {
+	
+	private boolean retainedLifecycle = false;
+	
+	protected boolean isInRetainLifecycle()
+	{
+		return retainedLifecycle;
+	}
+	
+	protected boolean isRetainInstance()
+	{
+		return false;
+	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.addPreferencesFromResource(R.xml.preferences);
+		this.setRetainInstance(isRetainInstance());
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		this.retainedLifecycle = true; // past this point if this is retained then this value will stay true
+		// if it goes back to false then we recreated the fragment
 	}
 	
 }

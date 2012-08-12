@@ -19,56 +19,56 @@
  */
 package org.couchtatertot.fragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.couchpotato.CouchPotato;
 import org.couchpotato.CouchPotato.PageEnum;
 import org.couchpotato.json.MovieJson;
 import org.couchtatertot.EditMovieActivity;
 import org.couchtatertot.R;
-import org.couchtatertot.app.LoadingListFragment;
-import org.couchtatertot.app.LoadingListFragment.ListStatus;
+import org.couchtatertot.app.EndlessLoadingListFragment;
+import org.couchtatertot.fragment.ManageFragment.Params;
 import org.couchtatertot.helper.Preferences;
 import org.couchtatertot.widget.LoadingPosterView;
+import org.couchtatertot.widget.SafeArrayAdapter;
 
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.view.ActionMode;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.viewpagerindicator.TitlePageIndicator;
+public class ManageFragment extends EndlessLoadingListFragment<Params, Void, List<MovieJson>> {
+	
+	public class Params {
+		String startsWith;
+		int current;
+		int step;
+	}
+	
+	private boolean atEnd = false;
+	private SafeArrayAdapter<MovieJson> movieAdapter;
+	
+	@Override
+	protected boolean isRetainInstance() {
+		return true;
+	}
 
-public class ManageFragment extends LoadingListFragment<Void, Void, List<MovieJson>> {
-	
-	private ArrayAdapter<MovieJson> movieAdapter;
-	
-//	private TitlePageIndicator pageIndicator = null;
+	@Override
+	protected boolean getAtEnd()
+	{
+		return atEnd;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-	    movieAdapter = new ArrayAdapter<MovieJson>(this.getActivity(), R.layout.wanted_banner_item) {
+	    movieAdapter = new SafeArrayAdapter<MovieJson>(this.getActivity(), R.layout.wanted_banner_item) {
 			@Override
 			public View getView( int position, View convertView, ViewGroup parent ) {
 				View row = convertView;
 				if ( row == null ) {
-					row = getActivity().getLayoutInflater().inflate(R.layout.wanted_banner_item, null);
+					row = layoutInflater.inflate(R.layout.wanted_banner_item, null);
 				}
 				MovieJson item = getItem(position);
 				TextView title = (TextView) row.findViewById(R.id.titleTextView);
@@ -100,18 +100,6 @@ public class ManageFragment extends LoadingListFragment<Void, Void, List<MovieJs
 		this.getListView().setCacheColorHint(R.color.couchpotato_background);
 	}
 
-//	@Override
-//	public void onActivityCreated(Bundle savedInstanceState) {
-//		super.onActivityCreated(savedInstanceState);
-//		try {
-//			pageIndicator = (TitlePageIndicator)this.getActivity().findViewById(R.id.viewPagerIndicator);
-//			pageIndicator.setOnPageChangeListener(this);
-//		} catch (Exception e) {
-//			; // there is no viewPagerIndicator
-//			// tried to do this with a check but it always failed
-//		}
-//	}
-
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
@@ -119,142 +107,8 @@ public class ManageFragment extends LoadingListFragment<Void, Void, List<MovieJs
 		MovieJson item = movieAdapter.getItem(position);
 		intent.putExtra("id", item.id);
 		intent.putExtra("page", PageEnum.MANAGE.name());
-//		intent.putExtra("imdb", item.library.info.imdb);
-//		intent.putExtra("title", item.library.info.titles.get(0));
-//		intent.putExtra("year", item.library.info.year+"");
-//		intent.putExtra("plot", item.library.info.plot);
-//		if ( item.library.info.images.poster.size() > 0 )
-//			intent.putExtra("poster", item.library.info.images.poster.get(0));
 		startActivity(intent);
 	}
-
-//	@Override
-//	public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-//		if ( actionMode == null ) {
-//			actionMode = getSherlockActivity().startActionMode( new ActionMode.Callback() {
-//				
-//				@Override
-//				public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-//					return false;
-//				}
-//				
-//				@Override
-//				public void onDestroyActionMode(ActionMode mode) {
-//					movieAdapter.notifyDataSetChanged();
-//					selected.clear();
-//					actionMode = null;
-//				}
-//				
-//				@Override
-//				public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-//					MenuInflater inflate = getSherlockActivity().getSupportMenuInflater();
-//					inflate.inflate(R.menu.shows_cab_menu, menu);
-//					return true;
-//				}
-//				
-//				@Override
-//				public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-//					switch ( item.getItemId() ) {
-//					case R.id.pauseMenuItem:
-//						final PauseDialog pDialog = new PauseDialog();
-//						pDialog.setTitle("Set Pause");
-//						pDialog.setOnOkClick( new OnClickListener(){
-//							@Override
-//							public void onClick(DialogInterface arg0, int arg1) {
-//								final ProgressDialog dialog = ProgressDialog.show(WantedFragment.this.getSherlockActivity(), "","Pausing Shows. Please wait...", true);
-//								dialog.setCancelable(true);
-//								dialog.show();
-//								String[] tvdbids = new String[selected.size()];
-//								for ( int i=0; i < selected.size(); i++ ) {
-//									tvdbids[i] = movieAdapter.getItem(selected.get(i)).id;
-//								}
-//								PauseTask pause = new PauseTask(tvdbids, pDialog.getPause()){
-//									@Override
-//									protected void onPostExecute(Boolean result) {
-//										if ( dialog != null && dialog.isShowing() )
-//											dialog.dismiss();
-//									}};
-//								pause.execute();
-//							}} );
-//						pDialog.show(getFragmentManager(), "update");
-//						return true;
-//					case R.id.refreshMenuItem:
-//						{
-//							final ProgressDialog dialog = ProgressDialog.show(WantedFragment.this.getSherlockActivity(), "","Refreshing Shows. Please wait...", true);
-//							dialog.setCancelable(true);
-//							dialog.show();
-//							String[] tvdbids = new String[selected.size()];
-//							for ( int i=0; i < selected.size(); i++ ) {
-//								tvdbids[i] = movieAdapter.getItem(selected.get(i)).id;
-//							}
-//							RefreshTask refresh = new RefreshTask(tvdbids){
-//								@Override
-//								protected void onPostExecute(Boolean result) {
-//									if ( dialog != null && dialog.isShowing() )
-//										dialog.dismiss();
-//								}};
-//								refresh.execute();
-//						}
-//						return true;
-//					case R.id.updateMenuItem:
-//						{
-//							final ProgressDialog dialog = ProgressDialog.show(WantedFragment.this.getSherlockActivity(), "","Updating Shows. Please wait...", true);
-//							dialog.setCancelable(true);
-//							dialog.show();
-//							String[] tvdbids = new String[selected.size()];
-//							for ( int i=0; i < selected.size(); i++ ) {
-//								tvdbids[i] = movieAdapter.getItem(selected.get(i)).id;
-//							}
-//							UpdateTask update = new UpdateTask(tvdbids){
-//								@Override
-//								protected void onPostExecute(Boolean result) {
-//									if ( dialog != null && dialog.isShowing() )
-//										dialog.dismiss();
-//								}};
-//							update.execute();
-//						}
-//						return true;
-////					case R.id.editMenuItem:
-////						// get all selected items and create the edit show activity passing all of them
-////						actionMode.finish();
-////						return true;
-//					}
-//					return false;
-//				}
-//			});
-//		}
-//		ImageView overlay = (ImageView)arg1.findViewById(R.id.showSelectedOverlay);
-//		int i = selected.indexOf(arg2);
-//		if ( i >= 0 ) {
-//			selected.remove(i);
-//			overlay.setVisibility(View.INVISIBLE);
-//		} else {
-//			selected.add(arg2);
-//			overlay.setVisibility(View.VISIBLE);
-//		}
-//		actionMode.setTitle(selected.size() + " Items Selected");
-//		if ( selected.size() == 0 ) {
-//			actionMode.finish();
-//		}
-//		return true;
-//	}
-//	
-//	@Override
-//	public void onPageScrollStateChanged(int arg0) {
-//		// do nothing
-//	}
-//
-//	@Override
-//	public void onPageScrolled(int arg0, float arg1, int arg2) {
-//		// do nothing
-//	}
-//
-//	@Override
-//	public void onPageSelected(int arg0) {
-//		if ( arg0 != 0 && actionMode != null ) {
-//			actionMode.finish();
-//		}
-//	}
 
 	@Override
 	protected String getEmptyText() {
@@ -262,13 +116,16 @@ public class ManageFragment extends LoadingListFragment<Void, Void, List<MovieJs
 	}
 	
 	@Override
-	protected Void[] getRefreshParams() {
-		return null;
+	protected Params[] getRefreshParams() {
+		Params p = new Params();
+		p.current = movieAdapter.getCount();
+		p.step = getStep();
+		return new Params[] { p };
 	}
 	
 	@Override
-	protected List<MovieJson> doInBackground(Void... arg0) throws Exception {
-		return Preferences.singleton.getCouchPotato().movieList("done", null, null, null);
+	protected List<MovieJson> doInBackground(Params... arg0) throws Exception {
+		return Preferences.singleton.getCouchPotato().movieList("done", arg0[0].step, arg0[0].current, null, null);
 	}
 	
 	@Override
@@ -278,8 +135,11 @@ public class ManageFragment extends LoadingListFragment<Void, Void, List<MovieJs
 	
 	@Override
 	protected void onPostExecute(List<MovieJson> result) {
-		setListAdapter(movieAdapter);
-		movieAdapter.clear();
+		if ( getListAdapter() == null )
+			setListAdapter(movieAdapter);
+		if ( result.size() < getStep() ) {
+			atEnd = true;
+		}
 		for ( MovieJson s : result ) {
 			movieAdapter.add(s);
 		}
@@ -290,5 +150,22 @@ public class ManageFragment extends LoadingListFragment<Void, Void, List<MovieJs
 			this.setListStatus(ListStatus.NORMAL);
 		}
 		movieAdapter.notifyDataSetChanged();
+	}
+	
+	@Override
+	protected int getStep()
+	{
+		return 25;
+	}
+
+	@Override
+	protected int getUpdatePadding() {
+		return 10;
+	}
+
+	@Override
+	protected void clearAdapter() {
+		movieAdapter.clear();
+		atEnd = false;
 	}
 }

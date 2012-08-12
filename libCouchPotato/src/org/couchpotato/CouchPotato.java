@@ -155,6 +155,10 @@ public class CouchPotato {
 	{
 		// WOW this sucks i hope this works for both windows and linux
 		try {
+			filename = filename.replace("\\", "/");
+			if ( filename.startsWith("/") == false ) {
+				filename = "/" + filename;
+			}
 			return this.getUri("file.cache" + filename, null).toURL();
 		} catch (URISyntaxException e) {
 			throw new MalformedURLException(e.getMessage());
@@ -231,20 +235,25 @@ public class CouchPotato {
 	 * Gets a list of movies
 	 * 
 	 * @param status		Filter by status
-	 * @param limitOffset	Filter by limit with offset
+	 * @param limit			Number of items to return
+	 * @param offset		Offset to start return items at
 	 * @param search		Filter by search
 	 * @param startsWith	Filter by what the movie title starts with
 	 */
-	public List<MovieJson> movieList( String status, String limitOffset, String search, String startsWith ) throws MalformedURLException, IOException, SocketTimeoutException
+	public List<MovieJson> movieList( String status, int limit, int offset, String search, String startsWith ) throws MalformedURLException, IOException, SocketTimeoutException
 	{
 		StringBuilder builder = new StringBuilder();
 		if ( status != null ) {
 			builder.append("&status=");
 			builder.append(status);
 		}
-		if ( limitOffset != null ) {
+		if ( limit > 0 ) {
 			builder.append("&limit_offset=");
-			builder.append(limitOffset);
+			builder.append(limit);
+			if ( offset > 0 ) {
+				builder.append(",");
+				builder.append(offset);
+			}
 		}
 		if ( search != null ) {
 			builder.append("&search=");

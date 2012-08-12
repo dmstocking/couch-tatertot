@@ -25,19 +25,20 @@ import org.couchpotato.json.InfoJson;
 import org.couchpotato.json.SearchResultsJson;
 import org.couchpotato.json.comparator.InfoJsonByTitleComparator;
 import org.couchpotato.json.comparator.InfoJsonByYearComparator;
-import org.couchtatertot.fragment.SearchFragment.SearchParams;
 import org.couchtatertot.AddMovieActivity;
 import org.couchtatertot.R;
 import org.couchtatertot.app.LoadingListFragment;
+import org.couchtatertot.fragment.SearchFragment.SearchParams;
 import org.couchtatertot.helper.Preferences;
 import org.couchtatertot.widget.LoadingPosterView;
+import org.couchtatertot.widget.SafeArrayAdapter;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -53,25 +54,40 @@ public class SearchFragment extends LoadingListFragment<SearchParams, Void, Sear
 	
 	private String query;
 	
-	private ArrayAdapter<InfoJson> searchAdapter;
+	private SafeArrayAdapter<InfoJson> searchAdapter;
 	private Comparator<InfoJson> sorter;
 	
 	private SearchResultsJson lastResults = null;
 	
 	@Override
+	protected boolean isRetainInstance() {
+		return true;
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		Intent intent = this.getActivity().getIntent();
+	    if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+	    	query = intent.getStringExtra(SearchManager.QUERY);
+	    }
+	}
+
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		sorter = new Comparator<InfoJson>(){
 			@Override
 			public int compare(InfoJson lhs, InfoJson rhs) {
 				return 0;
 			}
 		};
-		searchAdapter = new ArrayAdapter<InfoJson>(this.getActivity(), R.layout.wanted_banner_item) {
+		searchAdapter = new SafeArrayAdapter<InfoJson>(this.getActivity(), R.layout.wanted_banner_item) {
 			@Override
 			public View getView( int position, View convertView, ViewGroup parent ) {
 				View row = convertView;
 				if ( convertView == null ) {
-					row = getActivity().getLayoutInflater().inflate(R.layout.wanted_banner_item, null);
+					row = layoutInflater.inflate(R.layout.wanted_banner_item, null);
 				}
 				InfoJson item = getItem(position);
 				TextView title = (TextView) row.findViewById(R.id.titleTextView);
@@ -90,7 +106,6 @@ public class SearchFragment extends LoadingListFragment<SearchParams, Void, Sear
 				return row;
 			}
 		};
-		super.onCreate(savedInstanceState);
 		// DO NOT SET ADAPTER UNTIL THE DATA HAS BEEN AQUIRED!!!!
 		// this makes the list have a progress spinner for us
 	}
@@ -100,15 +115,6 @@ public class SearchFragment extends LoadingListFragment<SearchParams, Void, Sear
 		super.onCreateOptionsMenu(menu, inflater);
 		menu.removeItem(R.id.searchMenuItem);
 		inflater.inflate(R.menu.search_menu, menu);
-	}
-
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		Intent intent = this.getActivity().getIntent();
-	    if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-	    	query = intent.getStringExtra(SearchManager.QUERY);
-	    }
-		super.onViewCreated(view, savedInstanceState);
 	}
 	
 	@Override

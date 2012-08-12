@@ -19,23 +19,11 @@
  */
 package org.couchtatertot.widget;
 
-import java.net.URI;
-
-import org.couchtatertot.task.GetPosterTask;
-
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
-public class BoundedLoadingPosterView extends ImageView {
-	
-	private GetPosterTask task = null;
+public class BoundedLoadingPosterView extends LoadingPosterView {
 	
 	public BoundedLoadingPosterView(Context context) {
 		super(context);
@@ -68,21 +56,5 @@ public class BoundedLoadingPosterView extends ImageView {
 		}
 		
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-	}
-	
-	public void setPoster(String filename) {
-		if ( task != null ) {
-			task.cancel(true);
-		}
-		// Clear current image
-		this.setImageBitmap(null);
-		task = new GetPosterTask(filename,this.getWidth(),this.getHeight()){
-			@Override
-			protected void onPostExecute(Bitmap result) {
-				super.onPostExecute(result);
-				if ( result != null && task == this )
-					BoundedLoadingPosterView.this.setImageBitmap(result);
-			}};
-		task.execute();
 	}
 }
