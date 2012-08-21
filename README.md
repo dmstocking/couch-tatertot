@@ -16,4 +16,4 @@ Features:
 
 Example Screenshot:
 
-[[https://github.com/Buttink/couch-tatertot/wiki/Screenshots/couchtatertot-wanted.png]]
+[![https://github.com/Buttink/couch-tatertot/wiki/Screenshots/couchtatertot-wanted.png]]
