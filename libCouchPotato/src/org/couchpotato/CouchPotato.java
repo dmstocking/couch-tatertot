@@ -298,9 +298,9 @@ public class CouchPotato {
 		return this.<ProfileListJson>command("profile.list/", null, ProfileListJson.class).list;
 	}
 	
-	public void qualityList() throws MalformedURLException, IOException, SocketTimeoutException
+	public List<QualityJson> qualityList() throws MalformedURLException, IOException, SocketTimeoutException
 	{
-		;
+		return this.<QualityListJson>command("quality.list/", null, QualityListJson.class).list;
 	}
 	
 	public void releaseDelete( int id ) throws MalformedURLException, IOException, SocketTimeoutException

@@ -44,20 +44,20 @@ public class Status {
 	}
 	
 	/**
-	 * @param i	The status ID. These start at 1!
-	 * @return	The identifier
+	 * @param id	The status ID. These start at 1!
+	 * @return		The identifier
 	 */
-	static public String getIdentifier(int i)
+	static public String getIdentifier(int id)
 	{
-		return identifiers.get(i-1);
+		return identifiers.get(id-1);
 	}
 	
 	/**
-	 * @param i	The status ID. These start at 1!
-	 * @return	The label
+	 * @param id	The status ID. These start at 1!
+	 * @return		The label
 	 */
-	static public String getLabel(int i)
+	static public String getLabel(int id)
 	{
-		return identifiers.get(i-1);
+		return identifiers.get(id-1);
 	}
 }

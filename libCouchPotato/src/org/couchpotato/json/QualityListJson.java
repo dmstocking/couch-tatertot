@@ -23,16 +23,7 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ReleaseInfoJson {
-	public String description;
-	public String url;
-	public int age;
-	public String name;
-	public int score;
-	public String provider;
-	@SerializedName("detail_url")
-	public String detailUrl;
-	public String type;
-	public int id;
-	public int size;
+public class QualityListJson {
+	public List<QualityJson> list;
+	public boolean success;
 }

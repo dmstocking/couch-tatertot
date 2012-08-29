@@ -33,11 +33,8 @@ public class WhatsNewDialog extends SherlockDialogFragment {
 	DialogInterface.OnClickListener okListener = null;
 	
 	private static String whatsNew =
-			"- Fixed a bug on screen rotation.\n" +
-			"- Saved state on rotation. (no more loading on rotation)\n" +
-			"- Removed release managment for already downloaded movies.\n" +
-			"- Automatic refresh after settings changed.\n" +
-			"- Loading managed movies 25 at a time. (footer for status in the future)\n" +
+			"- Updated for new CouchPotato API format (requires newest version)\n" +
+			"- Better quality support\n" +
 			"\n" +
 			"Please show your support by purchasing this app on Goole Play!";
 	

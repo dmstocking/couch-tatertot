@@ -24,6 +24,7 @@ import org.couchtatertot.fragment.ManageFragment;
 import org.couchtatertot.fragment.WantedFragment;
 import org.couchtatertot.helper.PosterCache;
 import org.couchtatertot.helper.Preferences;
+import org.couchtatertot.task.QualityListTask;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -63,6 +64,7 @@ public class HomeActivity extends SherlockFragmentActivity implements OnSharedPr
         
         wantedFrag = new WantedFragment();
         manageFrag = new ManageFragment();
+        new QualityListTask().execute();
         
         viewpager = ((ViewPager)findViewById(R.id.viewpager));
         pageIndicator = ((TitlePageIndicator)findViewById(R.id.viewPagerIndicator));
@@ -127,6 +129,7 @@ public class HomeActivity extends SherlockFragmentActivity implements OnSharedPr
 				wantedFrag.refresh();
 				manageFrag.refresh();
 				preferencesChanged = false;
+		        new QualityListTask().execute();
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);

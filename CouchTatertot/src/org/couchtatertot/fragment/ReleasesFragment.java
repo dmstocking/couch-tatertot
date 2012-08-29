@@ -21,6 +21,7 @@ package org.couchtatertot.fragment;
 
 import java.util.List;
 
+import org.couchpotato.Quality;
 import org.couchpotato.Status;
 import org.couchpotato.json.ReleaseJson;
 import org.couchtatertot.R;
@@ -92,13 +93,13 @@ public class ReleasesFragment extends LoadingListFragment<Void, Void, List<Relea
 				TextView size = (TextView) row.findViewById(R.id.sizeTextView);
 				TextView quality = (TextView) row.findViewById(R.id.qualityTextView);
 				TextView status = (TextView) row.findViewById(R.id.statusTextView);
-				release.setText(item.getValueFromInfo("name"));
+				release.setText(item.info.name);
 				release.setSelected(true);
-				provider.setText(item.getValueFromInfo("provider"));
-				age.setText("Age: " + item.getValueFromInfo("age"));
-				score.setText("Score: " + item.getValueFromInfo("score"));
-				size.setText("Size: " + item.getValueFromInfo("size"));
-				quality.setText(item.getValueFromInfo("quality"));
+				provider.setText(item.info.provider);
+				age.setText("Age: " + item.info.age);
+				score.setText("Score: " + item.info.score);
+				size.setText("Size: " + item.info.size);
+				quality.setText(Quality.getQuality(item.qualityId));
 				status.setText(Status.getIdentifier(item.statusId));
 				return row;
 			}
@@ -183,7 +184,7 @@ public class ReleasesFragment extends LoadingListFragment<Void, Void, List<Relea
 						{
 							ReleaseJson listItem = (ReleaseJson) l.getItemAtPosition(l.getCheckedItemPosition());
 							Intent intent = new Intent(Intent.ACTION_VIEW);
-							intent.setData(Uri.parse(listItem.getValueFromInfo("detail_url")));
+							intent.setData(Uri.parse(listItem.info.detailUrl));
 							startActivity(intent);
 						}
 						return true;

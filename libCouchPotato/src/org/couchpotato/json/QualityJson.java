@@ -31,4 +31,5 @@ public class QualityJson {
 	public String identifier;
 	public int order;
 	public String label;
+	public int id;
 }

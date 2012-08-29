@@ -26,21 +26,11 @@ import com.google.gson.annotations.SerializedName;
 public class ReleaseJson {
 	// TODO figure out what this is
 //	public List<Object> files;
-	public List<ReleaseInfoJson> info;
+	public ReleaseInfoJson info;
 	@SerializedName("quality_id")
 	public int qualityId;
 	@SerializedName("status_id")
 	public int statusId;
 	public String identifier;
 	public int id;
-	
-	public String getValueFromInfo( String identifier )
-	{
-		for ( ReleaseInfoJson json : info ) {
-			if ( identifier.compareTo(json.identifier) == 0 ) {
-				return json.value;
-			}
-		}
-		return "";
-	}
 }
