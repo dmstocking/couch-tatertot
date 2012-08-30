@@ -1,3 +1,6 @@
+Version 1.2.1:
+- Fixed invalid double bug.
+
 Version 1.2:
 - Updated for new CouchPotato API format (requires newest version)
 - Better quality support

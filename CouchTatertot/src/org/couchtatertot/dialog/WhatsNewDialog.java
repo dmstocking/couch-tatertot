@@ -33,8 +33,7 @@ public class WhatsNewDialog extends SherlockDialogFragment {
 	DialogInterface.OnClickListener okListener = null;
 	
 	private static String whatsNew =
-			"- Updated for new CouchPotato API format (requires newest version)\n" +
-			"- Better quality support\n" +
+			"- Fixed invalid double bug.\n" +
 			"\n" +
 			"Please show your support by purchasing this app on Goole Play!";
 	
