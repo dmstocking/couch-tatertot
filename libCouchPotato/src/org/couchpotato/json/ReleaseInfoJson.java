@@ -26,13 +26,13 @@ import com.google.gson.annotations.SerializedName;
 public class ReleaseInfoJson {
 	public String description;
 	public String url;
-	public int age;
+	public String age;
 	public String name;
-	public int score;
+	public String score;
 	public String provider;
 	@SerializedName("detail_url")
 	public String detailUrl;
 	public String type;
-	public int id;
-	public int size;
+//	public int id;
+	public String size;
 }

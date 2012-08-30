@@ -33,7 +33,7 @@ public class WhatsNewDialog extends SherlockDialogFragment {
 	DialogInterface.OnClickListener okListener = null;
 	
 	private static String whatsNew =
-			"- Fixed invalid double bug.\n" +
+			"- Fixed more parsing bugs.\n" +
 			"\n" +
 			"Please show your support by purchasing this app on Goole Play!";
 	
