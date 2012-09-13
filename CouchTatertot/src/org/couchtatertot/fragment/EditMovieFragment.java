@@ -35,9 +35,16 @@ import org.couchtatertot.task.RefreshTask;
 import org.couchtatertot.widget.LoadingPosterView;
 import org.couchtatertot.widget.WorkingTextView;
 
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -126,9 +133,15 @@ public class EditMovieFragment extends LoadingFragment<Integer,Void,MovieJson> {
 							@Override
 							protected void onPostExecute(Void result) {
 								super.onPostExecute(result);
-								// there is no way to tell if this failed
-								editWorkingTextView.setIsWorking(false);
-								EditMovieFragment.this.refresh();
+								// there is no way to tell if this failed from couchpotato only if i got an exception from io or something like that
+								if ( error == null ) {
+									editWorkingTextView.setIsWorking(false);
+									editWorkingTextView.setIsSuccessful(true);
+									EditMovieFragment.this.refresh();
+								} else {
+									editWorkingTextView.setIsWorking(false);
+									editWorkingTextView.setIsSuccessful(false);
+								}
 							}
 						};
 						task.execute();
@@ -145,7 +158,13 @@ public class EditMovieFragment extends LoadingFragment<Integer,Void,MovieJson> {
 					@Override
 					protected void onPostExecute(Void result) {
 						super.onPostExecute(result);
-						refreshWorkingTextView.setIsWorking(false);
+						if ( error == null ) {
+							refreshWorkingTextView.setIsWorking(false);
+							refreshWorkingTextView.setIsSuccessful(true);
+						} else {
+							refreshWorkingTextView.setIsWorking(false);
+							refreshWorkingTextView.setIsSuccessful(false);
+						}
 					}
 				};
 				task.execute();
@@ -162,7 +181,16 @@ public class EditMovieFragment extends LoadingFragment<Integer,Void,MovieJson> {
 					@Override
 					protected void onPostExecute(Void result) {
 						super.onPostExecute(result);
-						deleteWorkingTextView.setIsWorking(false);
+						if ( error == null ) {
+							deleteWorkingTextView.setIsWorking(false);
+							deleteWorkingTextView.setIsSuccessful(true);
+							if ( EditMovieFragment.this != null && EditMovieFragment.this.getActivity() != null ) {
+								EditMovieFragment.this.getActivity().finish();
+							}
+						} else {
+							deleteWorkingTextView.setIsWorking(false);
+							deleteWorkingTextView.setIsSuccessful(false);
+						}
 					}
 				};
 				task.execute();
@@ -184,6 +212,57 @@ public class EditMovieFragment extends LoadingFragment<Integer,Void,MovieJson> {
 	}
 
 	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.edit_movie_menu, menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch ( item.getItemId() ) {
+		case R.id.imdbMenuItem:
+			if ( this.imdb != null ) {
+				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("imdb:///title/" + this.imdb));
+				Activity parent = this.getSherlockActivity();
+				if ( parent != null ) {
+					try {
+						startActivity(intent);
+					} catch (Exception e) {
+						try {
+							Intent market = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.imdb.mobile"));
+							startActivity(intent);
+						} catch (Exception e2) {
+							if ( getSherlockActivity() != null ) {
+								AlertDialog.Builder build = new AlertDialog.Builder(getSherlockActivity());
+								build.setMessage(R.string.imdb_view_error);
+								build.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialog, int which) {
+										dialog.cancel();
+									}
+								});
+								build.show();
+							}
+						}
+					}
+				}
+			} else {
+				AlertDialog.Builder build = new AlertDialog.Builder(getSherlockActivity());
+				build.setMessage(R.string.wait_error);
+				build.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+					}
+				});
+				build.show();
+			}
+			
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
 	protected String getEmptyText() {
 		return "Show was empty? If you see this file a bug report.";
 	}
@@ -200,7 +279,7 @@ public class EditMovieFragment extends LoadingFragment<Integer,Void,MovieJson> {
 
 	@Override
 	protected MovieJson doInBackground(Integer... arg0) throws Exception {
-		return Preferences.singleton.getCouchPotato().movieGet(arg0[0]);
+		return Preferences.getSingleton().getCouchPotato().movieGet(arg0[0]);
 	}
 
 	@Override
@@ -210,6 +289,9 @@ public class EditMovieFragment extends LoadingFragment<Integer,Void,MovieJson> {
 	@Override
 	protected void onPostExecute(MovieJson result) {
 		savedMovieJson = result;
+		if ( imdb == null ) {
+			imdb = result.library.info.imdb;
+		}
 		titles = result.library.info.titles;
 		origTitle = result.library.titles.get(0).title;
 		profileId = result.profileId;

@@ -43,7 +43,7 @@ public class MovieEditTask extends CouchTask<Void,Void,Void>
 	@Override
 	protected Void doInBackground(Void... params) {
 		try {
-			Preferences.singleton.getCouchPotato().movieEdit(profileId,id,defaultTitle);
+			Preferences.getSingleton().getCouchPotato().movieEdit(profileId,id,defaultTitle);
 		} catch (Exception e) {
 			this.error = e;
 		}

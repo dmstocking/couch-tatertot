@@ -1,46 +1,29 @@
 package org.couchpotato;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-// this classes ONLY job is to abstract interface for statuses from couchpotato
-// this was made to not use the internet every 5 seconds to get a list of statuses
+import org.couchpotato.json.StatusJson;
+
 public class Status {
 
-	static public List<String> identifiers;
-	static public List<String> labels;
+	private static Map<Integer,StatusJson> statuses = new HashMap<Integer,StatusJson>();
 	
-	static {
-		 identifiers = Arrays.asList(
-				"needs_update",
-				"ignored",
-				"done",
-				"snatched",
-				"downloaded",
-				"active",
-				"wanted",
-				"deleted",
-				"available"
-			);
-		 labels = Arrays.asList(
-				"Needs update",
-				"Ignored",
-				"Done",
-				"Snatched",
-				"Downloaded",
-				"Active",
-				"Wanted",
-				"Deleted",
-				"Available"
-			);
+	public static void populateStatuses( List<StatusJson> json )
+	{
+		if ( json != null && json.size() > 0 ) {
+			statuses.clear();
+			for ( StatusJson j : json ) {
+				statuses.put(j.id, j );
+			}
+		}
 	}
 	
-	/**
-	 * @return	Number of status enums. IDs start at 1!
-	 */
-	static public int size()
+	public static StatusJson getStatus(int id)
 	{
-		return 8;
+		return statuses.get(id);
 	}
 	
 	/**
@@ -49,7 +32,11 @@ public class Status {
 	 */
 	static public String getIdentifier(int id)
 	{
-		return identifiers.get(id-1);
+		if ( id <= statuses.size() ) {
+			return statuses.get(id).identifier;
+		} else {
+			return "Unknown";
+		}
 	}
 	
 	/**
@@ -58,6 +45,10 @@ public class Status {
 	 */
 	static public String getLabel(int id)
 	{
-		return identifiers.get(id-1);
+		if ( id <= statuses.size() ) {
+			return statuses.get(id).label;
+		} else {
+			return "Unknown";
+		}
 	}
 }

@@ -38,7 +38,7 @@ public class ReleaseDownloadTask extends CouchTask<Void,Void,Void>
 	@Override
 	protected Void doInBackground(Void... params) {
 		try {
-			Preferences.singleton.getCouchPotato().releaseDownload(id);
+			Preferences.getSingleton().getCouchPotato().releaseDownload(id);
 		} catch (Exception e) {
 			this.error = e;
 		}

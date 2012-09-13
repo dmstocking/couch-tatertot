@@ -24,6 +24,7 @@ import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
 public class StatusJson {
+	public int id;
 	public String identifier;
 	public String label;
 }

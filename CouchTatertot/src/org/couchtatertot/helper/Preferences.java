@@ -30,7 +30,7 @@ import android.util.Log;
 
 public class Preferences implements OnSharedPreferenceChangeListener {
 	
-	public static Preferences singleton;
+	private static Preferences singleton;
 	
 	public boolean isUpdated = false;
 	
@@ -41,7 +41,8 @@ public class Preferences implements OnSharedPreferenceChangeListener {
 	
 	public static void setUpSingleton( Context c )
 	{
-		if ( singleton == null ) {
+		if ( getSingleton() == null ) {
+			c = c.getApplicationContext();
 			SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(c);
 		    singleton = new Preferences( pref, c );
 		}
@@ -49,15 +50,21 @@ public class Preferences implements OnSharedPreferenceChangeListener {
 	
 	public static void newSingleton( Context c )
 	{
+		c = c.getApplicationContext();
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(c);
 	    singleton = new Preferences( pref, c );
 	}
 	
+	public static Preferences getSingleton() {
+		return singleton;
+	}
+
 	public Preferences( SharedPreferences pref, Context c )
 	{
 		this.pref = pref;
 		pref.registerOnSharedPreferenceChangeListener( this );
 		try {
+			c = c.getApplicationContext();
 			int versionCurrent = c.getPackageManager().getPackageInfo(c.getPackageName(), 0).versionCode;
 			int versionSave = pref.getInt("version", -1);
 			if ( versionCurrent != versionSave ) {

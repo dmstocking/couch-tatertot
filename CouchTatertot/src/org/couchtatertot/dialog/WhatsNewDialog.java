@@ -33,7 +33,14 @@ public class WhatsNewDialog extends SherlockDialogFragment {
 	DialogInterface.OnClickListener okListener = null;
 	
 	private static String whatsNew =
-			"- Fixed more parsing bugs.\n" +
+			"- Fixed startup and low memory bugs.\n" +
+			"- Fixed parsing releases.\n" +
+			"- Fixed Statuses causing crashing.\n" +
+			"- Added IMDB share button support.\n" +
+			"- Added sharing www.imdb.com title pages support.\n" +
+			"- Added View In IDMB App button.\n" +
+			"- Added simple notification viewer.\n" +
+			"- Minor fixes when editing show.\n" +
 			"\n" +
 			"Please show your support by purchasing this app on Goole Play!";
 	

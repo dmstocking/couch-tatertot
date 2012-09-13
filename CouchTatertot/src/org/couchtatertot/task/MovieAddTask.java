@@ -26,7 +26,12 @@ public class MovieAddTask extends CouchTask<Void,Void,Void>
 	
 	protected String imdbId;
 	protected Integer profileId = null;
-	protected String defaultTitle;
+	protected String defaultTitle = null;
+	
+	public MovieAddTask(String imdbId)
+	{
+		this.imdbId = imdbId;
+	}
 	
 	public MovieAddTask(String imdbId, String defaultTitle)
 	{
@@ -49,7 +54,7 @@ public class MovieAddTask extends CouchTask<Void,Void,Void>
 	@Override
 	protected Void doInBackground(Void... params) {
 		try {
-			Preferences.singleton.getCouchPotato().movieAdd(profileId,imdbId,defaultTitle);
+			Preferences.getSingleton().getCouchPotato().movieAdd(profileId,imdbId,defaultTitle);
 		} catch (Exception e) {
 			this.error = e;
 		}

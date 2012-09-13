@@ -23,6 +23,7 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
+// These are all string because I'm tired of changes crashing Gson
 public class ReleaseInfoJson {
 	public String description;
 	public String url;

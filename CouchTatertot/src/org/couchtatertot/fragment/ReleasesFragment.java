@@ -211,7 +211,7 @@ public class ReleasesFragment extends LoadingListFragment<Void, Void, List<Relea
 	
 	@Override
 	protected List<ReleaseJson> doInBackground(Void... arg0) throws Exception {
-		return Preferences.singleton.getCouchPotato().movieGet(id).releases;
+		return Preferences.getSingleton().getCouchPotato().movieGet(id).releases;
 	}
 	
 	@Override

@@ -36,26 +36,30 @@ public class PosterCache {
 	private static final String cacheLogName = "PosterCache";
 	private static final String cacheFolder = "posters";
 
-	public static PosterCache singleton;
+	private static PosterCache singleton;
 	
-	private Context c;
 	private File cacheDir;
 	private LruCache<String,Bitmap> memCache;
 
 	public static void setUpSingleton( Context c )
 	{
-		if ( singleton == null )
-			singleton = new PosterCache(c);
+		if ( getSingleton(c) == null )
+			singleton = new PosterCache(c.getApplicationContext());
 	}
-	
+
 	public static void newSingleton( Context c )
 	{
-		singleton = new PosterCache(c);
+		singleton = new PosterCache(c.getApplicationContext());
+	}
+	
+	public static PosterCache getSingleton( Context c ) {
+		if ( singleton == null )
+			singleton = new PosterCache(c.getApplicationContext());
+		return singleton;
 	}
 	
 	private PosterCache( Context c )
 	{
-		this.c = c;
 		this.cacheDir = new File(c.getExternalCacheDir(), cacheFolder);
 		this.cacheDir.mkdirs();
 		int memClass = ((ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE)).getMemoryClass();

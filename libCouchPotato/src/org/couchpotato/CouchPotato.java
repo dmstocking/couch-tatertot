@@ -184,8 +184,10 @@ public class CouchPotato {
 		}
 		builder.append("&identifier=");
 		builder.append(imdbId);
-		builder.append("&title=");
-		builder.append(title);
+		if ( title != null ) {
+			builder.append("&title=");
+			builder.append(title);
+		}
 		// all you get back is success and currently it doens't actually mean success
 		// if you give an id that doesn't exist it returns "success" : true
 		this.<Object>command("movie.add/", builder.toString(), Object.class);
@@ -288,9 +290,14 @@ public class CouchPotato {
 	 * 
 	 * @param limitOffset	Filter by limit with offset
 	 */
-	public void notificationList( String limitOffset ) throws MalformedURLException, IOException, SocketTimeoutException
+	public List<NotificationJson> notificationList( String limitOffset ) throws MalformedURLException, IOException, SocketTimeoutException
 	{
-		;
+		StringBuilder builder = new StringBuilder();
+		if ( limitOffset != null ) {
+			builder.append("&limit_offset=");
+			builder.append(limitOffset);
+		}
+		return this.<NotificationListJson>command("notification.list/", builder.toString(), NotificationListJson.class).notifications;
 	}
 	
 	public List<ProfileJson> profileList() throws MalformedURLException, IOException, SocketTimeoutException
@@ -333,6 +340,11 @@ public class CouchPotato {
 	public void renamerScan() throws MalformedURLException, IOException, SocketTimeoutException
 	{
 		;
+	}
+	
+	public List<StatusJson> statusList() throws MalformedURLException, IOException, SocketTimeoutException
+	{
+		return this.<StatusListJson>command("status.list/", null, StatusListJson.class).list;
 	}
 	
 	public void updaterCheck() throws MalformedURLException, IOException, SocketTimeoutException

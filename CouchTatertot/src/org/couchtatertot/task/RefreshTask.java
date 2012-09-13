@@ -39,7 +39,7 @@ public class RefreshTask extends CouchTask<Void,Void,Void>
 	@Override
 	protected Void doInBackground(Void... params) {
 		try {
-			Preferences.singleton.getCouchPotato().movieRefresh(id);
+			Preferences.getSingleton().getCouchPotato().movieRefresh(id);
 		} catch (Exception e) {
 			this.error = e;
 		}

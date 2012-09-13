@@ -1,3 +1,13 @@
+Version 1.3:
+- Fixed startup and low memory bugs.
+- Fixed parsing releases.
+- Fixed Statuses causing crashing.
+- Added IMDB share button support.
+- Added sharing www.imdb.com title pages support.
+- Added View In IDMB App button.
+- Added simple notification viewer.
+- Minor fixes when editing show.
+
 Version 1.2.2:
 - Fixed more parsing bugs.
 

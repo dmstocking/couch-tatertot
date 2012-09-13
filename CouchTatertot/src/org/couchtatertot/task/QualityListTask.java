@@ -23,7 +23,6 @@ import java.util.List;
 
 import org.couchpotato.Quality;
 import org.couchpotato.json.QualityJson;
-import org.couchpotato.json.QualityListJson;
 import org.couchtatertot.helper.Preferences;
 
 public class QualityListTask extends CouchTask<Void,Void,List<QualityJson>>
@@ -41,7 +40,7 @@ public class QualityListTask extends CouchTask<Void,Void,List<QualityJson>>
 	@Override
 	protected List<QualityJson> doInBackground(Void... params) {
 		try {
-			return Preferences.singleton.getCouchPotato().qualityList();
+			return Preferences.getSingleton().getCouchPotato().qualityList();
 		} catch (Exception e) {
 			this.error = e;
 		}

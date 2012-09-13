@@ -35,7 +35,7 @@ public class GetProfilesTask extends CouchTask<Void,Void,List<ProfileJson>>
 	@Override
 	protected List<ProfileJson> doInBackground(Void... params) {
 		try {
-			return Preferences.singleton.getCouchPotato().profileList();
+			return Preferences.getSingleton().getCouchPotato().profileList();
 		} catch (Exception e) {
 			this.error = e;
 		}

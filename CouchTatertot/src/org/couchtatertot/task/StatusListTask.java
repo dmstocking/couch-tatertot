@@ -19,29 +19,37 @@
  */
 package org.couchtatertot.task;
 
+import java.util.List;
+
+import org.couchpotato.json.StatusJson;
 import org.couchtatertot.helper.Preferences;
 
-public class ReleaseIgnoreTask extends CouchTask<Void,Void,Void>
+public class StatusListTask extends CouchTask<Void,Void,List<StatusJson>>
 {
-	protected int id;
 	
-	public ReleaseIgnoreTask(int id)
+	public StatusListTask()
 	{
-		this.id = id;
 	}
 
 	@Override
 	public String getTaskLogName() {
-		return "ReleaseIgnoreTask";
+		return "StatusListTask";
 	}
 
 	@Override
-	protected Void doInBackground(Void... params) {
+	protected List<StatusJson> doInBackground(Void... params) {
 		try {
-			Preferences.getSingleton().getCouchPotato().releaseIgnore(id);
+			return Preferences.getSingleton().getCouchPotato().statusList();
 		} catch (Exception e) {
 			this.error = e;
 		}
 		return null;
+	}
+
+	@Override
+	protected void onPostExecute(List<StatusJson> result) {
+		super.onPostExecute(result);
+		if ( result != null )
+			org.couchpotato.Status.populateStatuses(result);
 	}
 }

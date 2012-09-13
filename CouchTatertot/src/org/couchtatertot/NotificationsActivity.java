@@ -17,31 +17,18 @@
  * 	You should have received a copy of the GNU General Public License
  * 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.couchtatertot.task;
+package org.couchtatertot;
 
-import org.couchtatertot.helper.Preferences;
+import org.couchtatertot.app.CouchActivity;
 
-public class ReleaseIgnoreTask extends CouchTask<Void,Void,Void>
-{
-	protected int id;
+import android.os.Bundle;
+
+public class NotificationsActivity extends CouchActivity {
 	
-	public ReleaseIgnoreTask(int id)
-	{
-		this.id = id;
-	}
-
-	@Override
-	public String getTaskLogName() {
-		return "ReleaseIgnoreTask";
-	}
-
-	@Override
-	protected Void doInBackground(Void... params) {
-		try {
-			Preferences.getSingleton().getCouchPotato().releaseIgnore(id);
-		} catch (Exception e) {
-			this.error = e;
-		}
-		return null;
-	}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.notifications_activity);
+    }
+    
 }

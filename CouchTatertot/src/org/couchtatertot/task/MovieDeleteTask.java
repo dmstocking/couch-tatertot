@@ -44,7 +44,7 @@ public class MovieDeleteTask extends CouchTask<Void,Void,Void>
 	@Override
 	protected Void doInBackground(Void... params) {
 		try {
-			Preferences.singleton.getCouchPotato().movieDelete(ids, page);
+			Preferences.getSingleton().getCouchPotato().movieDelete(ids, page);
 		} catch (Exception e) {
 			this.error = e;
 		}

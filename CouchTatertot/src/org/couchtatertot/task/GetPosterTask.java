@@ -24,6 +24,7 @@ import java.net.URL;
 import org.couchtatertot.helper.PosterCache;
 import org.couchtatertot.helper.Preferences;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -34,7 +35,9 @@ public class GetPosterTask extends CouchTask<Void,Void,Bitmap>
 	protected int width;
 	protected int height;
 	
-	public GetPosterTask(String filename, int width, int height)
+	private Context c;
+	
+	public GetPosterTask(String filename, int width, int height, Context c)
 	{
 		this.filename = filename;
 		this.width = width;
@@ -49,16 +52,17 @@ public class GetPosterTask extends CouchTask<Void,Void,Bitmap>
 	@Override
 	protected Bitmap doInBackground(Void... params) {
 		try {
+			PosterCache cache = PosterCache.getSingleton(c);
 			Bitmap ret = null;
-			if ( PosterCache.singleton.in(filename) ) {
-				ret = PosterCache.singleton.getFromMemory(filename);
+			if ( cache.in(filename) ) {
+				ret = cache.getFromMemory(filename);
 				if ( ret == null ) {
-					ret = PosterCache.singleton.getFromDisk(filename);
+					ret = cache.getFromDisk(filename);
 				}
 			} else {
-				URL url = Preferences.singleton.getCouchPotato().fileCache(filename);
+				URL url = Preferences.getSingleton().getCouchPotato().fileCache(filename);
 				ret = BitmapFactory.decodeStream(url.openStream());
-				PosterCache.singleton.put(filename, ret);
+				PosterCache.getSingleton(c).put(filename, ret);
 			}
 			// I have removed this ONLY because 
 			// 1) the bitmaps are small

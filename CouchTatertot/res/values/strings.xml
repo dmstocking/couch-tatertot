@@ -32,6 +32,8 @@
 	<string name="log_item_title">Log</string>
 	<string name="about_item_title">About CouchTatertot</string>
 	<string name="edit_movie_title">Edit Movie</string>
+	<string name="notification_item_title">Notifications</string>
+	<string name="imdb_item_title">View In IMDB App</string>
     
 	<!-- CAD Menu Item Values -->
 	<string name="edit_item_title">Edit</string>
@@ -43,5 +45,9 @@
 	<string name="details_item_title">Details</string>
 	
 	<string name="set_status_item_title">Set Status</string>
+	
+	<!-- Error messages -->
+	<string name="imdb_view_error">You do not have the IMDB app installed, nor the Google Play market place to download it. Sorry.</string>
+	<string name="wait_error">Please wait. Try again after it is done loading.</string>
 	
 </resources>

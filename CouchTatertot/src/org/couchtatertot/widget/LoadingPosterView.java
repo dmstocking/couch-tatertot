@@ -48,7 +48,7 @@ public class LoadingPosterView extends ImageView {
 		}
 		// Clear current image
 		this.setImageBitmap(null);
-		task = new GetPosterTask(filename,this.getWidth(),this.getHeight()){
+		task = new GetPosterTask(filename,this.getWidth(),this.getHeight(),getContext()){
 			@Override
 			protected void onPostExecute(Bitmap result) {
 				super.onPostExecute(result);

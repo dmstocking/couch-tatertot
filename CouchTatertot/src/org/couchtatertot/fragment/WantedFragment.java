@@ -93,6 +93,7 @@ public class WantedFragment extends LoadingListFragment<Void, Void, List<MovieJs
 		MovieJson item = movieAdapter.getItem(position);
 		intent.putExtra("id", item.id);
 		intent.putExtra("page", PageEnum.WANTED.name());
+		intent.putExtra("imdb", item.library.info.imdb);
 		startActivity(intent);
 	}
 
@@ -108,7 +109,7 @@ public class WantedFragment extends LoadingListFragment<Void, Void, List<MovieJs
 	
 	@Override
 	protected List<MovieJson> doInBackground(Void... arg0) throws Exception {
-		return Preferences.singleton.getCouchPotato().movieList(null, -1, -1, null, null);
+		return Preferences.getSingleton().getCouchPotato().movieList(null, -1, -1, null, null);
 	}
 	
 	@Override

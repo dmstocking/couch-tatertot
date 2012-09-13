@@ -1,5 +1,5 @@
 /*
- * 	CouchTatertot is a android app for managing couchpotato
+ * 	libCouchPotato is a java library for communication with couchpotato
  * 	Copyright (C) 2012  David Stocking dmstocking@gmail.com
  * 
  * 	http://code.google.com/p/couch-tatertot/
@@ -17,31 +17,13 @@
  * 	You should have received a copy of the GNU General Public License
  * 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.couchtatertot.task;
+package org.couchpotato.json;
 
-import org.couchtatertot.helper.Preferences;
+import java.util.List;
 
-public class ReleaseIgnoreTask extends CouchTask<Void,Void,Void>
-{
-	protected int id;
-	
-	public ReleaseIgnoreTask(int id)
-	{
-		this.id = id;
-	}
+import com.google.gson.annotations.SerializedName;
 
-	@Override
-	public String getTaskLogName() {
-		return "ReleaseIgnoreTask";
-	}
-
-	@Override
-	protected Void doInBackground(Void... params) {
-		try {
-			Preferences.getSingleton().getCouchPotato().releaseIgnore(id);
-		} catch (Exception e) {
-			this.error = e;
-		}
-		return null;
-	}
+public class StatusListJson {
+	public List<StatusJson> list;
+	public boolean success;
 }

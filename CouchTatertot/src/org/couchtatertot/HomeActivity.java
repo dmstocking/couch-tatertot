@@ -25,6 +25,7 @@ import org.couchtatertot.fragment.WantedFragment;
 import org.couchtatertot.helper.PosterCache;
 import org.couchtatertot.helper.Preferences;
 import org.couchtatertot.task.QualityListTask;
+import org.couchtatertot.task.StatusListTask;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -59,12 +60,13 @@ public class HomeActivity extends SherlockFragmentActivity implements OnSharedPr
         super.onCreate(savedInstanceState);
         PosterCache.setUpSingleton(this);
         Preferences.setUpSingleton(this);
-        Preferences.singleton.registerSharedPreferencesChangedListener(this);
+        Preferences.getSingleton().registerSharedPreferencesChangedListener(this);
         setContentView(R.layout.main_activity);
         
         wantedFrag = new WantedFragment();
         manageFrag = new ManageFragment();
         new QualityListTask().execute();
+        new StatusListTask().execute();
         
         viewpager = ((ViewPager)findViewById(R.id.viewpager));
         pageIndicator = ((TitlePageIndicator)findViewById(R.id.viewPagerIndicator));
@@ -72,7 +74,7 @@ public class HomeActivity extends SherlockFragmentActivity implements OnSharedPr
         viewpager.setAdapter( pageAdapter );
         pageIndicator.setViewPager( viewpager );
         
-        if ( Preferences.singleton.isUpdated ) {
+        if ( Preferences.getSingleton().isUpdated ) {
         	// make sure the dialog box isnt already up
         	Fragment f = getSupportFragmentManager().findFragmentByTag("whatsnew");
         	if ( f == null ) {
@@ -81,7 +83,7 @@ public class HomeActivity extends SherlockFragmentActivity implements OnSharedPr
 		        diag.setOnOkClick( new DialogInterface.OnClickListener(){
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						Preferences.singleton.isUpdated = false;
+						Preferences.getSingleton().isUpdated = false;
 					}
 				});
 		        diag.show(getSupportFragmentManager(), "whatsnew");
@@ -102,8 +104,14 @@ public class HomeActivity extends SherlockFragmentActivity implements OnSharedPr
 		{
 //		case R.id.logMenuItem:
 //			return true;
+		case R.id.notificationMenuItem:
+			{
+				Intent intent = new Intent(this,NotificationsActivity.class);
+				startActivityForResult(intent, PREFERENCES_ACTIVITY_REQUEST_CODE);
+				return true;
+			}
 		case R.id.cacheMenuItem:
-			PosterCache.singleton.clear();
+			PosterCache.getSingleton(this).clear();
 			return true;
 		case R.id.settingsMenuItem:
 			{
@@ -130,6 +138,7 @@ public class HomeActivity extends SherlockFragmentActivity implements OnSharedPr
 				manageFrag.refresh();
 				preferencesChanged = false;
 		        new QualityListTask().execute();
+		        new StatusListTask().execute();
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
