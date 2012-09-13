@@ -75,19 +75,7 @@ public class HomeActivity extends SherlockFragmentActivity implements OnSharedPr
         pageIndicator.setViewPager( viewpager );
         
         if ( Preferences.getSingleton().isUpdated ) {
-        	// make sure the dialog box isnt already up
-        	Fragment f = getSupportFragmentManager().findFragmentByTag("whatsnew");
-        	if ( f == null ) {
-        		// since it isnt lets make it
-		        WhatsNewDialog diag = new WhatsNewDialog();
-		        diag.setOnOkClick( new DialogInterface.OnClickListener(){
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						Preferences.getSingleton().isUpdated = false;
-					}
-				});
-		        diag.show(getSupportFragmentManager(), "whatsnew");
-        	}
+        	showWhatsNewDiag();
         }
     }
     
@@ -119,6 +107,11 @@ public class HomeActivity extends SherlockFragmentActivity implements OnSharedPr
 				startActivityForResult(intent, PREFERENCES_ACTIVITY_REQUEST_CODE);
 				return true;
 			}
+		case R.id.whatsNewMenuItem:
+			{
+	        	showWhatsNewDiag();
+	        	return true;
+			}
 		case R.id.aboutMenuItem:
 			{
 				Intent intent = new Intent(this,AboutActivity.class);
@@ -127,6 +120,22 @@ public class HomeActivity extends SherlockFragmentActivity implements OnSharedPr
 			}
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void showWhatsNewDiag() {
+		// make sure the dialog box isnt already up
+		Fragment f = getSupportFragmentManager().findFragmentByTag("whatsnew");
+		if ( f == null ) {
+			// since it isnt lets make it
+		    WhatsNewDialog diag = new WhatsNewDialog();
+		    diag.setOnOkClick( new DialogInterface.OnClickListener(){
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Preferences.getSingleton().isUpdated = false;
+				}
+			});
+		    diag.show(getSupportFragmentManager(), "whatsnew");
+		}
 	}
 	
 	@Override
