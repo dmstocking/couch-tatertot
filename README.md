@@ -11,8 +11,10 @@ Features:
 * View, Edit, Refresh, and Delete movies
 * View, Ignore, and Download releases
 * Search and Add movies
-* View Shows, Seasons, and Episodes
 * HTTPS Support
+* IMDB share support
+* imdb.com share support
+* View in IMDB Android App
 
 Example Screenshot:
 
