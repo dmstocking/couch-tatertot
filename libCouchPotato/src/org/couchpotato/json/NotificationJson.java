@@ -27,7 +27,8 @@ public class NotificationJson {
 	public int id;
 	// date added in python long form
 	// I'm pretty sure this is system specific so its worthless to me
-//	public int added;
+	// BUT ill use it to sort i guess
+	public int added;
 	public boolean read;
 	public Object data;
 	public String message;

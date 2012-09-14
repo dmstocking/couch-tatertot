@@ -25,6 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.couchtatertot.R;
+import org.couchtatertot.helper.Preferences;
 import org.couchtatertot.task.MovieAddTask;
 
 import android.app.Activity;
@@ -81,11 +82,12 @@ public class OnShareViaFragment extends SherlockFragment {
 		error = (TextView) view.findViewById(R.id.errorTextView);
 		
         for ( Pattern p : imdbPatterns ) {
-        	Matcher m = p.matcher(extras.toString());
+        	Matcher m = p.matcher(extras);
 	        if ( m.find() ) {
 	        	// we need to do stuff
 	        	imdb = m.group(3);
-	        	MovieAddTask task = new MovieAddTask(imdb){
+				Preferences pref = Preferences.getSingleton(view.getContext());
+	        	MovieAddTask task = new MovieAddTask(pref, imdb){
 					@Override
 					protected void onPostExecute(Void result) {
 						super.onPostExecute(result);
@@ -109,6 +111,7 @@ public class OnShareViaFragment extends SherlockFragment {
         }
         if ( imdb == null ) {
         	working.setVisibility(View.GONE);
+        	error.setText("Not a valid IMDB link.\nGiven Information: " + extras);
         	error.setVisibility(View.VISIBLE);
         }
 	}

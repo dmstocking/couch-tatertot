@@ -19,6 +19,8 @@
  */
 package org.couchtatertot.widget;
 
+import org.couchtatertot.helper.PosterCache;
+import org.couchtatertot.helper.Preferences;
 import org.couchtatertot.task.GetPosterTask;
 
 import android.content.Context;
@@ -48,7 +50,9 @@ public class LoadingPosterView extends ImageView {
 		}
 		// Clear current image
 		this.setImageBitmap(null);
-		task = new GetPosterTask(filename,this.getWidth(),this.getHeight(),getContext()){
+		Preferences pref = Preferences.getSingleton(this.getContext());
+		PosterCache cache = PosterCache.getSingleton(this.getContext());
+		task = new GetPosterTask(pref, cache, filename,this.getWidth(),this.getHeight()){
 			@Override
 			protected void onPostExecute(Bitmap result) {
 				super.onPostExecute(result);

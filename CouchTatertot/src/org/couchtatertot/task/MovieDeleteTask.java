@@ -27,11 +27,13 @@ import org.couchtatertot.helper.Preferences;
 public class MovieDeleteTask extends CouchTask<Void,Void,Void>
 {
 	
+	protected Preferences pref;
 	protected List<Integer> ids;
 	protected PageEnum page;
 	
-	public MovieDeleteTask(List<Integer> ids, PageEnum page)
+	public MovieDeleteTask(Preferences pref, List<Integer> ids, PageEnum page)
 	{
+		this.pref = pref;
 		this.ids = ids;
 		this.page = page;
 	}
@@ -44,7 +46,7 @@ public class MovieDeleteTask extends CouchTask<Void,Void,Void>
 	@Override
 	protected Void doInBackground(Void... params) {
 		try {
-			Preferences.getSingleton().getCouchPotato().movieDelete(ids, page);
+			pref.getCouchPotato().movieDelete(ids, page);
 		} catch (Exception e) {
 			this.error = e;
 		}

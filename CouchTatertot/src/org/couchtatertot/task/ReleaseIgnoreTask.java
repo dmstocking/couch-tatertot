@@ -23,10 +23,13 @@ import org.couchtatertot.helper.Preferences;
 
 public class ReleaseIgnoreTask extends CouchTask<Void,Void,Void>
 {
+	
+	protected Preferences pref;
 	protected int id;
 	
-	public ReleaseIgnoreTask(int id)
+	public ReleaseIgnoreTask(Preferences pref, int id)
 	{
+		this.pref = pref;
 		this.id = id;
 	}
 
@@ -38,7 +41,7 @@ public class ReleaseIgnoreTask extends CouchTask<Void,Void,Void>
 	@Override
 	protected Void doInBackground(Void... params) {
 		try {
-			Preferences.getSingleton().getCouchPotato().releaseIgnore(id);
+			pref.getCouchPotato().releaseIgnore(id);
 		} catch (Exception e) {
 			this.error = e;
 		}

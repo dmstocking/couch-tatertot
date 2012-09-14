@@ -1,3 +1,9 @@
+Version 1.3.1:
+- Fixed more startup errors.
+- Fixed bug where you couldn't share unless CouchTatertot is open.
+- Fixed market place detection.
+- Added sorting by Ascending/Descending to notifications. (Saved!)
+
 Version 1.3:
 - Fixed startup and low memory bugs.
 - Fixed parsing releases.

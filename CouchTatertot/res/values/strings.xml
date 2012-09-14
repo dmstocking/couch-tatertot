@@ -34,6 +34,8 @@
 	<string name="about_item_title">About CouchTatertot</string>
 	<string name="edit_movie_title">Edit Movie</string>
 	<string name="notification_item_title">Notifications</string>
+	<string name="ascending_item_title">Sort Ascending</string>
+	<string name="descending_item_title">Sort Descending</string>
 	<string name="imdb_item_title">View In IMDB App</string>
     
 	<!-- CAD Menu Item Values -->

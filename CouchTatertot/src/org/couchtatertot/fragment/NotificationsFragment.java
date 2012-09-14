@@ -19,13 +19,19 @@
  */
 package org.couchtatertot.fragment;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.couchpotato.json.NotificationJson;
 import org.couchtatertot.R;
 import org.couchtatertot.app.LoadingListFragment;
 import org.couchtatertot.helper.Preferences;
+import org.couchtatertot.helper.SortEnum;
 import org.couchtatertot.widget.SafeArrayAdapter;
+
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +39,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class NotificationsFragment extends LoadingListFragment<Void, Void, List<NotificationJson>> {
+	
+	private static Comparator<NotificationJson> ascending = new Comparator<NotificationJson>(){
+		@Override
+		public int compare(NotificationJson arg0, NotificationJson arg1) {
+			return ((Integer)arg0.added).compareTo(arg1.added);
+		}
+	};
+	
+	private static Comparator<NotificationJson> descending = new Comparator<NotificationJson>(){
+		@Override
+		public int compare(NotificationJson arg0, NotificationJson arg1) {
+			return ((Integer)arg1.added).compareTo(arg0.added);
+		}
+	};
+	
+	protected Comparator<NotificationJson> sorter;
 	
 	private SafeArrayAdapter<NotificationJson> notificationsAdapter;
 	
@@ -62,6 +84,31 @@ public class NotificationsFragment extends LoadingListFragment<Void, Void, List<
 	}
 
 	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.notification_menu, menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch ( item.getItemId() ) {
+		case R.id.ascendingMenuItem:
+			sorter = ascending;
+			notificationsAdapter.sort(sorter);
+			Preferences pref = Preferences.getSingleton(getSherlockActivity());
+			pref.setNotificationSort(SortEnum.DESCENDING);
+			return true;
+		case R.id.descendingMenuItem:
+			sorter = descending;
+			notificationsAdapter.sort(sorter);
+			pref = Preferences.getSingleton(getSherlockActivity());
+			pref.setNotificationSort(SortEnum.DESCENDING);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
 	protected String getEmptyText() {
 		return "No Notifications";
 	}
@@ -73,7 +120,7 @@ public class NotificationsFragment extends LoadingListFragment<Void, Void, List<
 
 	@Override
 	protected List<NotificationJson> doInBackground(Void... arg0) throws Exception {
-		return Preferences.getSingleton().getCouchPotato().notificationList(null);
+		return Preferences.getSingleton(getSherlockActivity()).getCouchPotato().notificationList(null);
 	}
 
 	@Override
@@ -90,6 +137,13 @@ public class NotificationsFragment extends LoadingListFragment<Void, Void, List<
 				notificationsAdapter.add(n);
 			}
 			// make a sorter that sorts by year
+			Preferences pref = Preferences.getSingleton(getSherlockActivity());
+			if ( pref.getNotificationSort() == SortEnum.ASCENDING ) {
+				sorter = ascending;
+			} else {
+				sorter = descending;
+			}
+			notificationsAdapter.sort(sorter);
 			notificationsAdapter.notifyDataSetChanged();
 			if ( notificationsAdapter.getCount() == 0 ) {
 				this.setListStatus(ListStatus.EMPTY);

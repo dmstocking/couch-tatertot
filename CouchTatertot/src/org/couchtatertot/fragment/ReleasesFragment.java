@@ -148,7 +148,8 @@ public class ReleasesFragment extends LoadingListFragment<Void, Void, List<Relea
 							dialog.setCancelable(true);
 							dialog.show();
 							ReleaseJson listItem = (ReleaseJson) l.getItemAtPosition(l.getCheckedItemPosition());
-							ReleaseDownloadTask task = new ReleaseDownloadTask(listItem.id){
+							Preferences pref = Preferences.getSingleton(getSherlockActivity());
+							ReleaseDownloadTask task = new ReleaseDownloadTask(pref, listItem.id){
 								@Override
 								protected void onPostExecute(Void result) {
 									if ( dialog != null && dialog.isShowing() )
@@ -167,7 +168,8 @@ public class ReleasesFragment extends LoadingListFragment<Void, Void, List<Relea
 							dialog.setCancelable(true);
 							dialog.show();
 							ReleaseJson listItem = (ReleaseJson) l.getItemAtPosition(l.getCheckedItemPosition());
-							ReleaseIgnoreTask task = new ReleaseIgnoreTask(listItem.id){
+							Preferences pref = Preferences.getSingleton(getSherlockActivity());
+							ReleaseIgnoreTask task = new ReleaseIgnoreTask(pref, listItem.id){
 								@Override
 								protected void onPostExecute(Void result) {
 									if ( dialog != null && dialog.isShowing() )
@@ -211,7 +213,7 @@ public class ReleasesFragment extends LoadingListFragment<Void, Void, List<Relea
 	
 	@Override
 	protected List<ReleaseJson> doInBackground(Void... arg0) throws Exception {
-		return Preferences.getSingleton().getCouchPotato().movieGet(id).releases;
+		return Preferences.getSingleton(getSherlockActivity()).getCouchPotato().movieGet(id).releases;
 	}
 	
 	@Override

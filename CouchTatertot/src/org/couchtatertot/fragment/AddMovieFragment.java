@@ -22,6 +22,7 @@ package org.couchtatertot.fragment;
 import org.couchtatertot.HomeActivity;
 import org.couchtatertot.R;
 import org.couchtatertot.dialog.EditDialog;
+import org.couchtatertot.helper.Preferences;
 import org.couchtatertot.task.GetExternalPosterTask;
 import org.couchtatertot.task.MovieAddTask;
 import org.couchtatertot.widget.WorkingTextView;
@@ -137,7 +138,8 @@ public class AddMovieFragment extends SherlockFragment {
 			public void onClick(View v) {
 				final ProgressDialog prog = ProgressDialog.show(getSherlockActivity(), "Adding Movie", "Please wait. Adding movie ...");
 				prog.setCancelable(true);
-				MovieAddTask task = new MovieAddTask(imdb, selectedProfileId, selectedTitle){
+				Preferences pref = Preferences.getSingleton(v.getContext());
+				MovieAddTask task = new MovieAddTask(pref, imdb, selectedProfileId, selectedTitle){
 					@Override
 					protected void onPostExecute(Void result) {
 						super.onPostExecute(result);

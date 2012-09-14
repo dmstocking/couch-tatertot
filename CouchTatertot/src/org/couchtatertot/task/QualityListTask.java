@@ -28,8 +28,11 @@ import org.couchtatertot.helper.Preferences;
 public class QualityListTask extends CouchTask<Void,Void,List<QualityJson>>
 {
 	
-	public QualityListTask()
+	protected Preferences pref;
+	
+	public QualityListTask(Preferences pref)
 	{
+		this.pref = pref;
 	}
 
 	@Override
@@ -40,7 +43,7 @@ public class QualityListTask extends CouchTask<Void,Void,List<QualityJson>>
 	@Override
 	protected List<QualityJson> doInBackground(Void... params) {
 		try {
-			return Preferences.getSingleton().getCouchPotato().qualityList();
+			return pref.getCouchPotato().qualityList();
 		} catch (Exception e) {
 			this.error = e;
 		}

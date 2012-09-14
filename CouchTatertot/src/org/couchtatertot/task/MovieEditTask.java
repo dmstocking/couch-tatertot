@@ -24,12 +24,14 @@ import org.couchtatertot.helper.Preferences;
 public class MovieEditTask extends CouchTask<Void,Void,Void>
 {
 	
+	protected Preferences pref;
 	protected int id;
 	protected int profileId;
 	protected String defaultTitle;
 	
-	public MovieEditTask(int id, int profileId, String defaultTitle)
+	public MovieEditTask(Preferences pref, int id, int profileId, String defaultTitle)
 	{
+		this.pref = pref;
 		this.id = id;
 		this.profileId = profileId;
 		this.defaultTitle = defaultTitle;
@@ -43,7 +45,7 @@ public class MovieEditTask extends CouchTask<Void,Void,Void>
 	@Override
 	protected Void doInBackground(Void... params) {
 		try {
-			Preferences.getSingleton().getCouchPotato().movieEdit(profileId,id,defaultTitle);
+			pref.getCouchPotato().movieEdit(profileId,id,defaultTitle);
 		} catch (Exception e) {
 			this.error = e;
 		}

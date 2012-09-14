@@ -41,12 +41,6 @@ public class PosterCache {
 	private File cacheDir;
 	private LruCache<String,Bitmap> memCache;
 
-	public static void setUpSingleton( Context c )
-	{
-		if ( getSingleton(c) == null )
-			singleton = new PosterCache(c.getApplicationContext());
-	}
-
 	public static void newSingleton( Context c )
 	{
 		singleton = new PosterCache(c.getApplicationContext());
@@ -54,7 +48,7 @@ public class PosterCache {
 	
 	public static PosterCache getSingleton( Context c ) {
 		if ( singleton == null )
-			singleton = new PosterCache(c.getApplicationContext());
+			newSingleton( c );
 		return singleton;
 	}
 	

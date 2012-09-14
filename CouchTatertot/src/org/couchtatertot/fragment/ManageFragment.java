@@ -126,7 +126,7 @@ public class ManageFragment extends EndlessLoadingListFragment<Params, Void, Lis
 	
 	@Override
 	protected List<MovieJson> doInBackground(Params... arg0) throws Exception {
-		return Preferences.getSingleton().getCouchPotato().movieList("done", arg0[0].step, arg0[0].current, null, null);
+		return Preferences.getSingleton(getSherlockActivity()).getCouchPotato().movieList("done", arg0[0].step, arg0[0].current, null, null);
 	}
 	
 	@Override

@@ -24,23 +24,24 @@ import org.couchtatertot.helper.Preferences;
 public class MovieAddTask extends CouchTask<Void,Void,Void>
 {
 	
+	protected Preferences pref;
 	protected String imdbId;
 	protected Integer profileId = null;
 	protected String defaultTitle = null;
 	
-	public MovieAddTask(String imdbId)
+	public MovieAddTask(Preferences pref, String imdbId)
 	{
-		this.imdbId = imdbId;
+		this( pref, imdbId, null, null );
 	}
 	
-	public MovieAddTask(String imdbId, String defaultTitle)
+	public MovieAddTask(Preferences pref, String imdbId, String defaultTitle)
 	{
-		this.imdbId = imdbId;
-		this.defaultTitle = defaultTitle;
+		this( pref, imdbId, null, defaultTitle );
 	}
 	
-	public MovieAddTask(String imdbId, Integer profileId, String defaultTitle)
+	public MovieAddTask(Preferences pref, String imdbId, Integer profileId, String defaultTitle)
 	{
+		this.pref = pref;
 		this.imdbId = imdbId;
 		this.profileId = profileId;
 		this.defaultTitle = defaultTitle;
@@ -54,7 +55,7 @@ public class MovieAddTask extends CouchTask<Void,Void,Void>
 	@Override
 	protected Void doInBackground(Void... params) {
 		try {
-			Preferences.getSingleton().getCouchPotato().movieAdd(profileId,imdbId,defaultTitle);
+			pref.getCouchPotato().movieAdd(profileId,imdbId,defaultTitle);
 		} catch (Exception e) {
 			this.error = e;
 		}

@@ -39,15 +39,6 @@ public class Preferences implements OnSharedPreferenceChangeListener {
 	
 	private OnSharedPreferenceChangeListener listener;
 	
-	public static void setUpSingleton( Context c )
-	{
-		if ( getSingleton() == null ) {
-			c = c.getApplicationContext();
-			SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(c);
-		    singleton = new Preferences( pref, c );
-		}
-	}
-	
 	public static void newSingleton( Context c )
 	{
 		c = c.getApplicationContext();
@@ -55,7 +46,9 @@ public class Preferences implements OnSharedPreferenceChangeListener {
 	    singleton = new Preferences( pref, c );
 	}
 	
-	public static Preferences getSingleton() {
+	public static Preferences getSingleton( Context c ) {
+		if ( singleton == null )
+			newSingleton( c );
 		return singleton;
 	}
 
@@ -113,6 +106,23 @@ public class Preferences implements OnSharedPreferenceChangeListener {
 	public String getPassword()
 	{
 		return pref.getString("password", "");
+	}
+	
+	public SortEnum getNotificationSort()
+	{
+		try {
+			return SortEnum.valueOf(pref.getString("notification_sort", "DESCENDING"));
+		} catch (Exception e) {
+			setNotificationSort( SortEnum.DESCENDING );
+			return SortEnum.DESCENDING;
+		}
+	}
+	
+	public void setNotificationSort( SortEnum sort )
+	{
+		SharedPreferences.Editor edit = pref.edit();
+		edit.putString("notification_sort", sort.toString());
+		edit.commit();
 	}
 	
 	public CouchPotato getCouchPotato()

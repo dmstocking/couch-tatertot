@@ -188,7 +188,7 @@ public class SearchFragment extends LoadingListFragment<SearchParams, Void, Sear
 
 	@Override
 	protected SearchResultsJson doInBackground(SearchParams... arg0) throws Exception {
-		return Preferences.getSingleton().getCouchPotato().movieSearch(arg0[0].query);
+		return Preferences.getSingleton(getSherlockActivity()).getCouchPotato().movieSearch(arg0[0].query);
 	}
 
 	@Override

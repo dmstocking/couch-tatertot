@@ -58,15 +58,14 @@ public class HomeActivity extends SherlockFragmentActivity implements OnSharedPr
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PosterCache.setUpSingleton(this);
-        Preferences.setUpSingleton(this);
-        Preferences.getSingleton().registerSharedPreferencesChangedListener(this);
+        Preferences.getSingleton(this).registerSharedPreferencesChangedListener(this);
+        PosterCache.getSingleton(this);
         setContentView(R.layout.main_activity);
         
         wantedFrag = new WantedFragment();
         manageFrag = new ManageFragment();
-        new QualityListTask().execute();
-        new StatusListTask().execute();
+        new QualityListTask(Preferences.getSingleton(this)).execute();
+        new StatusListTask(Preferences.getSingleton(this)).execute();
         
         viewpager = ((ViewPager)findViewById(R.id.viewpager));
         pageIndicator = ((TitlePageIndicator)findViewById(R.id.viewPagerIndicator));
@@ -74,7 +73,7 @@ public class HomeActivity extends SherlockFragmentActivity implements OnSharedPr
         viewpager.setAdapter( pageAdapter );
         pageIndicator.setViewPager( viewpager );
         
-        if ( Preferences.getSingleton().isUpdated ) {
+        if ( Preferences.getSingleton(this).isUpdated ) {
         	showWhatsNewDiag();
         }
     }
@@ -131,7 +130,7 @@ public class HomeActivity extends SherlockFragmentActivity implements OnSharedPr
 		    diag.setOnOkClick( new DialogInterface.OnClickListener(){
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					Preferences.getSingleton().isUpdated = false;
+					Preferences.getSingleton(HomeActivity.this).isUpdated = false;
 				}
 			});
 		    diag.show(getSupportFragmentManager(), "whatsnew");
@@ -146,8 +145,8 @@ public class HomeActivity extends SherlockFragmentActivity implements OnSharedPr
 				wantedFrag.refresh();
 				manageFrag.refresh();
 				preferencesChanged = false;
-		        new QualityListTask().execute();
-		        new StatusListTask().execute();
+		        new QualityListTask(Preferences.getSingleton(this)).execute();
+		        new StatusListTask(Preferences.getSingleton(this)).execute();
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);

@@ -27,8 +27,11 @@ import org.couchtatertot.helper.Preferences;
 public class StatusListTask extends CouchTask<Void,Void,List<StatusJson>>
 {
 	
-	public StatusListTask()
+	protected Preferences pref;
+	
+	public StatusListTask(Preferences pref)
 	{
+		this.pref = pref;
 	}
 
 	@Override
@@ -39,7 +42,7 @@ public class StatusListTask extends CouchTask<Void,Void,List<StatusJson>>
 	@Override
 	protected List<StatusJson> doInBackground(Void... params) {
 		try {
-			return Preferences.getSingleton().getCouchPotato().statusList();
+			return pref.getCouchPotato().statusList();
 		} catch (Exception e) {
 			this.error = e;
 		}

@@ -23,10 +23,13 @@ import org.couchtatertot.helper.Preferences;
 
 public class ReleaseDownloadTask extends CouchTask<Void,Void,Void>
 {
+	
+	protected Preferences pref;
 	protected int id;
 	
-	public ReleaseDownloadTask(int id)
+	public ReleaseDownloadTask(Preferences pref, int id)
 	{
+		this.pref = pref;
 		this.id = id;
 	}
 
@@ -38,7 +41,7 @@ public class ReleaseDownloadTask extends CouchTask<Void,Void,Void>
 	@Override
 	protected Void doInBackground(Void... params) {
 		try {
-			Preferences.getSingleton().getCouchPotato().releaseDownload(id);
+			pref.getCouchPotato().releaseDownload(id);
 		} catch (Exception e) {
 			this.error = e;
 		}

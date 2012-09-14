@@ -129,7 +129,8 @@ public class EditMovieFragment extends LoadingFragment<Integer,Void,MovieJson> {
 					public void onClick(DialogInterface dialog, int which) {
 						diag.dismiss();
 						editWorkingTextView.setIsWorking(true);
-						MovieEditTask task = new MovieEditTask(EditMovieFragment.this.id, diag.getSelectedProfileId(), diag.getSelectedTitle() ){
+						Preferences pref = Preferences.getSingleton(EditMovieFragment.this.getSherlockActivity());
+						MovieEditTask task = new MovieEditTask(pref, EditMovieFragment.this.id, diag.getSelectedProfileId(), diag.getSelectedTitle() ){
 							@Override
 							protected void onPostExecute(Void result) {
 								super.onPostExecute(result);
@@ -154,7 +155,8 @@ public class EditMovieFragment extends LoadingFragment<Integer,Void,MovieJson> {
 			@Override
 			public void onClick(View v) {
 				refreshWorkingTextView.setIsWorking(true);
-				RefreshTask task = new RefreshTask(id){
+				Preferences pref = Preferences.getSingleton(v.getContext());
+				RefreshTask task = new RefreshTask(pref, id){
 					@Override
 					protected void onPostExecute(Void result) {
 						super.onPostExecute(result);
@@ -177,7 +179,8 @@ public class EditMovieFragment extends LoadingFragment<Integer,Void,MovieJson> {
 				List<Integer> ids = new ArrayList<Integer>();
 				ids.add(id);
 				// TODO add a DeleteTask constructor that doesnt need lists
-				MovieDeleteTask task = new MovieDeleteTask(ids,page){
+				Preferences pref = Preferences.getSingleton(v.getContext());
+				MovieDeleteTask task = new MovieDeleteTask(pref, ids,page){
 					@Override
 					protected void onPostExecute(Void result) {
 						super.onPostExecute(result);
@@ -230,7 +233,7 @@ public class EditMovieFragment extends LoadingFragment<Integer,Void,MovieJson> {
 					} catch (Exception e) {
 						try {
 							Intent market = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.imdb.mobile"));
-							startActivity(intent);
+							startActivity(market);
 						} catch (Exception e2) {
 							if ( getSherlockActivity() != null ) {
 								AlertDialog.Builder build = new AlertDialog.Builder(getSherlockActivity());
@@ -279,7 +282,7 @@ public class EditMovieFragment extends LoadingFragment<Integer,Void,MovieJson> {
 
 	@Override
 	protected MovieJson doInBackground(Integer... arg0) throws Exception {
-		return Preferences.getSingleton().getCouchPotato().movieGet(arg0[0]);
+		return Preferences.getSingleton(getSherlockActivity()).getCouchPotato().movieGet(arg0[0]);
 	}
 
 	@Override

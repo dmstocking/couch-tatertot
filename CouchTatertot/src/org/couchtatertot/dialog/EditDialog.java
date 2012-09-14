@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.couchpotato.json.ProfileJson;
 import org.couchtatertot.R;
+import org.couchtatertot.helper.Preferences;
 import org.couchtatertot.task.GetProfilesTask;
 
 import android.app.AlertDialog;
@@ -93,7 +94,8 @@ public class EditDialog extends SherlockDialogFragment {
 		builder.setCancelable(false);
 		
 		// start the task to get profiles
-		GetProfilesTask task = new GetProfilesTask(){
+		Preferences pref = Preferences.getSingleton(getSherlockActivity());
+		GetProfilesTask task = new GetProfilesTask(pref){
 			@Override
 			protected void onPostExecute(List<ProfileJson> result) {
 				super.onPostExecute(result);

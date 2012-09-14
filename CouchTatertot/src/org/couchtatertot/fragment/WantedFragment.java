@@ -109,7 +109,7 @@ public class WantedFragment extends LoadingListFragment<Void, Void, List<MovieJs
 	
 	@Override
 	protected List<MovieJson> doInBackground(Void... arg0) throws Exception {
-		return Preferences.getSingleton().getCouchPotato().movieList(null, -1, -1, null, null);
+		return Preferences.getSingleton(getSherlockActivity()).getCouchPotato().movieList(null, -1, -1, null, null);
 	}
 	
 	@Override

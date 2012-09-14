@@ -26,6 +26,12 @@ import org.couchtatertot.helper.Preferences;
 
 public class GetProfilesTask extends CouchTask<Void,Void,List<ProfileJson>>
 {
+	
+	protected Preferences pref;
+	
+	public GetProfilesTask( Preferences pref ) {
+		this.pref = pref;
+	}
 
 	@Override
 	public String getTaskLogName() {
@@ -35,7 +41,7 @@ public class GetProfilesTask extends CouchTask<Void,Void,List<ProfileJson>>
 	@Override
 	protected List<ProfileJson> doInBackground(Void... params) {
 		try {
-			return Preferences.getSingleton().getCouchPotato().profileList();
+			return pref.getCouchPotato().profileList();
 		} catch (Exception e) {
 			this.error = e;
 		}
