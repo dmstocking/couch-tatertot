@@ -22,5 +22,9 @@ package org.couchpotato.json;
 public class LoggingJson {
 	public boolean success;
 	public String log;
+	
+	/**
+	 * This element doesn't exist in loggingPartial
+	 */
 	public int total;
 }

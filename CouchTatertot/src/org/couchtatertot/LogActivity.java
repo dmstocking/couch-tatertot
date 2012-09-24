@@ -1,5 +1,5 @@
 /*
- * 	libCouchPotato is a java library for communication with couchpotato
+ * 	CouchTatertot is a android app for managing couchpotato
  * 	Copyright (C) 2012  David Stocking dmstocking@gmail.com
  * 
  * 	http://code.google.com/p/couch-tatertot/
@@ -17,16 +17,18 @@
  * 	You should have received a copy of the GNU General Public License
  * 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.couchpotato.json;
+package org.couchtatertot;
 
-import java.util.List;
+import org.couchtatertot.app.CouchActivity;
 
-import com.google.gson.annotations.SerializedName;
+import android.os.Bundle;
 
-public class SearchResultsJson {
-	public List<InfoJson> movies;
-	// empty will be "false" if its not empty
-	// and "0" if it is >.> GG .... GG
-//	public boolean empty;
-	public boolean success;
+public class LogActivity extends CouchActivity {
+	
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.log_activity);
+    }
+    
 }

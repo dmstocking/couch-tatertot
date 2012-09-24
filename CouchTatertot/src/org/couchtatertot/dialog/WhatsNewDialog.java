@@ -33,12 +33,11 @@ public class WhatsNewDialog extends SherlockDialogFragment {
 	DialogInterface.OnClickListener okListener = null;
 	
 	private static String whatsNew =
-			"- Fixed more startup errors.\n" +
-			"- Fixed bug where you couldn't share unless CouchTatertot is open.\n" +
-			"- Fixed market place detection.\n" +
-			"- Added sorting by Ascending/Descending to notifications. (Saved!)\n" +
+			"- Sharing now recongizes (hopefully) all imdb links.\n" +
+			"- Fixed error on search when you get no results.\n" +
+			"- Added log.\n" +
 			"\n" +
-			"Please show your support by rating/reviewing this app on Goole Play!";
+			"Please show your support by rating/reviewing this app on Google Play!";
 	
 	public WhatsNewDialog()
 	{

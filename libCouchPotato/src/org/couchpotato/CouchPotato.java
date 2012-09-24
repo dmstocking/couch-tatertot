@@ -34,8 +34,10 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -170,9 +172,23 @@ public class CouchPotato {
 		// TODO make me
 	}
 	
-	public void loggingPartial( int lines, LoggingTypeEnum type ) throws MalformedURLException, IOException, SocketTimeoutException
+	public List<String> loggingPartial( Integer lines, LoggingTypeEnum type ) throws MalformedURLException, IOException, SocketTimeoutException
 	{
-		;
+		StringBuilder builder = new StringBuilder();
+		if ( lines != null ) {
+			builder.append("&lines=");
+			builder.append(lines);
+		}
+		if ( type != null ) {
+			builder.append("&type=");
+			builder.append(type.toString().toLowerCase());
+		}
+		LoggingJson json = this.<LoggingJson>command("logging.partial/", builder.toString(), LoggingJson.class);
+		// split will remove the time stamp ... and I want it
+//		Pattern newLine = Pattern.compile("\\\\n\\d{2}\\-\\d{2} \\d{2}:\\d{2}:\\d{2}");
+		// Lazy >.> figure this out better later
+		Pattern newLine = Pattern.compile("\\\\n");
+		return Arrays.asList(newLine.split(json.log));
 	}
 	
 	public void movieAdd( Integer profileId, String imdbId, String title ) throws MalformedURLException, IOException, SocketTimeoutException

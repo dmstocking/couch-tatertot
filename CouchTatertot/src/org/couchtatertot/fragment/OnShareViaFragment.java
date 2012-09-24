@@ -44,11 +44,7 @@ public class OnShareViaFragment extends SherlockFragment {
 
 	// FORMAT FOR TEXT FROM ANDROID IMDB APP
 	// <Show Name>\n<Uri>
-	private static Pattern imdbAndroid = Pattern.compile("https?\\://(www\\.)?(m\\.)?imdb\\.com/rg/an_share/title/title/(tt\\d{7})/");
-	private static Pattern imdbShowtimeWebsite = Pattern.compile("https?\\://(www\\.)?(m\\.)?imdb\\.com/showtimes/title/(tt\\d{7})/");
-	private static Pattern imdbTitleWebsite = Pattern.compile("https?\\://(www\\.)?(m\\.)?imdb\\.com/title/(tt\\d{7})/");
-	
-	private static List<Pattern> imdbPatterns = Arrays.asList( imdbAndroid, imdbShowtimeWebsite, imdbTitleWebsite );
+	private static Pattern imdbTitle = Pattern.compile("/title/(tt\\d{7})/");
 	
 	private String extras;
 	private String imdb;
@@ -81,33 +77,31 @@ public class OnShareViaFragment extends SherlockFragment {
 		working = (LinearLayout) view.findViewById(R.id.workingLinearLayout);
 		error = (TextView) view.findViewById(R.id.errorTextView);
 		
-        for ( Pattern p : imdbPatterns ) {
-        	Matcher m = p.matcher(extras);
-	        if ( m.find() ) {
-	        	// we need to do stuff
-	        	imdb = m.group(3);
-				Preferences pref = Preferences.getSingleton(view.getContext());
-	        	MovieAddTask task = new MovieAddTask(pref, imdb){
-					@Override
-					protected void onPostExecute(Void result) {
-						super.onPostExecute(result);
-						
-						if ( OnShareViaFragment.this.getActivity() == null )
-							return; // no point to do anything our activity is gone :(
-						
-						if ( error == null ) {
-							Toast success = Toast.makeText( getActivity(), "Successfully added movie!!!", Toast.LENGTH_LONG );
-							success.show();
-							OnShareViaFragment.this.getActivity().finish();
-						} else {
-							working.setVisibility(View.GONE);
-							OnShareViaFragment.this.error.setText("Error adding movie.\nERROR: " + error.getMessage());
-							OnShareViaFragment.this.error.setVisibility(View.VISIBLE);
-						}
+    	Matcher m = imdbTitle.matcher(extras);
+        if ( m.find() ) {
+        	// we need to do stuff
+        	imdb = m.group(3);
+			Preferences pref = Preferences.getSingleton(view.getContext());
+        	MovieAddTask task = new MovieAddTask(pref, imdb){
+				@Override
+				protected void onPostExecute(Void result) {
+					super.onPostExecute(result);
+					
+					if ( OnShareViaFragment.this.getActivity() == null )
+						return; // no point to do anything our activity is gone :(
+					
+					if ( error == null ) {
+						Toast success = Toast.makeText( getActivity(), "Successfully added movie!!!", Toast.LENGTH_LONG );
+						success.show();
+						OnShareViaFragment.this.getActivity().finish();
+					} else {
+						working.setVisibility(View.GONE);
+						OnShareViaFragment.this.error.setText("Error adding movie.\nERROR: " + error.getMessage());
+						OnShareViaFragment.this.error.setVisibility(View.VISIBLE);
 					}
-				};
-				task.execute();
-	        }
+				}
+			};
+			task.execute();
         }
         if ( imdb == null ) {
         	working.setVisibility(View.GONE);

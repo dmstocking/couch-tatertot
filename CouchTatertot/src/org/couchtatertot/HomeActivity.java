@@ -89,8 +89,12 @@ public class HomeActivity extends SherlockFragmentActivity implements OnSharedPr
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch ( item.getItemId() )
 		{
-//		case R.id.logMenuItem:
-//			return true;
+		case R.id.logMenuItem:
+			{
+				Intent intent = new Intent(this,LogActivity.class);
+				startActivity(intent);
+				return true;
+			}
 		case R.id.notificationMenuItem:
 			{
 				Intent intent = new Intent(this,NotificationsActivity.class);
