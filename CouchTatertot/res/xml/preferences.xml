@@ -44,6 +44,16 @@
 <!--             android:key="password" -->
 <!--             android:inputType="textPassword" /> -->
     </PreferenceCategory>
+    <PreferenceCategory
+        android:title="CouchTatertot Cache" >
+        <org.couchtatertot.preference.ClearCacheDialogPreference
+                android:title="Clear Poster Cache"
+                android:summary="Delete poster cache. (Cannot be undone!)"
+                android:dialogIcon="@android:drawable/ic_dialog_alert"
+                android:dialogMessage="Are you sure you wish to clear the cache?"
+                android:positiveButtonText="Clear Cache"
+                android:negativeButtonText="Cancel" />
+    </PreferenceCategory>
 <!--     <PreferenceCategory -->
 <!--         android:title="History"> -->
 <!--         <EditTextPreference -->

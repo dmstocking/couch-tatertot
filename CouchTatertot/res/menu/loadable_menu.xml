@@ -11,5 +11,5 @@
         android:id="@+id/refreshMenuItem"
         android:title="@string/refresh_item_title"
         android:icon="@drawable/ic_menu_refresh"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="always" />
 </menu>

@@ -15,7 +15,9 @@
     <RelativeLayout
         android:id="@+id/RelativeLayout1"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="fill_parent"
+        android:paddingLeft="3px"
+        android:paddingRight="3px">
 
         <TextView
             android:id="@+id/yearTextView"
