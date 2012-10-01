@@ -10,7 +10,7 @@
     <name>CouchTatertot parent POM project</name>
 
     <modules>
-        <module>CouchTatertot</module>
+        <module>app</module>
     </modules>
 
     <licenses>
