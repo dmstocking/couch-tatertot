@@ -19,11 +19,6 @@
  */
 package org.couchtatertot.app;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.couchtatertot.R;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,11 +29,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import org.couchtatertot.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class LoadingListFragment<Params, Progress, Result> extends CouchListFragment implements AdapterView.OnItemLongClickListener {
 	

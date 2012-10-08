@@ -19,14 +19,6 @@
  */
 package org.couchtatertot;
 
-import org.couchtatertot.dialog.WhatsNewDialog;
-import org.couchtatertot.fragment.ManageFragment;
-import org.couchtatertot.fragment.WantedFragment;
-import org.couchtatertot.helper.PosterCache;
-import org.couchtatertot.helper.Preferences;
-import org.couchtatertot.task.QualityListTask;
-import org.couchtatertot.task.StatusListTask;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,11 +28,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.viewpagerindicator.TitlePageIndicator;
+import org.couchtatertot.dialog.WhatsNewDialog;
+import org.couchtatertot.fragment.ManageFragment;
+import org.couchtatertot.fragment.WantedFragment;
+import org.couchtatertot.helper.PosterCache;
+import org.couchtatertot.helper.Preferences;
+import org.couchtatertot.task.QualityListTask;
+import org.couchtatertot.task.StatusListTask;
 
 public class HomeActivity extends SherlockFragmentActivity implements OnSharedPreferenceChangeListener {
 	

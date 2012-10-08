@@ -19,9 +19,9 @@
  */
 package org.couchpotato.json.comparator;
 
-import java.util.Comparator;
-
 import org.couchpotato.json.InfoJson;
+
+import java.util.Comparator;
 
 
 public class InfoJsonByYearComparator implements Comparator<InfoJson> {

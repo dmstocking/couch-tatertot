@@ -19,15 +19,6 @@
  */
 package org.couchtatertot.fragment;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.couchtatertot.R;
-import org.couchtatertot.helper.Preferences;
-import org.couchtatertot.task.MovieAddTask;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,8 +28,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.actionbarsherlock.app.SherlockFragment;
+import org.couchtatertot.R;
+import org.couchtatertot.helper.Preferences;
+import org.couchtatertot.task.MovieAddTask;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class OnShareViaFragment extends SherlockFragment {
 
@@ -80,7 +76,7 @@ public class OnShareViaFragment extends SherlockFragment {
     	Matcher m = imdbTitle.matcher(extras);
         if ( m.find() ) {
         	// we need to do stuff
-        	imdb = m.group(3);
+        	imdb = m.group(1);
 			Preferences pref = Preferences.getSingleton(view.getContext());
         	MovieAddTask task = new MovieAddTask(pref, imdb){
 				@Override

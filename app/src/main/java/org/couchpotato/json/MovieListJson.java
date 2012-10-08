@@ -21,8 +21,6 @@ package org.couchpotato.json;
 
 import java.util.List;
 
-import com.google.gson.annotations.SerializedName;
-
 public class MovieListJson {
 	public List<MovieJson> movies;
 	public int total;

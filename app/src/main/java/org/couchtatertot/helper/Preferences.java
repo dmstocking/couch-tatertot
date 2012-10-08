@@ -19,14 +19,13 @@
  */
 package org.couchtatertot.helper;
 
-import org.couchpotato.CouchPotato;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import org.couchpotato.CouchPotato;
 
 public class Preferences implements OnSharedPreferenceChangeListener {
 	

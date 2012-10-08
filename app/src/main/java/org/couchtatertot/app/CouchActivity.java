@@ -19,13 +19,11 @@
  */
 package org.couchtatertot.app;
 
-import org.couchtatertot.HomeActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
+import org.couchtatertot.HomeActivity;
 
 public class CouchActivity extends SherlockFragmentActivity {
 	

@@ -19,16 +19,15 @@
  */
 package org.couchtatertot.app;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-
 import org.couchtatertot.app.ExpandableLoadingListFragment.EasyExpandableListAdapter.Pair;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class ExpandableLoadingListFragment<GroupType, ItemType, Params, Progress, Result> extends LoadingListFragment<Params, Progress, Result> {
 	

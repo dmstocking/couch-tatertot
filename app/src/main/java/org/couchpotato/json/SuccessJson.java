@@ -19,10 +19,6 @@
  */
 package org.couchpotato.json;
 
-import java.util.List;
-
-import com.google.gson.annotations.SerializedName;
-
 // This is pointless right now because it returns success no matter what >.>
 public class SuccessJson {
 	public boolean success;

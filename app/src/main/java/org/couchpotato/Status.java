@@ -1,11 +1,10 @@
 package org.couchpotato;
 
-import java.util.Arrays;
+import org.couchpotato.json.StatusJson;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.couchpotato.json.StatusJson;
 
 public class Status {
 

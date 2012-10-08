@@ -19,14 +19,13 @@
  */
 package org.couchtatertot.widget;
 
-import org.couchtatertot.helper.PosterCache;
-import org.couchtatertot.helper.Preferences;
-import org.couchtatertot.task.GetPosterTask;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+import org.couchtatertot.helper.PosterCache;
+import org.couchtatertot.helper.Preferences;
+import org.couchtatertot.task.GetPosterTask;
 
 public class LoadingPosterView extends ImageView {
 	

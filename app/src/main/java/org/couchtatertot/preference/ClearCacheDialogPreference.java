@@ -25,7 +25,6 @@ import android.content.DialogInterface;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import org.couchtatertot.helper.PosterCache;
-import org.couchtatertot.helper.Preferences;
 
 public class ClearCacheDialogPreference extends DialogPreference {
 

@@ -19,9 +19,8 @@
  */
 package org.couchtatertot;
 
-import org.couchtatertot.app.CouchActivity;
-
 import android.os.Bundle;
+import org.couchtatertot.app.CouchActivity;
 
 public class EditMovieActivity extends CouchActivity {
 	

@@ -19,10 +19,6 @@
  */
 package org.couchtatertot.helper;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -30,6 +26,10 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.support.v4.util.LruCache;
 import android.util.Log;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 
 public class PosterCache {
 	

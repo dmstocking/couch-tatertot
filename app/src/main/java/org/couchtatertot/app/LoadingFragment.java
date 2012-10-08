@@ -19,8 +19,6 @@
  */
 package org.couchtatertot.app;
 
-import org.couchtatertot.R;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,10 +27,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import org.couchtatertot.R;
 
 public abstract class LoadingFragment<Params, Progress, Result> extends CouchFragment {
 	

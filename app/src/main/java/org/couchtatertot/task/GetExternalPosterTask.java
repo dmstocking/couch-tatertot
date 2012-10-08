@@ -19,10 +19,10 @@
  */
 package org.couchtatertot.task;
 
-import java.net.URL;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
+import java.net.URL;
 
 public class GetExternalPosterTask extends CouchTask<Void,Void,Bitmap>
 {

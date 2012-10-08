@@ -21,8 +21,6 @@ package org.couchpotato.json;
 
 import java.util.List;
 
-import com.google.gson.annotations.SerializedName;
-
 public class StatusListJson {
 	public List<StatusJson> list;
 	public boolean success;

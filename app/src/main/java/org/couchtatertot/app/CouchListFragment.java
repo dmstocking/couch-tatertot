@@ -20,7 +20,6 @@
 package org.couchtatertot.app;
 
 import android.os.Bundle;
-
 import com.actionbarsherlock.app.SherlockListFragment;
 
 public class CouchListFragment extends SherlockListFragment {

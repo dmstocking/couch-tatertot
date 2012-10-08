@@ -19,14 +19,6 @@
  */
 package org.couchtatertot.dialog;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.couchpotato.json.ProfileJson;
-import org.couchtatertot.R;
-import org.couchtatertot.helper.Preferences;
-import org.couchtatertot.task.GetProfilesTask;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -39,8 +31,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import com.actionbarsherlock.app.SherlockDialogFragment;
+import org.couchpotato.json.ProfileJson;
+import org.couchtatertot.R;
+import org.couchtatertot.helper.Preferences;
+import org.couchtatertot.task.GetProfilesTask;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class EditDialog extends SherlockDialogFragment {
 

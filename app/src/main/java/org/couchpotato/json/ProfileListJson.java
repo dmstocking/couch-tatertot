@@ -21,8 +21,6 @@ package org.couchpotato.json;
 
 import java.util.List;
 
-import com.google.gson.annotations.SerializedName;
-
 public class ProfileListJson {
 	public List<ProfileJson> list;
 	public boolean success = false;

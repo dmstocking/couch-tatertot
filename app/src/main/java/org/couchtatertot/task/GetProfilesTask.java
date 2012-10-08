@@ -19,10 +19,10 @@
  */
 package org.couchtatertot.task;
 
-import java.util.List;
-
 import org.couchpotato.json.ProfileJson;
 import org.couchtatertot.helper.Preferences;
+
+import java.util.List;
 
 public class GetProfilesTask extends CouchTask<Void,Void,List<ProfileJson>>
 {

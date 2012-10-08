@@ -19,8 +19,17 @@
  */
 package org.couchtatertot.fragment;
 
-import java.util.Comparator;
-
+import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import org.couchpotato.json.InfoJson;
 import org.couchpotato.json.SearchResultsJson;
 import org.couchpotato.json.comparator.InfoJsonByTitleComparator;
@@ -33,18 +42,7 @@ import org.couchtatertot.helper.Preferences;
 import org.couchtatertot.widget.LoadingPosterView;
 import org.couchtatertot.widget.SafeArrayAdapter;
 
-import android.app.Activity;
-import android.app.SearchManager;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
+import java.util.Comparator;
 
 public class SearchFragment extends LoadingListFragment<SearchParams, Void, SearchResultsJson> {
 	

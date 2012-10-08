@@ -19,14 +19,13 @@
  */
 package org.couchtatertot.task;
 
-import java.net.URL;
-
-import org.couchtatertot.helper.PosterCache;
-import org.couchtatertot.helper.Preferences;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import org.couchtatertot.helper.PosterCache;
+import org.couchtatertot.helper.Preferences;
+
+import java.net.URL;
 
 public class GetPosterTask extends CouchTask<Void,Void,Bitmap>
 {

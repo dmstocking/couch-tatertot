@@ -19,9 +19,17 @@
  */
 package org.couchtatertot.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import org.couchpotato.CouchPotato.PageEnum;
 import org.couchpotato.json.MovieJson;
 import org.couchtatertot.R;
@@ -35,19 +43,8 @@ import org.couchtatertot.task.RefreshTask;
 import org.couchtatertot.widget.LoadingPosterView;
 import org.couchtatertot.widget.WorkingTextView;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.ResolveInfo;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditMovieFragment extends LoadingFragment<Integer,Void,MovieJson> {
 

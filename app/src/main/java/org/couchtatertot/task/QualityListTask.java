@@ -19,11 +19,11 @@
  */
 package org.couchtatertot.task;
 
-import java.util.List;
-
 import org.couchpotato.Quality;
 import org.couchpotato.json.QualityJson;
 import org.couchtatertot.helper.Preferences;
+
+import java.util.List;
 
 public class QualityListTask extends CouchTask<Void,Void,List<QualityJson>>
 {

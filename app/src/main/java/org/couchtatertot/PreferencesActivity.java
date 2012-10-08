@@ -20,7 +20,6 @@
 package org.couchtatertot;
 
 import android.os.Bundle;
-
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 
 public class PreferencesActivity extends SherlockPreferenceActivity {

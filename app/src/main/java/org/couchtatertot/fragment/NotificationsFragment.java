@@ -19,9 +19,13 @@
  */
 package org.couchtatertot.fragment;
 
-import java.util.Comparator;
-import java.util.List;
-
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import org.couchpotato.json.NotificationJson;
 import org.couchtatertot.R;
 import org.couchtatertot.app.LoadingListFragment;
@@ -29,14 +33,8 @@ import org.couchtatertot.helper.Preferences;
 import org.couchtatertot.helper.SortEnum;
 import org.couchtatertot.widget.SafeArrayAdapter;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-
-import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import java.util.Comparator;
+import java.util.List;
 
 public class NotificationsFragment extends LoadingListFragment<Void, Void, List<NotificationJson>> {
 	

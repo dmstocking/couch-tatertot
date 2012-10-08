@@ -19,10 +19,6 @@
  */
 package org.couchpotato.json;
 
-import java.util.List;
-
-import com.google.gson.annotations.SerializedName;
-
 public class MovieWrapperJson {
 	public MovieJson movie;
 	public boolean success;

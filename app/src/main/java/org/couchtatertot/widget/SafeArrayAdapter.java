@@ -19,11 +19,11 @@
  */
 package org.couchtatertot.widget;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
+
+import java.util.List;
 
 public class SafeArrayAdapter<T> extends ArrayAdapter<T> {
 	

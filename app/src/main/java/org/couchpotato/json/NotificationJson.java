@@ -19,10 +19,6 @@
  */
 package org.couchpotato.json;
 
-import java.util.List;
-
-import com.google.gson.annotations.SerializedName;
-
 public class NotificationJson {
 	public int id;
 	// date added in python long form

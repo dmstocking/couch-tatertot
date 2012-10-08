@@ -1,10 +1,10 @@
 package org.couchpotato;
 
+import org.couchpotato.json.QualityJson;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.couchpotato.json.QualityJson;
 
 public class Quality {
 

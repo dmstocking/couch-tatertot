@@ -19,8 +19,19 @@
  */
 package org.couchtatertot.fragment;
 
-import java.util.List;
-
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
+import com.actionbarsherlock.view.ActionMode;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import org.couchpotato.Quality;
 import org.couchpotato.Status;
 import org.couchpotato.json.ReleaseJson;
@@ -31,20 +42,7 @@ import org.couchtatertot.task.ReleaseDownloadTask;
 import org.couchtatertot.task.ReleaseIgnoreTask;
 import org.couchtatertot.widget.SafeArrayAdapter;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import com.actionbarsherlock.view.ActionMode;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
+import java.util.List;
 
 public class ReleasesFragment extends LoadingListFragment<Void, Void, List<ReleaseJson>> {
 	

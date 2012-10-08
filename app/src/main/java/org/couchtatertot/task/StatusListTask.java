@@ -19,10 +19,10 @@
  */
 package org.couchtatertot.task;
 
-import java.util.List;
-
 import org.couchpotato.json.StatusJson;
 import org.couchtatertot.helper.Preferences;
+
+import java.util.List;
 
 public class StatusListTask extends CouchTask<Void,Void,List<StatusJson>>
 {

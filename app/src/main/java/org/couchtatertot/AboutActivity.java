@@ -19,11 +19,10 @@
  */
 package org.couchtatertot;
 
-import org.couchtatertot.app.CouchActivity;
-
 import android.os.Bundle;
 import android.text.util.Linkify;
 import android.widget.TextView;
+import org.couchtatertot.app.CouchActivity;
 
 public class AboutActivity extends CouchActivity {
 	

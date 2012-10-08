@@ -24,7 +24,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
-
 import com.actionbarsherlock.app.SherlockDialogFragment;
 
 public class WhatsNewDialog extends SherlockDialogFragment {

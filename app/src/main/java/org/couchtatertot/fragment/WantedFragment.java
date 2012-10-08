@@ -19,8 +19,12 @@
  */
 package org.couchtatertot.fragment;
 
-import java.util.List;
-
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
 import org.couchpotato.CouchPotato.PageEnum;
 import org.couchpotato.json.MovieJson;
 import org.couchtatertot.EditMovieActivity;
@@ -30,12 +34,7 @@ import org.couchtatertot.helper.Preferences;
 import org.couchtatertot.widget.LoadingPosterView;
 import org.couchtatertot.widget.SafeArrayAdapter;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
+import java.util.List;
 
 public class WantedFragment extends LoadingListFragment<Void, Void, List<MovieJson>> {
 	

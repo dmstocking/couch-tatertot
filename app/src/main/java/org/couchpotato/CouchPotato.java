@@ -19,40 +19,25 @@
  */
 package org.couchpotato;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.lang.reflect.Type;
-import java.net.Authenticator;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.SocketTimeoutException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.security.SecureRandom;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.regex.Pattern;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.KeyManager;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.TrustManager;
-
+import com.google.gson.GsonBuilder;
 import org.couchpotato.json.*;
 import org.couchpotato.json.deserializer.JsonBooleanDeserializer;
 import org.couchpotato.json.type.JsonBoolean;
 import org.couchpotato.net.CouchAuthenticator;
 import org.couchpotato.net.ssl.DefaultTrustManager;
 
-import com.google.gson.GsonBuilder;
+import javax.net.ssl.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.lang.reflect.Type;
+import java.net.*;
+import java.security.SecureRandom;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Pattern;
 
 public class CouchPotato {
 	

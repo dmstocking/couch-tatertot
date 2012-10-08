@@ -19,14 +19,6 @@
  */
 package org.couchtatertot.fragment;
 
-import org.couchtatertot.HomeActivity;
-import org.couchtatertot.R;
-import org.couchtatertot.dialog.EditDialog;
-import org.couchtatertot.helper.Preferences;
-import org.couchtatertot.task.GetExternalPosterTask;
-import org.couchtatertot.task.MovieAddTask;
-import org.couchtatertot.widget.WorkingTextView;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -39,8 +31,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.actionbarsherlock.app.SherlockFragment;
+import org.couchtatertot.HomeActivity;
+import org.couchtatertot.R;
+import org.couchtatertot.dialog.EditDialog;
+import org.couchtatertot.helper.Preferences;
+import org.couchtatertot.task.GetExternalPosterTask;
+import org.couchtatertot.task.MovieAddTask;
+import org.couchtatertot.widget.WorkingTextView;
 
 public class AddMovieFragment extends SherlockFragment {
 

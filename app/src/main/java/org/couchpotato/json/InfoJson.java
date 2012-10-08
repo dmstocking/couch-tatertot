@@ -19,9 +19,9 @@
  */
 package org.couchpotato.json;
 
-import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class InfoJson {
 	@SerializedName("via_tmdb")

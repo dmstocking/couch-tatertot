@@ -21,8 +21,6 @@ package org.couchpotato.json;
 
 import java.util.List;
 
-import com.google.gson.annotations.SerializedName;
-
 public class SearchResultsJson {
 	public List<InfoJson> movies;
 	// empty will be "false" if its not empty
