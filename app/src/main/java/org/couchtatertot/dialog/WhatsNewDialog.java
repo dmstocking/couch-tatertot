@@ -32,9 +32,8 @@ public class WhatsNewDialog extends SherlockDialogFragment {
 	DialogInterface.OnClickListener okListener = null;
 	
 	private static String whatsNew =
-			"- Added padding to text on wanted and manage screens.\n" +
-			"- Fixed a bug were new movies would not load posters.\n" +
-			"- Moved \"Clear Cache\" into settings.\n" +
+			"- Fixed a crash after edit dialog closed.\n" +
+			"- Fixed IMDB share.\n" +
 			"\n" +
 			"Please show your support by purchasing this app on Google Play!";
 	
