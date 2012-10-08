@@ -97,7 +97,7 @@ public class EditDialog extends SherlockDialogFragment {
 			@Override
 			protected void onPostExecute(List<ProfileJson> result) {
 				super.onPostExecute(result);
-				if ( result != null ) {
+				if ( result != null && EditDialog.this != null ) {
 					qualitySpinner.setAdapter(new ArrayAdapter<ProfileJson>(getSherlockActivity(),android.R.layout.simple_spinner_item, result){
 						@Override
 						public View getDropDownView(int position, View convertView, ViewGroup parent) {
