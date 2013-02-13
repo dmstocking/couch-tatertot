@@ -19,25 +19,50 @@
  */
 package org.couchpotato;
 
-import com.google.gson.GsonBuilder;
-import org.couchpotato.json.*;
-import org.couchpotato.json.deserializer.JsonBooleanDeserializer;
-import org.couchpotato.json.type.JsonBoolean;
-import org.couchpotato.net.CouchAuthenticator;
-import org.couchpotato.net.ssl.DefaultTrustManager;
-
-import javax.net.ssl.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
-import java.net.*;
-import java.security.SecureRandom;
+import java.net.Authenticator;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSocketFactory;
+
+import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
+import org.apache.http.conn.ssl.StrictHostnameVerifier;
+import org.couchpotato.json.AppVersionJson;
+import org.couchpotato.json.LoggingJson;
+import org.couchpotato.json.MovieJson;
+import org.couchpotato.json.MovieListJson;
+import org.couchpotato.json.MovieWrapperJson;
+import org.couchpotato.json.NotificationJson;
+import org.couchpotato.json.NotificationListJson;
+import org.couchpotato.json.ProfileJson;
+import org.couchpotato.json.ProfileListJson;
+import org.couchpotato.json.QualityJson;
+import org.couchpotato.json.QualityListJson;
+import org.couchpotato.json.SearchResultsJson;
+import org.couchpotato.json.StatusJson;
+import org.couchpotato.json.StatusListJson;
+import org.couchpotato.json.deserializer.JsonBooleanDeserializer;
+import org.couchpotato.json.type.JsonBoolean;
+import org.couchpotato.net.CouchAuthenticator;
+
+import android.net.SSLCertificateSocketFactory;
+
+import com.google.gson.GsonBuilder;
 
 public class CouchPotato {
 	
@@ -73,41 +98,42 @@ public class CouchPotato {
 	private String password;
 	
 	private String version;
+	private boolean trustAll = false;
 	
-	public CouchPotato( boolean ssl, String host, int port, String path, String api, String username, String password )
+	public CouchPotato( boolean ssl, String host, int port, String path, String api, String username, String password, boolean trustAll )
 	{
-		this( ssl ? "https" : "http", host, port, path, api, username, password );
+		this( ssl ? "https" : "http", host, port, path, api, username, password, trustAll );
 	}
 	
-	private CouchPotato( String scheme, String hostName, int port, String path, String api, String username, String password )
+	private CouchPotato( String scheme, String hostname, int port, String path, String api, String username, String password, boolean trustAll )
 	{
 		this.scheme = scheme;
-		this.hostName = hostName;
+		this.hostName = hostname;
 		this.port = port;
 		this.path = path;
 		this.api = api;
 		this.username = username;
 		this.password = password;
+		this.trustAll = trustAll;
 		
 		if ( this.username == null )
 			this.username = "";
 		if ( this.password == null )
 			this.password = "";
 		
-		try {
-			Authenticator.setDefault(new CouchAuthenticator(username,password));
-			if ( scheme.compareTo("https") == 0 ) {
-				SSLContext ctx = SSLContext.getInstance("TLS");
-		        ctx.init(new KeyManager[0], new TrustManager[] {new DefaultTrustManager()}, new SecureRandom());
-		        HttpsURLConnection.setDefaultSSLSocketFactory(ctx.getSocketFactory());
-		        HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier(){
-					@Override
-					public boolean verify(String arg0, SSLSession arg1) {
-						return true;
-					}
-				});
-			}
-		} catch ( Exception e ) {;}
+		// Configure SSL behavior based on user preferences
+		Authenticator.setDefault(new CouchAuthenticator(username,password, hostname));
+		SSLSocketFactory sslFactory;
+		HostnameVerifier verifier;
+		if( trustAll ) {
+			sslFactory = SSLCertificateSocketFactory.getInsecure(SOCKET_TIMEOUT, null);
+			verifier = new AllowAllHostnameVerifier();
+		} else {
+			sslFactory = SSLCertificateSocketFactory.getDefault(SOCKET_TIMEOUT, null);
+			verifier = new StrictHostnameVerifier();
+		}
+		HttpsURLConnection.setDefaultSSLSocketFactory(sslFactory);
+		HttpsURLConnection.setDefaultHostnameVerifier(verifier);
 	}
 	
 	public String getVersion()

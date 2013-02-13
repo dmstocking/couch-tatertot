@@ -31,18 +31,23 @@
             android:summary="Use HTTPS"
             android:defaultValue="false"
             android:key="https"/>
-<!--         <EditTextPreference -->
-<!--             android:title="Username" -->
-<!--             android:summary="The username to access your CouchPotato server." -->
-<!--             android:defaultValue="" -->
-<!--             android:key="username" -->
-<!--             android:inputType="text|textNoSuggestions" /> -->
-<!--         <EditTextPreference -->
-<!--             android:title="Password" -->
-<!--             android:summary="The password to access your CouchPotato server." -->
-<!--             android:defaultValue="" -->
-<!--             android:key="password" -->
-<!--             android:inputType="textPassword" /> -->
+        <CheckBoxPreference
+            android:title="Trust all certificates"
+            android:summary="Don't verify SSL certificate for HTTPS (if checked may compromise your server security)"
+            android:defaultValue="false"
+            android:key="trustAll"/>
+        <EditTextPreference
+            android:title="Username"
+            android:summary="The username to access your CouchPotato server."
+            android:defaultValue=""
+            android:key="username"
+            android:inputType="text|textNoSuggestions" />
+        <EditTextPreference
+            android:title="Password"
+            android:summary="The password to access your CouchPotato server."
+            android:defaultValue=""
+            android:key="password"
+            android:inputType="textPassword" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="CouchTatertot Cache" >

@@ -92,6 +92,11 @@ public class Preferences implements OnSharedPreferenceChangeListener {
 		return pref.getBoolean("https", false);
 	}
 	
+	public boolean getTrustAll()
+	{
+		return pref.getBoolean("trustAll", false);
+	}
+	
 	public String getPath()
 	{
 		return pref.getString("path","");
@@ -147,7 +152,7 @@ public class Preferences implements OnSharedPreferenceChangeListener {
 	
 	private void updateCouchPotato()
 	{
-		potato = new CouchPotato( getHTTPS(), getHost(), getPort(), getPath(), getAPI(), getUsername(), getPassword() );
+		potato = new CouchPotato( getHTTPS(), getHost(), getPort(), getPath(), getAPI(), getUsername(), getPassword(), getTrustAll() );
 	}
 
 	public void registerSharedPreferencesChangedListener( OnSharedPreferenceChangeListener listener )
