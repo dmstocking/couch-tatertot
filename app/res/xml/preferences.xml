@@ -34,8 +34,15 @@
         <CheckBoxPreference
             android:title="Trust all certificates"
             android:summary="Don't verify SSL certificate for HTTPS (if checked may compromise your server security)"
-            android:defaultValue="false"
+            android:dependency="https"
+            android:defaultValue="true"
             android:key="trustAll"/>
+        <EditTextPreference
+            android:title="Manually trusted certificate"
+            android:summary="SHA-1 Fingerprint of your self-signed certificate"
+            android:dependency="https"
+            android:defaultValue=""
+            android:key="trustMe"/>
         <EditTextPreference
             android:title="Username"
             android:summary="The username to access your CouchPotato server."

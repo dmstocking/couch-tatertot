@@ -31,6 +31,10 @@ import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -38,7 +42,9 @@ import java.util.regex.Pattern;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
 
 import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
 import org.apache.http.conn.ssl.StrictHostnameVerifier;
@@ -59,8 +65,7 @@ import org.couchpotato.json.StatusListJson;
 import org.couchpotato.json.deserializer.JsonBooleanDeserializer;
 import org.couchpotato.json.type.JsonBoolean;
 import org.couchpotato.net.CouchAuthenticator;
-
-import android.net.SSLCertificateSocketFactory;
+import org.couchpotato.net.ssl.DefaultTrustManager;
 
 import com.google.gson.GsonBuilder;
 
@@ -98,14 +103,14 @@ public class CouchPotato {
 	private String password;
 	
 	private String version;
-	private boolean trustAll = false;
+	private boolean trustAll = true;
 	
-	public CouchPotato( boolean ssl, String host, int port, String path, String api, String username, String password, boolean trustAll )
+	public CouchPotato( boolean ssl, String host, int port, String path, String api, String username, String password, boolean trustAll, String trustMe )
 	{
-		this( ssl ? "https" : "http", host, port, path, api, username, password, trustAll );
+		this( ssl ? "https" : "http", host, port, path, api, username, password, trustAll, trustMe );
 	}
 	
-	private CouchPotato( String scheme, String hostname, int port, String path, String api, String username, String password, boolean trustAll )
+	private CouchPotato( String scheme, String hostname, int port, String path, String api, String username, String password, boolean trustAll, String trustMe )
 	{
 		this.scheme = scheme;
 		this.hostName = hostname;
@@ -123,17 +128,24 @@ public class CouchPotato {
 		
 		// Configure SSL behavior based on user preferences
 		Authenticator.setDefault(new CouchAuthenticator(username,password, hostname));
-		SSLSocketFactory sslFactory;
 		HostnameVerifier verifier;
-		if( trustAll ) {
-			sslFactory = SSLCertificateSocketFactory.getInsecure(SOCKET_TIMEOUT, null);
-			verifier = new AllowAllHostnameVerifier();
-		} else {
-			sslFactory = SSLCertificateSocketFactory.getDefault(SOCKET_TIMEOUT, null);
-			verifier = new StrictHostnameVerifier();
+		try {
+			SSLContext ctx = SSLContext.getInstance("TLS");
+			ctx.init(new KeyManager[0], new TrustManager[] {new DefaultTrustManager(trustAll, trustMe)}, new SecureRandom());
+			if( trustAll ) {
+				verifier = new AllowAllHostnameVerifier();
+			} else {
+				verifier = new StrictHostnameVerifier();
+			}
+			HttpsURLConnection.setDefaultSSLSocketFactory(ctx.getSocketFactory());
+			HttpsURLConnection.setDefaultHostnameVerifier(verifier);
+		} catch (NoSuchAlgorithmException e) {
+			
+		} catch (KeyManagementException e) {
+			
+		} catch (KeyStoreException e) {
+			
 		}
-		HttpsURLConnection.setDefaultSSLSocketFactory(sslFactory);
-		HttpsURLConnection.setDefaultHostnameVerifier(verifier);
 	}
 	
 	public String getVersion()
