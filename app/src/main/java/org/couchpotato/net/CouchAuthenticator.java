@@ -24,17 +24,23 @@ import java.net.PasswordAuthentication;
 
 public class CouchAuthenticator extends Authenticator {
 
-	String user;
-	String pass;
+	private String user;
+	private String pass;
+	private String hostname;
 	
-	public CouchAuthenticator( String user, String pass ) {
+	public CouchAuthenticator( String user, String pass, String hostname ) {
 		this.user = user;
 		this.pass = pass;
+		this.hostname = hostname;
 	}
 	
 	@Override
 	protected PasswordAuthentication getPasswordAuthentication() {
-		return new PasswordAuthentication(user,pass.toCharArray());
+		if( getRequestingSite().getHostAddress().equals(this.hostname) ||
+				getRequestingSite().getHostName().equals(this.hostname))
+			return new PasswordAuthentication(user,pass.toCharArray());
+		else
+			return new PasswordAuthentication("", "".toCharArray());
 	}
 
 }
