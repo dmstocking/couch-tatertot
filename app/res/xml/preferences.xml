@@ -26,6 +26,9 @@
             android:defaultValue=""
             android:key="api"
             android:inputType="text|textNoSuggestions" />
+    </PreferenceCategory>
+    <PreferenceCategory
+            android:title="CouchPotato Server Authentication" >
         <CheckBoxPreference
             android:title="HTTPS"
             android:summary="Use HTTPS"

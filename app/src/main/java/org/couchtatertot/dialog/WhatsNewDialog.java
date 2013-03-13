@@ -38,6 +38,8 @@ public class WhatsNewDialog extends SherlockDialogFragment {
 			"- Added a new release view.\n" +
 			"- Updated the releases view.\n" +
 			"- Automatic actions on update. (to save you the pain)\n" +
+			"- HTTP authentication.\n" +
+			"- True HTTPS support. (Thank hardwarefault)\n" +
 			"\n" +
 			"Please show your support by rating/reviewing this app on Google Play!";
 	

@@ -14,7 +14,7 @@
                android:layout_height="match_parent"
                android:layout_weight="1"
                android:drawSelectorOnTop="true"
-               android:listSelector="@drawable/list_selector"/>
+               android:listSelector="@drawable/list_selector" />
      
 	<LinearLayout
 	    android:id="@id/android:empty"
