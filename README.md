@@ -31,3 +31,4 @@ com.google.android:support-v4:10 to both. Compile and Run to test your setup. Af
 ## Contributors
 
 David Stocking - Creator
+Hardwarefault - SSL Verification
