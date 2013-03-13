@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/couchpotato_background" >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+        <TextView
+                android:id="@+id/titleTextView"
+                style="@style/MovieTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/couchpotato_background_dark"
+                android:text="Release Title" />
+
+        <TableLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1" >
+
+            <TableRow
+                    android:layout_height="wrap_content" >
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Provider: " />
+
+                <TextView
+                        android:id="@+id/providerTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="provider here" />
+
+            </TableRow>
+
+            <View
+                android:layout_height="2px"
+                android:layout_width="fill_parent"
+                android:background="@color/couchpotato_background_dark" />
+
+            <TableRow
+                    android:layout_height="wrap_content" >
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Age: " />
+
+                <TextView
+                        android:id="@+id/ageTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="age here" />
+
+            </TableRow>
+
+            <View
+                    android:layout_height="2px"
+                    android:layout_width="fill_parent"
+                    android:background="@color/couchpotato_background_dark" />
+
+            <TableRow
+                    android:layout_height="wrap_content" >
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Size: " />
+
+                <TextView
+                        android:id="@+id/sizeTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="size here" />
+
+            </TableRow>
+
+            <View
+                    android:layout_height="2px"
+                    android:layout_width="fill_parent"
+                    android:background="@color/couchpotato_background_dark" />
+
+            <TableRow
+                    android:layout_height="wrap_content" >
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Score: " />
+
+                <TextView
+                        android:id="@+id/scoreTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="score here" />
+
+            </TableRow>
+
+            <View
+                    android:layout_height="2px"
+                    android:layout_width="fill_parent"
+                    android:background="@color/couchpotato_background_dark" />
+
+            <TableRow
+                    android:layout_height="wrap_content" >
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Quality: " />
+
+                <TextView
+                        android:id="@+id/qualityTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="quality here" />
+
+            </TableRow>
+
+            <View
+                    android:layout_height="2px"
+                    android:layout_width="fill_parent"
+                    android:background="@color/couchpotato_background_dark" />
+
+            <TableRow
+                    android:layout_height="wrap_content" >
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Status: " />
+
+                <TextView
+                        android:id="@+id/statusTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="status here" />
+
+            </TableRow>
+
+            <View
+                    android:layout_height="2px"
+                    android:layout_width="fill_parent"
+                    android:background="@color/couchpotato_background_dark" />
+
+        </TableLayout>
+
+        <org.couchtatertot.widget.WorkingTextView
+                android:id="@+id/downloadWorkingTextView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+        <org.couchtatertot.widget.WorkingTextView
+                android:id="@+id/ignoreWorkingTextView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+        <org.couchtatertot.widget.WorkingTextView
+                android:id="@+id/detailsWorkingTextView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</ScrollView>

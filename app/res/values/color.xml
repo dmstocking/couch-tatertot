@@ -23,5 +23,8 @@
     <color name="selected_background">@color/pressed_background_list</color>
     
     <color name="options_seperator_background">#333333</color>
+
+    <color name="category_wheel_selected_text">#FFFFFF</color>
+    <color name="category_wheel_normal_text">#AAAAAA</color>
     
 </resources>

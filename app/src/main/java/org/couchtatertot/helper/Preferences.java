@@ -32,6 +32,8 @@ public class Preferences implements OnSharedPreferenceChangeListener {
 	private static Preferences singleton;
 	
 	public boolean isUpdated = false;
+
+	private int version = -1;
 	
 	private SharedPreferences pref;
 	private CouchPotato potato;
@@ -58,8 +60,10 @@ public class Preferences implements OnSharedPreferenceChangeListener {
 		try {
 			c = c.getApplicationContext();
 			int versionCurrent = c.getPackageManager().getPackageInfo(c.getPackageName(), 0).versionCode;
+			version = versionCurrent;
 			int versionSave = pref.getInt("version", -1);
 			if ( versionCurrent != versionSave ) {
+				new OnVersionChanged(c, versionSave, versionCurrent).processVersionChanges();
 				Editor edit = pref.edit();
 				edit.putInt("version", versionCurrent);
 				edit.commit();
@@ -69,6 +73,11 @@ public class Preferences implements OnSharedPreferenceChangeListener {
 			Log.e("Preferences", "ERROR: " + e.getMessage(), e);
 		}
 		updateCouchPotato();
+	}
+
+	public int getCouchTatertotVersion()
+	{
+		return version;
 	}
 	
 	public String getHost()

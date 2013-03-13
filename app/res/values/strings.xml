@@ -31,6 +31,7 @@
 <!-- 	<string name="history_item_title">History</string> -->
 	<string name="log_item_title">Log</string>
 	<string name="whats_new_item_title">What\'s New?</string>
+    <string name="help_item_title">Help</string>
 	<string name="about_item_title">About CouchTatertot</string>
 	<string name="edit_movie_title">Edit Movie</string>
 	<string name="notification_item_title">Notifications</string>
@@ -51,5 +52,36 @@
 	<!-- Error messages -->
 	<string name="imdb_view_error">You do not have the IMDB app installed, nor the Google Play market place to download it. Sorry.</string>
 	<string name="wait_error">Please wait. Try again after it is done loading.</string>
+
+    <string-array name="category_wheel_items">
+        <item>ALL</item>
+        <item>#</item>
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+        <item>G</item>
+        <item>H</item>
+        <item>I</item>
+        <item>J</item>
+        <item>K</item>
+        <item>L</item>
+        <item>M</item>
+        <item>N</item>
+        <item>O</item>
+        <item>P</item>
+        <item>Q</item>
+        <item>R</item>
+        <item>S</item>
+        <item>T</item>
+        <item>U</item>
+        <item>V</item>
+        <item>W</item>
+        <item>X</item>
+        <item>Y</item>
+        <item>Z</item>
+    </string-array>
 	
 </resources>

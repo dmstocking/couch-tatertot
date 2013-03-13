@@ -15,6 +15,19 @@
         <item name="android:textStyle">bold</item>
 <!--         <item name="android:background">@color/button_background_selector</item> -->
     </style>
+    <style name="CategoryLabel">
+        <item name="android:textColor">#AAAAAA</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:padding">5sp</item>
+    </style>
+    <style name="CategoryLabelSelected">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:padding">5sp</item>
+    </style>
     <style name="TextViewButton" parent="ClickableText" >
         <item name="android:clickable">true</item>
         <item name="android:paddingLeft">3dp</item>

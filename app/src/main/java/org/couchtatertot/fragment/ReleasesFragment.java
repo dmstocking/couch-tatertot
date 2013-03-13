@@ -22,10 +22,12 @@ package org.couchtatertot.fragment;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.actionbarsherlock.view.ActionMode;
@@ -36,10 +38,12 @@ import org.couchpotato.Quality;
 import org.couchpotato.Status;
 import org.couchpotato.json.ReleaseJson;
 import org.couchtatertot.R;
+import org.couchtatertot.ReleaseActivity;
 import org.couchtatertot.app.LoadingListFragment;
 import org.couchtatertot.helper.Preferences;
 import org.couchtatertot.task.ReleaseDownloadTask;
 import org.couchtatertot.task.ReleaseIgnoreTask;
+import org.couchtatertot.widget.MarqueeView;
 import org.couchtatertot.widget.SafeArrayAdapter;
 
 import java.util.List;
@@ -57,7 +61,7 @@ public class ReleasesFragment extends LoadingListFragment<Void, Void, List<Relea
 
 	@Override
 	protected int getChoiceMode() {
-		return ListView.CHOICE_MODE_SINGLE;
+		return ListView.CHOICE_MODE_MULTIPLE;
 	}
 
 	@Override
@@ -77,8 +81,32 @@ public class ReleasesFragment extends LoadingListFragment<Void, Void, List<Relea
 				if ( row == null ) {
 					row = layoutInflater.inflate(R.layout.releases_item, null);
 				}
+				// if even
+				if ( position % 2 == 0 )
+					row.setBackgroundResource(R.color.couchpotato_background_dark);
+				else
+					row.setBackgroundResource(R.color.couchpotato_background);
 				ReleaseJson item = getItem(position);
-				View overlay = row.findViewById(R.id.selectedOverlay);
+				CheckBox releaseCheckBox = (CheckBox)row.findViewById(R.id.releaseCheckBox);
+				if ( ReleasesFragment.this.getListView().getCheckedItemPositions().get(position) == true ) {
+					releaseCheckBox.setActivated(true);
+				} else {
+					releaseCheckBox.setActivated(false);
+				}
+				releaseCheckBox.setTag(position);
+				releaseCheckBox.setOnClickListener( new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						onItemChecked(view);
+					}
+				});
+				MarqueeView titleTextView = (MarqueeView) row.findViewById(R.id.titleTextView);
+				titleTextView.setText(item.info.name);
+				TextView quality = (TextView) row.findViewById(R.id.qualityTextView);
+				quality.setText(Quality.getQuality(item.qualityId));
+				TextView status = (TextView) row.findViewById(R.id.statusTextView);
+				status.setText(Status.getLabel(item.statusId));
+				/*View overlay = row.findViewById(R.id.selectedOverlay);
 				if ( position == getListView().getCheckedItemPosition() ) {
 					overlay.setVisibility(View.VISIBLE);
 				} else {
@@ -98,7 +126,7 @@ public class ReleasesFragment extends LoadingListFragment<Void, Void, List<Relea
 				score.setText("Score: " + item.info.score);
 				size.setText("Size: " + item.info.size);
 				quality.setText(Quality.getQuality(item.qualityId));
-				status.setText(Status.getIdentifier(item.statusId));
+				status.setText(Status.getIdentifier(item.statusId));*/
 				return row;
 			}
 		};
@@ -110,44 +138,74 @@ public class ReleasesFragment extends LoadingListFragment<Void, Void, List<Relea
 		this.getListView().setBackgroundResource(R.color.couchpotato_background);
 		this.getListView().setCacheColorHint(R.color.couchpotato_background);
 	}
-	
-	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
-		super.onListItemClick(l, v, position, id);
+
+	public void onItemChecked(View v)
+	{
+		CheckBox checkBox = (CheckBox)v.findViewById(R.id.releaseCheckBox);
+		int position = (Integer)checkBox.getTag();
+		onItemChecked(checkBox,position);
+		return;
+	}
+
+	public void onItemChecked(CheckBox checkBox, int position)
+	{
+		ListView list = ReleasesFragment.this.getListView();
+		// if we are checked
+		if ( list.getCheckedItemPositions().get(position) == true ) {
+			// then uncheck us
+			ReleasesFragment.this.getListView().setItemChecked(position,false);
+			checkBox.setChecked(false);
+		} else {
+			// otherwise check us
+			ReleasesFragment.this.getListView().setItemChecked(position,true);
+			checkBox.setChecked(true);
+		}
 		if ( actionMode == null ) {
 			actionMode = getSherlockActivity().startActionMode( new ActionMode.Callback() {
-				
+
 				@Override
 				public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
 					return false;
 				}
-				
+
 				@Override
 				public void onDestroyActionMode(ActionMode mode) {
-					int checkedPos = getListView().getCheckedItemPosition();
-					getListView().setItemChecked(checkedPos, false);
+					// clear the checked items
+					SparseBooleanArray array = getListView().getCheckedItemPositions();
+					for ( int i=0; i < array.size(); i++ ) {
+						if ( array.valueAt(i) ) {
+							getListView().setItemChecked(i,false);
+						}
+					}
+					// uncheck all the checked checkboxes
+					for ( int i=0; i < getListView().getChildCount(); i++ )
+						((CheckBox)getListView().getChildAt(i).findViewById(R.id.releaseCheckBox)).setChecked(false);
 					actionMode = null;
 				}
-				
+
 				@Override
 				public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 					MenuInflater inflate = getSherlockActivity().getSupportMenuInflater();
 					inflate.inflate(R.menu.releases_cab_menu, menu);
 					return true;
 				}
-				
+
 				@Override
 				public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 					ListView l = getListView();
 					switch ( item.getItemId() ) {
-					case R.id.downloadMenuItem:
+						case R.id.downloadMenuItem:
 						{
 							final ProgressDialog dialog = ProgressDialog.show(getSherlockActivity(), "","Please wait...", true);
 							dialog.setCancelable(true);
 							dialog.show();
-							ReleaseJson listItem = (ReleaseJson) l.getItemAtPosition(l.getCheckedItemPosition());
+							int[] ids = new int[l.getCheckedItemCount()];
+							SparseBooleanArray array = l.getCheckedItemPositions();
+							for ( int i=0; i < ids.length; i++ ) {
+								ids[i] = ((ReleaseJson) l.getItemAtPosition(array.keyAt(i))).id;
+							}
 							Preferences pref = Preferences.getSingleton(getSherlockActivity());
-							ReleaseDownloadTask task = new ReleaseDownloadTask(pref, listItem.id){
+							ReleaseDownloadTask task = new ReleaseDownloadTask(pref, ids){
 								@Override
 								protected void onPostExecute(Void result) {
 									if ( dialog != null && dialog.isShowing() )
@@ -160,14 +218,18 @@ public class ReleasesFragment extends LoadingListFragment<Void, Void, List<Relea
 							task.execute();
 							return true;
 						}
-					case R.id.ignoreMenuItem:
+						case R.id.ignoreMenuItem:
 						{
 							final ProgressDialog dialog = ProgressDialog.show(getSherlockActivity(), "","Please wait...", true);
 							dialog.setCancelable(true);
 							dialog.show();
-							ReleaseJson listItem = (ReleaseJson) l.getItemAtPosition(l.getCheckedItemPosition());
+							int[] ids = new int[l.getCheckedItemCount()];
+							SparseBooleanArray array = l.getCheckedItemPositions();
+							for ( int i=0; i < ids.length; i++ ) {
+								ids[i] = ((ReleaseJson) l.getItemAtPosition(array.keyAt(i))).id;
+							}
 							Preferences pref = Preferences.getSingleton(getSherlockActivity());
-							ReleaseIgnoreTask task = new ReleaseIgnoreTask(pref, listItem.id){
+							ReleaseIgnoreTask task = new ReleaseIgnoreTask(pref, ids){
 								@Override
 								protected void onPostExecute(Void result) {
 									if ( dialog != null && dialog.isShowing() )
@@ -180,23 +242,54 @@ public class ReleasesFragment extends LoadingListFragment<Void, Void, List<Relea
 							task.execute();
 							return true;
 						}
-					case R.id.detailsMenuItem:
+						/*case R.id.detailsMenuItem:
 						{
 							ReleaseJson listItem = (ReleaseJson) l.getItemAtPosition(l.getCheckedItemPosition());
 							Intent intent = new Intent(Intent.ACTION_VIEW);
 							intent.setData(Uri.parse(listItem.info.detailUrl));
 							startActivity(intent);
-						}
-						return true;
+							return true;
+						}*/
 					}
 					return false;
 				}
 			});
-			actionMode.setTitle("1 Item Selected");
+			actionMode.setTitle(this.getListView().getCheckedItemCount() + " Item Selected");
+		} else if ( actionMode != null ) {
+			actionMode.setTitle(this.getListView().getCheckedItemCount() + " Item Selected");
+			if ( this.getListView().getCheckedItemCount() <= 0 ) {
+				actionMode.finish();
+				actionMode = null;
+			}
 		}
-		if ( l.getCheckedItemPosition() == ListView.INVALID_POSITION ) {
+		return;
+	}
+	
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		if ( actionMode != null ) {
 			actionMode.finish();
+			actionMode = null;
 		}
+		Intent intent = new Intent( this.getSherlockActivity(), ReleaseActivity.class );
+		ReleaseJson item = releaseAdapter.getItem(position);
+		intent.putExtra("id", item.id);
+		intent.putExtra("title", item.info.name);
+		intent.putExtra("provider", item.info.provider);
+		intent.putExtra("age", item.info.age);
+		intent.putExtra("size", item.info.size);
+		intent.putExtra("score", item.info.score);
+		intent.putExtra("quality", Quality.getQuality(item.qualityId));
+		intent.putExtra("status", Status.getLabel(item.statusId));
+		intent.putExtra("detailUrl", item.info.detailUrl);
+		startActivity(intent);
+	}
+
+	@Override
+	public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
+		onItemChecked(view);
+		return true;
 	}
 
 	@Override

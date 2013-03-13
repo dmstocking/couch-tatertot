@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/couchpotato_background_dark">
+
+    <LinearLayout
+            android:id="@+id/categoryLinearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+        <!--If you are looking at this the text views are all created at creation
+        They are all made with CategoryLabel style-->
+
+    </LinearLayout>
+
+</HorizontalScrollView>

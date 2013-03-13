@@ -19,31 +19,21 @@
  */
 package org.couchtatertot.dialog;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockDialogFragment;
+import org.couchtatertot.helper.Preferences;
+import org.couchtatertot.task.ReleaseIgnoreTask;
 
-public class WhatsNewDialog extends SherlockDialogFragment {
 
-	String title = null;
-	DialogInterface.OnClickListener okListener = null;
-	
-	private static String whatsNew =
-			"- Added Help.\n" +
-			"- Moved from couchpotato cache to downloaded image files.\n" +
-			"- Added categories wheel for movie lists.\n" +
-			"- Added a new release view.\n" +
-			"- Updated the releases view.\n" +
-			"- Automatic actions on update. (to save you the pain)\n" +
-			"\n" +
-			"Please show your support by rating/reviewing this app on Google Play!";
-	
-	public WhatsNewDialog()
+public class ToggleIgnoreReleaseDialog extends SherlockDialogFragment {
+
+	private int id;
+
+	public ToggleIgnoreReleaseDialog(int id)
 	{
-		super();
+		this.id = id;
 	}
 
 	@Override
@@ -53,27 +43,23 @@ public class WhatsNewDialog extends SherlockDialogFragment {
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this.getSherlockActivity());
-		builder.setTitle(title);
-		builder.setMessage(whatsNew);
-		builder.setPositiveButton("Dismiss", okListener);
-		builder.setCancelable(false);
-		return builder.create();
-	}
-	
-	public void setTitle( String title )
-	{
-		this.title = title;
-	}
-	
-	public String getTitle( String title )
-	{
-		return title;
-	}
-	
-	public void setOnOkClick( OnClickListener listener )
-	{
-		okListener = listener;
+		final ProgressDialog dialog = ProgressDialog.show(getSherlockActivity(), "","Please wait...", true);
+		dialog.setCancelable(true);
+		Preferences pref = Preferences.getSingleton(getSherlockActivity());
+		ReleaseIgnoreTask task = new ReleaseIgnoreTask(pref, id){
+			@Override
+			protected void onPostExecute(Void result) {
+				if ( dialog != null && dialog.isShowing() )
+					dialog.dismiss();
+				ToggleIgnoreReleaseDialog.this.onPostExecute();
+			}};
+		task.execute();
+		return dialog;
 	}
 
+	protected void onPostExecute()
+	{
+		return;
+	}
+	
 }

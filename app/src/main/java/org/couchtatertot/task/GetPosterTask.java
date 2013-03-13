@@ -19,7 +19,6 @@
  */
 package org.couchtatertot.task;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import org.couchtatertot.helper.PosterCache;
@@ -32,17 +31,15 @@ public class GetPosterTask extends CouchTask<Void,Void,Bitmap>
 	
 	protected Preferences pref;
 	protected PosterCache cache;
-	protected String filename;
+	protected String location;
 	protected int width;
 	protected int height;
 	
-	private Context c;
-	
-	public GetPosterTask(Preferences pref, PosterCache cache, String filename, int width, int height)
+	public GetPosterTask(Preferences pref, PosterCache cache, String location, int width, int height)
 	{
 		this.pref = pref;
 		this.cache = cache;
-		this.filename = filename;
+		this.location = location;
 		this.width = width;
 		this.height = height;
 	}
@@ -56,15 +53,16 @@ public class GetPosterTask extends CouchTask<Void,Void,Bitmap>
 	protected Bitmap doInBackground(Void... params) {
 		try {
 			Bitmap ret = null;
-			if ( cache.in(filename) ) {
-				ret = cache.getFromMemory(filename);
+			if ( cache.in(location) ) {
+				ret = cache.getFromMemory(location);
 				if ( ret == null ) {
-					ret = cache.getFromDisk(filename);
+					ret = cache.getFromDisk(location);
 				}
 			} else {
-				URL url = pref.getCouchPotato().fileCache(filename);
+//				URL url = pref.getCouchPotato().fileCache(location);
+				URL url = new URL(location);
 				ret = BitmapFactory.decodeStream(url.openStream());
-				PosterCache.getSingleton(c).put(filename, ret);
+				cache.put(location, ret);
 			}
 			// I have removed this ONLY because 
 			// 1) the bitmaps are small

@@ -1,10 +1,10 @@
 /*
- * 	SickStache is a android application for managing SickBeard
+ * 	CouchTatertot is a android app for managing couchpotato
  * 	Copyright (C) 2012  David Stocking dmstocking@gmail.com
- * 
- * 	http://code.google.com/p/sick-stashe/
- * 	
- * 	SickStache is free software: you can redistribute it and/or modify
+ *
+ * 	http://code.google.com/p/couch-tatertot/
+ *
+ * 	libCouchPotato is free software: you can redistribute it and/or modify
  * 	it under the terms of the GNU General Public License as published by
  * 	the Free Software Foundation, either version 3 of the License, or
  * 	(at your option) any later version.

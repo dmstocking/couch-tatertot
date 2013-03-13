@@ -17,41 +17,17 @@
  * 	You should have received a copy of the GNU General Public License
  * 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.couchtatertot.task;
+package org.couchtatertot;
 
-import org.couchtatertot.helper.Preferences;
+import android.os.Bundle;
+import org.couchtatertot.app.CouchActivity;
 
-public class ReleaseDownloadTask extends CouchTask<Void,Void,Void>
-{
+public class ReleaseActivity extends CouchActivity {
 	
-	protected Preferences pref;
-	protected int[] ids;
-
-	public  ReleaseDownloadTask(Preferences pref, int id)
-	{
-		this(pref, new int[]{id});
-	}
-
-	public ReleaseDownloadTask(Preferences pref, int[] ids)
-	{
-		this.pref = pref;
-		this.ids = ids;
-	}
-
-	@Override
-	public String getTaskLogName() {
-		return "ReleaseDownloadTask";
-	}
-
-	@Override
-	protected Void doInBackground(Void... params) {
-		try {
-			for ( int id : ids ) {
-				pref.getCouchPotato().releaseDownload(id);
-			}
-		} catch (Exception e) {
-			this.error = e;
-		}
-		return null;
-	}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.release_activity);
+    }
+    
 }

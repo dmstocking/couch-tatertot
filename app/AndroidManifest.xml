@@ -55,6 +55,9 @@
             android:name=".ReleasesActivity" >
         </activity>
         <activity
+            android:name=".ReleaseActivity" >
+        </activity>
+        <activity
             android:name=".AboutActivity" >
         </activity>
         <activity

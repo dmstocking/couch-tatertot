@@ -29,7 +29,7 @@ import org.couchpotato.CouchPotato.PageEnum;
 import org.couchpotato.json.MovieJson;
 import org.couchtatertot.EditMovieActivity;
 import org.couchtatertot.R;
-import org.couchtatertot.app.EndlessLoadingListFragment;
+import org.couchtatertot.app.CategoryEndlessLoadingListFragment;
 import org.couchtatertot.fragment.ManageFragment.Params;
 import org.couchtatertot.helper.Preferences;
 import org.couchtatertot.widget.LoadingPosterView;
@@ -37,14 +37,15 @@ import org.couchtatertot.widget.SafeArrayAdapter;
 
 import java.util.List;
 
-public class ManageFragment extends EndlessLoadingListFragment<Params, Void, List<MovieJson>> {
+public class ManageFragment extends CategoryEndlessLoadingListFragment<Params, Void, List<MovieJson>> {
 	
 	public class Params {
 		String startsWith;
 		int current;
 		int step;
 	}
-	
+
+	private String startsWith = null;
 	private boolean atEnd = false;
 	private SafeArrayAdapter<MovieJson> movieAdapter;
 	
@@ -108,6 +109,17 @@ public class ManageFragment extends EndlessLoadingListFragment<Params, Void, Lis
 	}
 
 	@Override
+	public void OnCategorySelected(String value) {
+		if ( value.equals("ALL") ) {
+			value = null;
+		} else if ( value.equals("#") ) {
+			value = "0";
+		}
+		this.startsWith = value;
+		this.refresh();
+	}
+
+	@Override
 	protected String getEmptyText() {
 		return "No Movies Available";
 	}
@@ -117,12 +129,13 @@ public class ManageFragment extends EndlessLoadingListFragment<Params, Void, Lis
 		Params p = new Params();
 		p.current = movieAdapter.getCount();
 		p.step = getStep();
+		p.startsWith = startsWith;
 		return new Params[] { p };
 	}
 	
 	@Override
 	protected List<MovieJson> doInBackground(Params... arg0) throws Exception {
-		return Preferences.getSingleton(getSherlockActivity()).getCouchPotato().movieList("done", arg0[0].step, arg0[0].current, null, null);
+		return Preferences.getSingleton(getSherlockActivity()).getCouchPotato().movieList("done", arg0[0].step, arg0[0].current, null, arg0[0].startsWith);
 	}
 	
 	@Override

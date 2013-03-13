@@ -36,11 +36,19 @@ public class LibraryJson {
 
 	public String getCroppedPoster()
 	{
-		for ( FilesJson file : files ) {
-			if ( file.type_id == 2 ) {
-				return file.path;
+		if ( info.images.poster.size() > 0 ) {
+			return info.images.poster.get(0);
+		} /*else {
+			for ( FilesJson file : files ) {
+				if ( file.type_id == 2 ) {
+					return file.path;
+				}
 			}
-		}
+			return null;
+		}*/
+		// not using this just because of how bad it works
+		// the type_id can basically be anything the system wants
+		// granted this happens most on upgrade, but just go get it from the internet
 		return null;
 	}
 }

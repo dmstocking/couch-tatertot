@@ -25,12 +25,17 @@ public class ReleaseIgnoreTask extends CouchTask<Void,Void,Void>
 {
 	
 	protected Preferences pref;
-	protected int id;
-	
+	protected int[] ids;
+
 	public ReleaseIgnoreTask(Preferences pref, int id)
 	{
+		this(pref, new int[]{id});
+	}
+	
+	public ReleaseIgnoreTask(Preferences pref, int[] ids)
+	{
 		this.pref = pref;
-		this.id = id;
+		this.ids = ids;
 	}
 
 	@Override
@@ -41,7 +46,9 @@ public class ReleaseIgnoreTask extends CouchTask<Void,Void,Void>
 	@Override
 	protected Void doInBackground(Void... params) {
 		try {
-			pref.getCouchPotato().releaseIgnore(id);
+			for ( int id : ids ) {
+				pref.getCouchPotato().releaseIgnore(id);
+			}
 		} catch (Exception e) {
 			this.error = e;
 		}

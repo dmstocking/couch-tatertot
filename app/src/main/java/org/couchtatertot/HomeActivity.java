@@ -23,6 +23,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -114,6 +115,12 @@ public class HomeActivity extends SherlockFragmentActivity implements OnSharedPr
 			{
 				Intent intent = new Intent(this,AboutActivity.class);
 				startActivity(intent);
+				return true;
+			}
+		case R.id.helpMenuItem:
+			{
+				Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Buttink/couch-tatertot/wiki/FAQ"));
+				startActivity(i);
 				return true;
 			}
 		}
