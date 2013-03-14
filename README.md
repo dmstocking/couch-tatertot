@@ -5,6 +5,8 @@ CouchTatertot is an open source android app for managing your CouchPotatoV2 serv
 
 [![Google Play Icon](http://www.android.com/images/brand/android_app_on_play_logo_large.png)](http://play.google.com/store/apps/details?id=org.couchtatertot)
 
+[Free apk download here.](https://sourceforge.net/projects/couchtatertot/files/?source=navbar)
+
 Features:
 * Android Ice Cream Sandwich (4.0) look and feel
 * Very Fast
@@ -30,5 +32,5 @@ com.google.android:support-v4:10 to both. Compile and Run to test your setup. Af
 
 ## Contributors
 
-David Stocking - Creator
-Hardwarefault - SSL Verification
+* David Stocking - Creator
+* Hardwarefault - SSL Verification
