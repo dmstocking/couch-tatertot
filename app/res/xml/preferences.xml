@@ -11,7 +11,7 @@
         <EditTextPreference
             android:title="Port"
             android:summary="The port to connect to your CouchPotato server."
-            android:defaultValue="8081"
+            android:defaultValue="5050"
             android:key="port"
             android:inputType="number" />
         <EditTextPreference
